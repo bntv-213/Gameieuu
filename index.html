@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi"> 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -694,15 +695,8 @@
                 🌙 Chào mừng trở lại
             </h2>
 
-            <label>
-                Tên đăng nhập
-            </label>
-
-            <input
-                id="loginUsername"
-                type="text"
-                placeholder="Nhập tên đăng nhập"
-            >
+            <label>Email</label>
+<input id="loginEmail" type="email" placeholder="Nhập email">
 
             <label>
                 Mật khẩu
@@ -741,15 +735,11 @@
                 ✨ Tạo nhân vật
             </h2>
 
-            <label>
-                Tên đăng nhập
-            </label>
+            <label>Email</label>
+<input id="registerEmail" type="email" placeholder="Email của bé">
 
-            <input
-                id="registerUsername"
-                type="text"
-                placeholder="Tên đăng nhập"
-            >
+<label>Tên nhân vật</label>
+<input id="registerUsername" type="text" placeholder="Tên nhân vật">
 
             <label>
                 Mật khẩu
@@ -1072,109 +1062,94 @@
            ĐĂNG KÝ
         ========================= */
 
-        function register() {
+        async function register() {
 
-            const username =
-                document
-                    .getElementById("registerUsername")
-                    .value
-                    .trim();
+    const email =
+        document.getElementById("registerEmail").value.trim();
 
-            const password =
-                document
-                    .getElementById("registerPassword")
-                    .value;
+    const username =
+        document.getElementById("registerUsername").value.trim();
 
-            const password2 =
-                document
-                    .getElementById("registerPassword2")
-                    .value;
+    const password =
+        document.getElementById("registerPassword").value;
 
+    const password2 =
+        document.getElementById("registerPassword2").value;
 
-            if (!username || !password) {
+    if (!email || !username || !password) {
+        alert("Bé chưa nhập đủ thông tin nè!");
+        return;
+    }
 
-                alert(
-                    "Bé chưa nhập đủ thông tin nè! 🌙"
-                );
+    if (password !== password2) {
+        alert("Hai mật khẩu chưa giống nhau!");
+        return;
+    }
 
-                return;
-            }
+    const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password
+    });
 
+    if (error) {
+        alert("Không tạo được tài khoản: " + error.message);
+        return;
+    }
 
-            if (password !== password2) {
+    alert(
+        "Tạo tài khoản thành công! 🌙\n\n" +
+        "Bé hãy kiểm tra email để xác nhận tài khoản nhé!"
+    );
 
-                alert(
-                    "Hai mật khẩu chưa giống nhau!"
-                );
+    document.getElementById("registerEmail").value = "";
+    document.getElementById("registerUsername").value = "";
+    document.getElementById("registerPassword").value = "";
+    document.getElementById("registerPassword2").value = "";
 
-                return;
-            }
-
-
-            alert(
-                "Tài khoản đã được tạo! ✨🌙"
-            );
-
-
-            document
-                .getElementById("registerUsername")
-                .value = "";
-
-            document
-                .getElementById("registerPassword")
-                .value = "";
-
-            document
-                .getElementById("registerPassword2")
-                .value = "";
-
-
-            showForm("login");
-        }
+    showForm("login");
+}
 
 
         /* =========================
            ĐĂNG NHẬP
         ========================= */
 
-        function login() {
+        async function login() {
 
-            const username =
-                document
-                    .getElementById("loginUsername")
-                    .value
-                    .trim();
+    const email =
+        document.getElementById("loginEmail").value.trim();
 
-            const password =
-                document
-                    .getElementById("loginPassword")
-                    .value;
+    const password =
+        document.getElementById("loginPassword").value;
 
+    if (!email || !password) {
+        alert("Bé chưa nhập email hoặc mật khẩu!");
+        return;
+    }
 
-            if (!username || !password) {
+    const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+        });
 
-                alert(
-                    "Bé chưa nhập tên đăng nhập hoặc mật khẩu!"
-                );
+    if (error) {
+        alert("Đăng nhập thất bại: " + error.message);
+        return;
+    }
 
-                return;
-            }
+    hideAll();
 
+    document.getElementById("world").style.display = "block";
 
-            document
-                .getElementById("playerName")
-                .textContent = username;
+    const userEmail = data.user.email;
 
-
-            document
-                .getElementById("loginPage")
-                .style.display = "none";
-
-
-            document
-                .getElementById("game")
-                .style.display = "block";
-        }
+    document.getElementById("welcomeText").innerHTML =
+        "Xin chào <b>" + userEmail +
+        "</b> 🌙<br><br>" +
+        "Đây là thế giới của riêng bạn.<br>" +
+        "Một hành trình mới đang bắt đầu...";
+}
 
 
         /* =========================
@@ -1235,6 +1210,12 @@
         }
 
     </script>
+const SUPABASE_URL = "https://mxulpbxwuasqqckqedxo.supabase.co";
+const SUPABASE_KEY = "sb_publishable_B4srj0xVQ6yR7fNYuBi9xw_SacXm7GW";
 
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 </body>
 </html>
