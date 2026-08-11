@@ -1074,63 +1074,52 @@
 
         function register() {
 
-            const username =
-                document
-                    .getElementById("registerUsername")
-                    .value
-                    .trim();
+    const username =
+        document.getElementById("registerUsername").value.trim();
 
-            const password =
-                document
-                    .getElementById("registerPassword")
-                    .value;
+    const password =
+        document.getElementById("registerPassword").value;
 
-            const password2 =
-                document
-                    .getElementById("registerPassword2")
-                    .value;
+    const password2 =
+        document.getElementById("registerPassword2").value;
 
 
-            if (!username || !password) {
+    if (!username || !password) {
+        alert("Bé ơi bé à nhập đầy đủ đi nò! 🌙");
+        return;
+    }
 
-                alert(
-                    "Bé chưa nhập đủ thông tin nè! 🌙"
-                );
-
-                return;
-            }
-
-
-            if (password !== password2) {
-
-                alert(
-                    "Hai mật khẩu chưa giống nhau!"
-                );
-
-                return;
-            }
+    if (password !== password2) {
+        alert("Hai mật khẩu chưa "sinh đôi"!");
+        return;
+    }
 
 
-            alert(
-                "Dỏi!Vào đăng nhập đi nhìn giề! ✨🌙"
-            );
+    const existingUser =
+        localStorage.getItem("lunaria_" + username);
 
 
-            document
-                .getElementById("registerUsername")
-                .value = "";
-
-            document
-                .getElementById("registerPassword")
-                .value = "";
-
-            document
-                .getElementById("registerPassword2")
-                .value = "";
+    if (existingUser) {
+        alert("Tên đăng nhập này có người nhanh tay hơn rồi ahaha!");
+        return;
+    }
 
 
-            showForm("login");
-        }
+    localStorage.setItem(
+        "lunaria_" + username,
+        password
+    );
+
+
+    alert("Dỏi! Vô đăng nhập đi nhìn  🌙✨");
+
+
+    document.getElementById("registerUsername").value = "";
+    document.getElementById("registerPassword").value = "";
+    document.getElementById("registerPassword2").value = "";
+
+    showForm("login");
+}
 
 
         /* =========================
@@ -1139,42 +1128,46 @@
 
         function login() {
 
-            const username =
-                document
-                    .getElementById("loginUsername")
-                    .value
-                    .trim();
+    const username =
+        document.getElementById("loginUsername").value.trim();
 
-            const password =
-                document
-                    .getElementById("loginPassword")
-                    .value;
+    const password =
+        document.getElementById("loginPassword").value;
 
 
-            if (!username || !password) {
-
-                alert(
-                    "Bé ơi bé à bé nhập đầy đủ đê!"
-                );
-
-                return;
-            }
+    if (!username || !password) {
+        alert("Bé ơi bé à nhập đầy đủ đi nò! 🌙");
+        return;
+    }
 
 
-            document
-                .getElementById("playerName")
-                .textContent = username;
+    const savedPassword =
+        localStorage.getItem("lunaria_" + username);
 
 
-            document
-                .getElementById("loginPage")
-                .style.display = "none";
+    if (!savedPassword) {
+        alert("Tài khoản này không tồn tại!");
+        return;
+    }
 
 
-            document
-                .getElementById("game")
-                .style.display = "block";
-        }
+    if (savedPassword !== password) {
+        alert("Nhìn kĩ đi sai mật khẩu kìa!");
+        return;
+    }
+
+
+    hideAll();
+
+    document.getElementById("world").style.display = "block";
+
+    document.getElementById("welcomeText").innerHTML =
+        "Xin chào <b>" +
+        username +
+        "</b> 🌙<br><br>" +
+        "Đây là thế giới của riêng bạn.<br>" +
+        "Một hành trình mới đang bắt đầu...";
+}
 
 
         /* =========================
