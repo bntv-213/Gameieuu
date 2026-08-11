@@ -1091,33 +1091,25 @@
 
 
     if (password !== password2) {
-        alert("Hai mật khẩu chưa sinh đôi kìa!");
+        alert("Hai mật khẩu chưa sinh đôi kìa");
         return;
     }
 
 
-    const existingUser =
-        localStorage.getItem("lunaria_" + username);
+    const key = "lunaria_" + username;
 
+    const existingUser = localStorage.getItem(key);
 
-    if (existingUser) {
-        alert("Tên đăng nhập này có người nhanh tay hơn rồi ahaha 💨🌙");
+    if (existingUser !== null) {
+        alert("Tên này có người nhanh tay hơn rồi ahaha! 💨🌙");
         return;
     }
 
 
-    localStorage.setItem(
-    "lunaria_" + username,
-    password
-);
+    localStorage.setItem(key, password);
 
-console.log(
-    "ĐÃ LƯU TÀI KHOẢN:",
-    username,
-    localStorage.getItem("lunaria_" + username)
-);
 
-    alert("Dỏi! Tạo xong ròi vô đăng nhập đi nhìn giề ✨🌙");
+    alert("DỎI! Tạo xong ròi vô đăng nhập đi chứ nhìn giề! ✨🌙");
 
 
     document.getElementById("registerUsername").value = "";
@@ -1151,14 +1143,14 @@ function login() {
         localStorage.getItem("lunaria_" + username);
 
 
-    if (!savedPassword) {
+    if (savedPassword === null) {
         alert("Ụa? Tài khoản này chưa tồn tại nè 👀🌙");
         return;
     }
 
 
     if (savedPassword !== password) {
-        alert("Nhìn kĩ đi có cái mật khẩu cũng nhập saiii 🔐");
+        alert("Nhìn kĩ coi có cái mật khẩu cũng nhập sai🔐");
         return;
     }
 
@@ -1167,7 +1159,6 @@ function login() {
 
     document.getElementById("world").style.display = "block";
 
-
     document.getElementById("welcomeText").innerHTML =
         "Xin chào <b>" +
         username +
@@ -1175,7 +1166,6 @@ function login() {
         "Đây là thế giới của riêng bạn.<br>" +
         "Một hành trình mới đang bắt đầu...";
 }
-
 
         /* =========================
            KHÁM PHÁ
