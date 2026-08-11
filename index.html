@@ -1061,90 +1061,106 @@
            ĐĂNG KÝ
         ========================= */
 
-        async function register() {
-
-    const email =
-        document.getElementById("registerEmail").value.trim();
+        function register() {
 
     const username =
-        document.getElementById("registerUsername").value.trim();
+        document
+            .getElementById("registerUsername")
+            .value
+            .trim();
 
     const password =
-        document.getElementById("registerPassword").value;
+        document
+            .getElementById("registerPassword")
+            .value;
 
     const password2 =
-        document.getElementById("registerPassword2").value;
+        document
+            .getElementById("registerPassword2")
+            .value;
 
-    if (!email || !username || !password) {
-        alert("Bé chưa nhập đủ thông tin nè!");
+
+    if (!username || !password) {
+
+        alert(
+            "Bé chưa nhập đủ thông tin nè! 🌙"
+        );
+
         return;
     }
+
 
     if (password !== password2) {
-        alert("Hai mật khẩu chưa giống nhau!");
+
+        alert(
+            "Hai mật khẩu chưa giống nhau!"
+        );
+
         return;
     }
 
-    const { data, error } = await supabaseClient.auth.signUp({
-        email: email,
-        password: password
-    });
-
-    if (error) {
-        alert("Không tạo được tài khoản: " + error.message);
-        return;
-    }
 
     alert(
-        "Tạo tài khoản thành công! 🌙\n\n" +
-        "Bé hãy kiểm tra email để xác nhận tài khoản nhé!"
+        "Tài khoản đã được tạo! ✨🌙"
     );
 
-    document.getElementById("registerEmail").value = "";
-    document.getElementById("registerUsername").value = "";
-    document.getElementById("registerPassword").value = "";
-    document.getElementById("registerPassword2").value = "";
+
+    document.getElementById(
+        "registerUsername"
+    ).value = "";
+
+    document.getElementById(
+        "registerPassword"
+    ).value = "";
+
+    document.getElementById(
+        "registerPassword2"
+    ).value = "";
+
 
     showForm("login");
 }
-
 
         /* =========================
            ĐĂNG NHẬP
         ========================= */
 
-        async function login() {
+        function login() {
 
-    const email =
-        document.getElementById("loginEmail").value.trim();
+    const username =
+        document
+            .getElementById("loginUsername")
+            .value
+            .trim();
 
     const password =
-        document.getElementById("loginPassword").value;
+        document
+            .getElementById("loginPassword")
+            .value;
 
-    if (!email || !password) {
-        alert("Bé chưa nhập email hoặc mật khẩu!");
+
+    if (!username || !password) {
+
+        alert(
+            "Bé chưa nhập tên đăng nhập hoặc mật khẩu!"
+        );
+
         return;
     }
 
-    const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
-
-    if (error) {
-        alert("Đăng nhập thất bại: " + error.message);
-        return;
-    }
 
     hideAll();
 
-    document.getElementById("world").style.display = "block";
+    document.getElementById(
+        "world"
+    ).style.display = "block";
 
-    const userEmail = data.user.email;
 
-    document.getElementById("welcomeText").innerHTML =
-        "Xin chào <b>" + userEmail +
+    document.getElementById(
+        "welcomeText"
+    ).innerHTML =
+        "Xin chào <b>" +
+        username +
         "</b> 🌙<br><br>" +
         "Đây là thế giới của riêng bạn.<br>" +
         "Một hành trình mới đang bắt đầu...";
