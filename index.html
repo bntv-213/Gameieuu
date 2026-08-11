@@ -1085,31 +1085,37 @@
 
 
     if (!username || !password) {
-        alert("Bé ơi bé à nhập đầy đủ đi nò! 🌙");
+        alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
         return;
     }
-
 
     if (password !== password2) {
-        alert("Hai mật khẩu chưa sinh đôi kìa");
+        alert("Hai mật khẩu chưa sinh đôi kìa 😭");
         return;
     }
 
 
-    const key = "lunaria_" + username;
+    // Kiểm tra tài khoản đã tồn tại chưa
+    const accounts =
+        JSON.parse(localStorage.getItem("lunariaAccounts") || "{}");
 
-    const existingUser = localStorage.getItem(key);
 
-    if (existingUser !== null) {
+    if (accounts[username]) {
         alert("Tên này có người nhanh tay hơn rồi ahaha! 💨🌙");
         return;
     }
 
 
-    localStorage.setItem(key, password);
+    // Lưu tài khoản
+    accounts[username] = password;
+
+    localStorage.setItem(
+        "lunariaAccounts",
+        JSON.stringify(accounts)
+    );
 
 
-    alert("DỎI! Tạo xong ròi vô đăng nhập đi chứ nhìn giề! ✨🌙");
+    alert("DỎI! Tạo xong ròi, vô đăng nhập đi chứ nhìn giề! ✨🌙");
 
 
     document.getElementById("registerUsername").value = "";
@@ -1134,23 +1140,24 @@ function login() {
 
 
     if (!username || !password) {
-        alert("Bé ơi bé à nhập đầy đủ đi nò! 🌙");
+        alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
         return;
     }
 
 
-    const savedPassword =
-        localStorage.getItem("lunaria_" + username);
+    // Lấy danh sách tài khoản
+    const accounts =
+        JSON.parse(localStorage.getItem("lunariaAccounts") || "{}");
 
 
-    if (savedPassword === null) {
+    if (!accounts[username]) {
         alert("Ụa? Tài khoản này chưa tồn tại nè 👀🌙");
         return;
     }
 
 
-    if (savedPassword !== password) {
-        alert("Nhìn kĩ coi có cái mật khẩu cũng nhập sai🔐");
+    if (accounts[username] !== password) {
+        alert("Nhìn kĩ coi, cái mật khẩu cũng nhập sai 🔐😭");
         return;
     }
 
