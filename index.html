@@ -1107,10 +1107,15 @@
 
 
     localStorage.setItem(
-        "lunaria_" + username,
-        password
-    );
+    "lunaria_" + username,
+    password
+);
 
+console.log(
+    "ĐÃ LƯU TÀI KHOẢN:",
+    username,
+    localStorage.getItem("lunaria_" + username)
+);
 
     alert("Dỏi! Tạo xong ròi vô đăng nhập đi nhìn giề ✨🌙");
 
