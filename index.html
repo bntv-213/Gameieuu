@@ -12,18 +12,20 @@
             padding: 0;
         }
 
-        body {
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            background:
-                radial-gradient(circle at 20% 20%, rgba(126,87,194,.35), transparent 30%),
-                radial-gradient(circle at 80% 70%, rgba(64,156,255,.25), transparent 30%),
-                linear-gradient(135deg,#0b1026,#17143d,#090d20);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+       body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(rgba(8, 10, 35, 0.35), rgba(8, 10, 35, 0.55)),
+        url("lunaria-cover.png") center center / cover no-repeat fixed;
+
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
 
         .stars {
             position: fixed;
