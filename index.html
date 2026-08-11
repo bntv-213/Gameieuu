@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Lunaria</title>
 
     <style>
@@ -12,404 +13,635 @@
             padding: 0;
         }
 
-       body {
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
 
-    background:
-        linear-gradient(rgba(8, 10, 35, 0.35), rgba(8, 10, 35, 0.55)),
-        url("lunaria-cover.png") center center / cover no-repeat fixed;
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: white;
 
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
+            background:
+                linear-gradient(
+                    rgba(7, 8, 30, 0.18),
+                    rgba(7, 8, 30, 0.38)
+                ),
+                url("lunaria-cover.png") center center / cover no-repeat fixed;
 
-        .stars {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            overflow: hidden;
+        }
+
+        /* Ánh sáng mờ phủ toàn màn hình */
+        body::before {
+            content: "";
             position: fixed;
             inset: 0;
+
+            background:
+                radial-gradient(
+                    circle at 50% 42%,
+                    rgba(150, 120, 255, 0.16),
+                    transparent 35%
+                );
+
             pointer-events: none;
-            opacity: .8;
-            background-image:
-                radial-gradient(circle,white 1px,transparent 1px),
-                radial-gradient(circle,white 1px,transparent 1px);
-            background-size: 90px 90px,140px 140px;
-            background-position: 10px 20px,60px 80px;
         }
 
+        /* Khung giao diện */
         .container {
             position: relative;
-            width: min(90%,430px);
-            padding: 42px 32px;
-            border: 1px solid rgba(255,255,255,.18);
+            width: min(90%, 430px);
+            min-height: 420px;
+
+            padding: 38px 34px;
+
+            border: 1px solid rgba(255,255,255,0.22);
             border-radius: 28px;
-            background: rgba(16,19,50,.82);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 20px 70px rgba(0,0,0,.45);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(14, 16, 48, 0.78),
+                    rgba(21, 19, 58, 0.64)
+                );
+
+            backdrop-filter: blur(12px);
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,0.48),
+                inset 0 0 30px rgba(160,130,255,0.06);
+
             text-align: center;
+
+            animation: appear 0.8s ease;
         }
 
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Mặt trăng */
         .moon {
             font-size: 48px;
             margin-bottom: 10px;
+
+            filter:
+                drop-shadow(0 0 12px rgba(255,220,100,0.55));
+
+            animation: floatingMoon 3s ease-in-out infinite;
         }
 
+        @keyframes floatingMoon {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        /* Logo */
         .logo {
             font-size: 48px;
-            font-weight: 800;
-            letter-spacing: 7px;
-            text-shadow: 0 0 25px rgba(170,150,255,.8);
+            font-weight: 900;
+            letter-spacing: 8px;
+
+            margin-bottom: 10px;
+
+            color: #ffffff;
+
+            text-shadow:
+                0 0 8px rgba(255,255,255,0.9),
+                0 0 22px rgba(160,130,255,0.8),
+                0 0 45px rgba(120,90,255,0.5);
         }
 
         .subtitle {
-            color: #bfc4e8;
-            margin: 10px 0 30px;
+            color: #d0d1ed;
             font-size: 14px;
+            line-height: 1.6;
+
+            margin-bottom: 28px;
         }
 
+        /* Nút */
         button {
             width: 100%;
-            padding: 14px;
+
+            padding: 14px 18px;
             margin-top: 12px;
-            border: none;
+
             border-radius: 14px;
+
             font-size: 16px;
             font-weight: bold;
+
             cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                filter 0.2s ease,
+                box-shadow 0.2s ease;
         }
 
         button:hover {
+            transform: translateY(-3px);
             filter: brightness(1.12);
-            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         .login-btn {
-            background: #8f7cff;
+            border: none;
+
             color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #8c75ff,
+                    #a78cff
+                );
+
+            box-shadow:
+                0 8px 25px rgba(126,99,255,0.35);
+        }
+
+        .login-btn:hover {
+            box-shadow:
+                0 12px 35px rgba(126,99,255,0.55);
         }
 
         .register-btn {
-            background: rgba(255,255,255,.09);
             color: white;
-            border: 1px solid rgba(255,255,255,.15);
+
+            background:
+                rgba(255,255,255,0.08);
+
+            border:
+                1px solid rgba(255,255,255,0.18);
+
+            box-shadow:
+                inset 0 0 20px rgba(255,255,255,0.03);
         }
 
-        .form,
-        .world {
+        .register-btn:hover {
+            box-shadow:
+                0 8px 25px rgba(130,110,255,0.2);
+        }
+
+        .small-note {
+            margin-top: 22px;
+
+            color: #9295be;
+
+            font-size: 12px;
+        }
+
+        /* Form đăng nhập / đăng ký */
+        .form {
             display: none;
             text-align: left;
         }
 
-        h2 {
+        .form h2 {
             text-align: center;
+
             margin-bottom: 22px;
+
+            font-size: 22px;
+
+            text-shadow:
+                0 0 15px rgba(160,130,255,0.5);
         }
 
         label {
             display: block;
-            margin: 12px 0 7px;
-            color: #cbd0f4;
+
+            margin: 13px 0 7px;
+
+            color: #d0d2ed;
+
             font-size: 14px;
         }
 
         input {
             width: 100%;
-            padding: 13px;
+
+            padding: 13px 14px;
+
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,.15);
-            background: rgba(255,255,255,.08);
+
+            border:
+                1px solid rgba(255,255,255,0.16);
+
+            background:
+                rgba(255,255,255,0.07);
+
             color: white;
+
             outline: none;
+
+            font-size: 14px;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+        }
+
+        input::placeholder {
+            color: #8589ae;
         }
 
         input:focus {
-            border-color: #9b8cff;
+            border-color: #9c8cff;
+
+            background:
+                rgba(255,255,255,0.10);
+
+            box-shadow:
+                0 0 15px rgba(145,120,255,0.18);
         }
 
         .back {
             background: transparent;
-            color: #aaaed1;
+
+            color: #aeb1d1;
+
+            border: none;
+
             font-size: 14px;
         }
 
+        .back:hover {
+            color: white;
+            box-shadow: none;
+        }
+
+        /* Thế giới */
         .world {
-            text-align: center;
+            display: none;
         }
 
         .world-icon {
-            font-size: 70px;
+            font-size: 65px;
+
             margin-bottom: 8px;
+
+            filter:
+                drop-shadow(0 0 18px rgba(150,120,255,0.6));
         }
 
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            margin: 25px 0;
-            gap: 10px;
+        .world h2 {
+            margin: 12px 0;
+
+            font-size: 25px;
+
+            text-shadow:
+                0 0 18px rgba(160,130,255,0.65);
         }
 
-        .stat {
-            flex: 1;
-            padding: 15px 8px;
-            border-radius: 15px;
-            background: rgba(255,255,255,.08);
+        .world p {
+            color: #d0d2ec;
+
+            line-height: 1.7;
+
+            font-size: 14px;
+
+            margin-bottom: 10px;
         }
 
-        .stat span {
-            display: block;
-            font-size: 13px;
-            color: #bfc4e8;
-            margin-bottom: 5px;
-        }
+        /* Điện thoại */
+        @media (max-width: 600px) {
 
-        .small-note {
-            margin-top: 20px;
-            font-size: 12px;
-            color: #888db6;
+            body {
+                background-position: center center;
+            }
+
+            .container {
+                width: 92%;
+                padding: 32px 24px;
+            }
+
+            .logo {
+                font-size: 38px;
+                letter-spacing: 6px;
+            }
+
+            .moon {
+                font-size: 42px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<div class="stars"></div>
+    <main class="container">
 
-<main class="container">
+        <!-- TRANG CHỦ -->
+        <section id="home">
 
-    <!-- TRANG CHỦ -->
-    <section id="home">
+            <div class="moon">🌙</div>
 
-        <div class="moon">🌙</div>
-
-        <div class="logo">LUNARIA</div>
-
-        <p class="subtitle">
-            Một thế giới đang chờ bạn khám phá...
-        </p>
-
-        <button class="login-btn" onclick="showForm('login')">
-            Đăng nhập
-        </button>
-
-        <button class="register-btn" onclick="showForm('register')">
-            Tạo tài khoản
-        </button>
-
-        <p class="small-note">
-            Mỗi người chơi — một hành trình riêng.
-        </p>
-
-    </section>
-
-
-    <!-- ĐĂNG NHẬP -->
-    <section id="login" class="form">
-
-        <h2>🌙 Chào mừng trở lại</h2>
-
-        <label>Tên đăng nhập</label>
-        <input id="loginUsername" type="text" placeholder="Nhập tên đăng nhập">
-
-        <label>Mật khẩu</label>
-        <input id="loginPassword" type="password" placeholder="Nhập mật khẩu">
-
-        <button class="login-btn" onclick="login()">
-            Vào Lunaria
-        </button>
-
-        <button class="back" onclick="showHome()">
-            ← Quay lại
-        </button>
-
-    </section>
-
-
-    <!-- ĐĂNG KÝ -->
-    <section id="register" class="form">
-
-        <h2>✨ Tạo tài khoản</h2>
-
-        <label>Tên đăng nhập</label>
-        <input id="registerUsername" type="text" placeholder="Tên đăng nhập">
-
-        <label>Mật khẩu</label>
-        <input id="registerPassword" type="password" placeholder="Mật khẩu">
-
-        <label>Nhập lại mật khẩu</label>
-        <input id="registerPassword2" type="password" placeholder="Nhập lại mật khẩu">
-
-        <button class="login-btn" onclick="register()">
-            Tạo tài khoản
-        </button>
-
-        <button class="back" onclick="showHome()">
-            ← Quay lại
-        </button>
-
-    </section>
-
-
-    <!-- THẾ GIỚI -->
-    <section id="world" class="world">
-
-        <div class="world-icon">🌌</div>
-
-        <h2>Chào mừng đến Lunaria!</h2>
-
-        <p>
-            Xin chào <b id="playerName"></b> 🌙
-        </p>
-
-        <div class="stats">
-
-            <div class="stat">
-                <span>🪙 Xu</span>
-                <b id="coins">100</b>
+            <div class="logo">
+                LUNARIA
             </div>
 
-            <div class="stat">
-                <span>💎 Kim cương</span>
-                <b id="diamonds">10</b>
+            <p class="subtitle">
+                Một thế giới đang chờ bạn khám phá...
+            </p>
+
+            <button
+                class="login-btn"
+                onclick="showForm('login')">
+                Đăng nhập
+            </button>
+
+            <button
+                class="register-btn"
+                onclick="showForm('register')">
+                Tạo tài khoản
+            </button>
+
+            <p class="small-note">
+                Mỗi người chơi — một hành trình riêng.
+            </p>
+
+        </section>
+
+
+        <!-- ĐĂNG NHẬP -->
+        <section id="login" class="form">
+
+            <h2>
+                🌙 Chào mừng trở lại
+            </h2>
+
+            <label>
+                Tên đăng nhập
+            </label>
+
+            <input
+                id="loginUsername"
+                type="text"
+                placeholder="Nhập tên đăng nhập">
+
+            <label>
+                Mật khẩu
+            </label>
+
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="Nhập mật khẩu">
+
+            <button
+                class="login-btn"
+                onclick="login()">
+                Vào Lunaria
+            </button>
+
+            <button
+                class="back"
+                onclick="showHome()">
+                ← Quay lại
+            </button>
+
+        </section>
+
+
+        <!-- ĐĂNG KÝ -->
+        <section id="register" class="form">
+
+            <h2>
+                ✨ Tạo nhân vật
+            </h2>
+
+            <label>
+                Tên đăng nhập
+            </label>
+
+            <input
+                id="registerUsername"
+                type="text"
+                placeholder="Tên đăng nhập">
+
+            <label>
+                Mật khẩu
+            </label>
+
+            <input
+                id="registerPassword"
+                type="password"
+                placeholder="Mật khẩu">
+
+            <label>
+                Nhập lại mật khẩu
+            </label>
+
+            <input
+                id="registerPassword2"
+                type="password"
+                placeholder="Nhập lại mật khẩu">
+
+            <button
+                class="login-btn"
+                onclick="register()">
+                Tạo tài khoản
+            </button>
+
+            <button
+                class="back"
+                onclick="showHome()">
+                ← Quay lại
+            </button>
+
+        </section>
+
+
+        <!-- THẾ GIỚI -->
+        <section id="world" class="world">
+
+            <div class="world-icon">
+                🌌
             </div>
 
-        </div>
+            <h2>
+                Chào mừng đến Lunaria!
+            </h2>
 
-        <p>
-            Đây là thế giới riêng của bạn.<br>
-            Một hành trình mới đang bắt đầu...
-        </p>
+            <p id="welcomeText"></p>
 
-        <button class="login-btn" onclick="logout()">
-            Rời khỏi thế giới
-        </button>
+            <button
+                class="login-btn"
+                onclick="logout()">
+                Rời khỏi thế giới
+            </button>
 
-    </section>
+        </section>
 
-</main>
-
-
-<script>
-
-    function hideAll() {
-        document.getElementById("home").style.display = "none";
-        document.getElementById("login").style.display = "none";
-        document.getElementById("register").style.display = "none";
-        document.getElementById("world").style.display = "none";
-    }
+    </main>
 
 
-    function showForm(type) {
-        hideAll();
-        document.getElementById(type).style.display = "block";
-    }
+    <script>
 
+        function hideAll() {
 
-    function showHome() {
-        hideAll();
-        document.getElementById("home").style.display = "block";
-    }
+            document.getElementById("home").style.display = "none";
 
+            document.getElementById("login").style.display = "none";
 
-    function getUsers() {
-        return JSON.parse(localStorage.getItem("lunariaUsers")) || {};
-    }
+            document.getElementById("register").style.display = "none";
 
-
-    function saveUsers(users) {
-        localStorage.setItem("lunariaUsers", JSON.stringify(users));
-    }
-
-
-    function register() {
-
-        const username =
-            document.getElementById("registerUsername").value.trim();
-
-        const password =
-            document.getElementById("registerPassword").value;
-
-        const password2 =
-            document.getElementById("registerPassword2").value;
-
-        if (!username || !password) {
-            alert("Bé chưa nhập đủ thông tin nè! 🌙");
-            return;
+            document.getElementById("world").style.display = "none";
         }
 
-        if (password !== password2) {
-            alert("Hai mật khẩu chưa giống nhau!");
-            return;
+
+        function showForm(type) {
+
+            hideAll();
+
+            document.getElementById(type).style.display = "block";
         }
 
-        const users = getUsers();
 
-        if (users[username]) {
-            alert("Tên đăng nhập này đã tồn tại rồi!");
-            return;
+        function showHome() {
+
+            hideAll();
+
+            document.getElementById("home").style.display = "block";
         }
 
-        users[username] = {
-            password: password,
-            coins: 100,
-            diamonds: 10
-        };
 
-        saveUsers(users);
+        function register() {
 
-        alert("Tạo tài khoản thành công! ✨");
+            const username =
+                document
+                    .getElementById("registerUsername")
+                    .value
+                    .trim();
 
-        document.getElementById("registerUsername").value = "";
-        document.getElementById("registerPassword").value = "";
-        document.getElementById("registerPassword2").value = "";
+            const password =
+                document
+                    .getElementById("registerPassword")
+                    .value;
 
-        showForm("login");
-    }
+            const password2 =
+                document
+                    .getElementById("registerPassword2")
+                    .value;
 
 
-    function login() {
+            if (!username || !password) {
 
-        const username =
-            document.getElementById("loginUsername").value.trim();
+                alert(
+                    "Bé chưa nhập đủ thông tin nè! 🌙"
+                );
 
-        const password =
-            document.getElementById("loginPassword").value;
+                return;
+            }
 
-        const users = getUsers();
 
-        if (!users[username]) {
-            alert("Không tìm thấy tài khoản này!");
-            return;
+            if (password !== password2) {
+
+                alert(
+                    "Hai mật khẩu chưa giống nhau!"
+                );
+
+                return;
+            }
+
+
+            alert(
+                "Tài khoản đã được tạo! ✨🌙"
+            );
+
+
+            document.getElementById(
+                "registerUsername"
+            ).value = "";
+
+            document.getElementById(
+                "registerPassword"
+            ).value = "";
+
+            document.getElementById(
+                "registerPassword2"
+            ).value = "";
+
+
+            showForm("login");
         }
 
-        if (users[username].password !== password) {
-            alert("Mật khẩu không đúng!");
-            return;
+
+        function login() {
+
+            const username =
+                document
+                    .getElementById("loginUsername")
+                    .value
+                    .trim();
+
+            const password =
+                document
+                    .getElementById("loginPassword")
+                    .value;
+
+
+            if (!username || !password) {
+
+                alert(
+                    "Bé chưa nhập tên đăng nhập hoặc mật khẩu!"
+                );
+
+                return;
+            }
+
+
+            hideAll();
+
+            document.getElementById(
+                "world"
+            ).style.display = "block";
+
+
+            document.getElementById(
+                "welcomeText"
+            ).innerHTML =
+                "Xin chào <b>" +
+                username +
+                "</b> 🌙<br><br>" +
+                "Đây là thế giới của riêng bạn.<br>" +
+                "Một hành trình mới đang bắt đầu...";
         }
 
-        localStorage.setItem("lunariaCurrentUser", username);
 
-        document.getElementById("playerName").textContent = username;
-        document.getElementById("coins").textContent = users[username].coins;
-        document.getElementById("diamonds").textContent = users[username].diamonds;
+        function logout() {
 
-        hideAll();
-        document.getElementById("world").style.display = "block";
-    }
+            showHome();
+        }
 
-
-    function logout() {
-
-        localStorage.removeItem("lunariaCurrentUser");
-
-        document.getElementById("loginUsername").value = "";
-        document.getElementById("loginPassword").value = "";
-
-        showHome();
-    }
-
-</script>
+    </script>
 
 </body>
 </html>
