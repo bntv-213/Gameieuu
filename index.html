@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi"> 
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -694,8 +694,15 @@
                 🌙 Chào mừng trở lại
             </h2>
 
-            <label>Tên đăng nhập</label>
-<input id="loginUsername" type="text" placeholder="Nhập tên đăng nhập">
+            <label>
+                Tên đăng nhập
+            </label>
+
+            <input
+                id="loginUsername"
+                type="text"
+                placeholder="Nhập tên đăng nhập"
+            >
 
             <label>
                 Mật khẩu
@@ -734,8 +741,15 @@
                 ✨ Tạo nhân vật
             </h2>
 
-<label>Tên nhân vật</label>
-<input id="registerUsername" type="text" placeholder="Tên nhân vật">
+            <label>
+                Tên đăng nhập
+            </label>
+
+            <input
+                id="registerUsername"
+                type="text"
+                placeholder="Tên đăng nhập"
+            >
 
             <label>
                 Mật khẩu
@@ -1060,63 +1074,64 @@
 
         function register() {
 
-    const username =
-        document
-            .getElementById("registerUsername")
-            .value
-            .trim();
+            const username =
+                document
+                    .getElementById("registerUsername")
+                    .value
+                    .trim();
 
-    const password =
-        document
-            .getElementById("registerPassword")
-            .value;
+            const password =
+                document
+                    .getElementById("registerPassword")
+                    .value;
 
-    const password2 =
-        document
-            .getElementById("registerPassword2")
-            .value;
-
-
-    if (!username || !password) {
-
-        alert(
-            "Bé chưa nhập đủ thông tin nè! 🌙"
-        );
-
-        return;
-    }
+            const password2 =
+                document
+                    .getElementById("registerPassword2")
+                    .value;
 
 
-    if (password !== password2) {
+            if (!username || !password) {
 
-        alert(
-            "Hai mật khẩu chưa giống nhau!"
-        );
+                alert(
+                    "Bé chưa nhập đủ thông tin nè! 🌙"
+                );
 
-        return;
-    }
-
-
-    alert(
-        "Tài khoản đã được tạo! ✨🌙"
-    );
+                return;
+            }
 
 
-    document.getElementById(
-        "registerUsername"
-    ).value = "";
+            if (password !== password2) {
 
-    document.getElementById(
-        "registerPassword"
-    ).value = "";
+                alert(
+                    "Hai mật khẩu chưa giống nhau!"
+                );
 
-    document.getElementById(
-        "registerPassword2"
-    ).value = "";
+                return;
+            }
 
 
-    showForm("login");
-}
+            alert(
+                "Tài khoản đã được tạo! ✨🌙"
+            );
+
+
+            document
+                .getElementById("registerUsername")
+                .value = "";
+
+            document
+                .getElementById("registerPassword")
+                .value = "";
+
+            document
+                .getElementById("registerPassword2")
+                .value = "";
+
+
+            showForm("login");
+        }
+
 
         /* =========================
            ĐĂNG NHẬP
@@ -1124,44 +1139,42 @@
 
         function login() {
 
-    const username =
-        document
-            .getElementById("loginUsername")
-            .value
-            .trim();
+            const username =
+                document
+                    .getElementById("loginUsername")
+                    .value
+                    .trim();
 
-    const password =
-        document
-            .getElementById("loginPassword")
-            .value;
-
-
-    if (!username || !password) {
-
-        alert(
-            "Bé chưa nhập tên đăng nhập hoặc mật khẩu!"
-        );
-
-        return;
-    }
+            const password =
+                document
+                    .getElementById("loginPassword")
+                    .value;
 
 
-    hideAll();
+            if (!username || !password) {
 
-    document.getElementById(
-        "world"
-    ).style.display = "block";
+                alert(
+                    "Bé chưa nhập tên đăng nhập hoặc mật khẩu!"
+                );
+
+                return;
+            }
 
 
-    document.getElementById(
-        "welcomeText"
-    ).innerHTML =
-        "Xin chào <b>" +
-        username +
-        "</b> 🌙<br><br>" +
-        "Đây là thế giới của riêng bạn.<br>" +
-        "Một hành trình mới đang bắt đầu...";
-}
+            document
+                .getElementById("playerName")
+                .textContent = username;
+
+
+            document
+                .getElementById("loginPage")
+                .style.display = "none";
+
+
+            document
+                .getElementById("game")
+                .style.display = "block";
+        }
 
 
         /* =========================
