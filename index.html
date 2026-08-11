@@ -1037,42 +1037,31 @@
            CHUYỂN MÀN HÌNH
         ========================= */
 
-        function hideForms() {
-
-            document.getElementById("home")
-                .style.display = "none";
-
-            document.getElementById("login")
-                .style.display = "none";
-
-            document.getElementById("register")
-                .style.display = "none";
-        }
+        function hideAll() {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("register").style.display = "none";
+    document.getElementById("world").style.display = "none";
+}
 
 
-        function showForm(type) {
-
-            hideForms();
-
-            document.getElementById(type)
-                .style.display = "block";
-        }
+function showForm(type) {
+    hideAll();
+    document.getElementById(type).style.display = "block";
+}
 
 
-        function showHome() {
-
-            hideForms();
-
-            document.getElementById("home")
-                .style.display = "block";
-        }
+function showHome() {
+    hideAll();
+    document.getElementById("home").style.display = "block";
+}
 
 
-        /* =========================
-           ĐĂNG KÝ
-        ========================= */
+/* =========================
+   ĐĂNG KÝ
+========================= */
 
-        function register() {
+function register() {
 
     const username =
         document.getElementById("registerUsername").value.trim();
@@ -1089,15 +1078,17 @@
         return;
     }
 
+
     if (password !== password2) {
         alert("Hai mật khẩu chưa sinh đôi kìa 😭");
         return;
     }
 
 
-    // Kiểm tra tài khoản đã tồn tại chưa
     const accounts =
-        JSON.parse(localStorage.getItem("lunariaAccounts") || "{}");
+        JSON.parse(
+            localStorage.getItem("lunariaAccounts") || "{}"
+        );
 
 
     if (accounts[username]) {
@@ -1106,8 +1097,8 @@
     }
 
 
-    // Lưu tài khoản
     accounts[username] = password;
+
 
     localStorage.setItem(
         "lunariaAccounts",
@@ -1115,12 +1106,15 @@
     );
 
 
-    alert("DỎI! Tạo xong ròi, vô đăng nhập đi chứ nhìn giề! ✨🌙");
+    alert(
+        "DỎI! Tạo xong ròi, vô đăng nhập đi chứ nhìn giề! ✨🌙"
+    );
 
 
     document.getElementById("registerUsername").value = "";
     document.getElementById("registerPassword").value = "";
     document.getElementById("registerPassword2").value = "";
+
 
     showForm("login");
 }
@@ -1145,9 +1139,10 @@ function login() {
     }
 
 
-    // Lấy danh sách tài khoản
     const accounts =
-        JSON.parse(localStorage.getItem("lunariaAccounts") || "{}");
+        JSON.parse(
+            localStorage.getItem("lunariaAccounts") || "{}"
+        );
 
 
     if (!accounts[username]) {
@@ -1157,14 +1152,16 @@ function login() {
 
 
     if (accounts[username] !== password) {
-        alert("Nhìn kĩ coi, cái mật khẩu cũng nhập sai 🔐😭");
+        alert("Nhìn kĩ coi, có cái mật khẩu cũng nhập sai 🔐😭");
         return;
     }
 
 
     hideAll();
 
+
     document.getElementById("world").style.display = "block";
+
 
     document.getElementById("welcomeText").innerHTML =
         "Xin chào <b>" +
@@ -1174,63 +1171,15 @@ function login() {
         "Một hành trình mới đang bắt đầu...";
 }
 
-        /* =========================
-           KHÁM PHÁ
-        ========================= */
 
-        function startExplore() {
+/* =========================
+   ĐĂNG XUẤT
+========================= */
 
-            const areas =
-                document
-                    .getElementById("areas");
-
-            const xp =
-                document
-                    .getElementById("xp");
-
-            areas.textContent = "1";
-
-            xp.textContent = "25 / 100";
-
-
-            alert(
-                "✨ Bạn vừa khám phá một vùng đất mới!"
-            );
-        }
-
-
-        /* =========================
-           MENU
-        ========================= */
-
-        function showMessage(name) {
-
-            alert(
-                name +
-                " sẽ được mở khóa trong những bước tiếp theo của Lunaria! 🌙✨"
-            );
-        }
-
-
-        /* =========================
-           ĐĂNG XUẤT
-        ========================= */
-
-        function logout() {
-
-            document
-                .getElementById("game")
-                .style.display = "none";
-
-
-            document
-                .getElementById("loginPage")
-                .style.display = "block";
-
-
-            showHome();
-        }
-
+function logout() {
+    showHome();
+}
+        
     </script>
 
 </body>
