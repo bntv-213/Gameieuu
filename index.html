@@ -1033,156 +1033,154 @@
 
     <script>
 
-        /* =========================
-           CHUYỂN MÀN HÌNH
-        ========================= */
+    /* =========================
+       CHUYỂN MÀN HÌNH
+    ========================= */
 
-        function hideAll() {
-    document.getElementById("home").style.display = "none";
-    document.getElementById("login").style.display = "none";
-    document.getElementById("register").style.display = "none";
-    document.getElementById("world").style.display = "none";
-}
-
-
-function showForm(type) {
-    hideAll();
-    document.getElementById(type).style.display = "block";
-}
-
-
-function showHome() {
-    hideAll();
-    document.getElementById("home").style.display = "block";
-}
-
-
-/* =========================
-   ĐĂNG KÝ
-========================= */
-
-function register() {
-
-    const username =
-        document.getElementById("registerUsername").value.trim();
-
-    const password =
-        document.getElementById("registerPassword").value;
-
-    const password2 =
-        document.getElementById("registerPassword2").value;
-
-
-    if (!username || !password) {
-        alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
-        return;
+    function hideAll() {
+        document.getElementById("home").style.display = "none";
+        document.getElementById("login").style.display = "none";
+        document.getElementById("register").style.display = "none";
+        document.getElementById("world").style.display = "none";
     }
 
 
-    if (password !== password2) {
-        alert("Hai mật khẩu chưa sinh đôi kìa 😭");
-        return;
+    function showForm(type) {
+        hideAll();
+        document.getElementById(type).style.display = "block";
     }
 
 
-    const accounts =
-        JSON.parse(
-            localStorage.getItem("lunariaAccounts") || "{}"
+    function showHome() {
+        hideAll();
+        document.getElementById("home").style.display = "block";
+    }
+
+
+    /* =========================
+       ĐĂNG KÝ
+    ========================= */
+
+    function register() {
+
+        const username =
+            document.getElementById("registerUsername").value.trim();
+
+        const password =
+            document.getElementById("registerPassword").value;
+
+        const password2 =
+            document.getElementById("registerPassword2").value;
+
+
+        if (!username || !password) {
+            alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
+            return;
+        }
+
+
+        if (password !== password2) {
+            alert("Hai mật khẩu chưa sinh đôi kìa 😭");
+            return;
+        }
+
+
+        const accounts =
+            JSON.parse(
+                localStorage.getItem("lunariaAccounts") || "{}"
+            );
+
+
+        if (accounts[username]) {
+            alert("Tên này có người nhanh tay hơn rồi ahaha! 💨🌙");
+            return;
+        }
+
+
+        accounts[username] = password;
+
+
+        localStorage.setItem(
+            "lunariaAccounts",
+            JSON.stringify(accounts)
         );
 
 
-    if (accounts[username]) {
-        alert("Tên này có người nhanh tay hơn rồi ahaha! 💨🌙");
-        return;
-    }
-
-
-    accounts[username] = password;
-
-
-    localStorage.setItem(
-        "lunariaAccounts",
-        JSON.stringify(accounts)
-    );
-
-
-    alert(
-        "DỎI! Tạo xong ròi, vô đăng nhập đi chứ nhìn giề! ✨🌙"
-    );
-
-
-    document.getElementById("registerUsername").value = "";
-    document.getElementById("registerPassword").value = "";
-    document.getElementById("registerPassword2").value = "";
-
-
-    showForm("login");
-}
-
-
-/* =========================
-   ĐĂNG NHẬP
-========================= */
-
-function login() {
-
-    alert("LOGIN ĐÃ CHẠY!!! 👀🌙");
-
-    const username =
-        document.getElementById("loginUsername").value.trim(); 
-
-    const password =
-        document.getElementById("loginPassword").value;
-
-
-    if (!username || !password) {
-        alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
-        return;
-    }
-
-
-    const accounts =
-        JSON.parse(
-            localStorage.getItem("lunariaAccounts") || "{}"
+        alert(
+            "DỎI! Tạo xong ròi, vô đăng nhập đi chứ nhìn giề! ✨🌙"
         );
 
 
-    if (!accounts[username]) {
-        alert("Ụa? Tài khoản này chưa tồn tại nè 👀🌙");
-        return;
+        document.getElementById("registerUsername").value = "";
+        document.getElementById("registerPassword").value = "";
+        document.getElementById("registerPassword2").value = "";
+
+
+        showForm("login");
     }
 
 
-    if (accounts[username] !== password) {
-        alert("Nhìn kĩ coi, có cái mật khẩu cũng nhập sai 🔐😭");
-        return;
+    /* =========================
+       ĐĂNG NHẬP
+    ========================= */
+
+    function login() {
+
+        const username =
+            document.getElementById("loginUsername").value.trim();
+
+        const password =
+            document.getElementById("loginPassword").value;
+
+
+        if (!username || !password) {
+            alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
+            return;
+        }
+
+
+        const accounts =
+            JSON.parse(
+                localStorage.getItem("lunariaAccounts") || "{}"
+            );
+
+
+        if (!accounts[username]) {
+            alert("Ụa? Tài khoản này chưa tồn tại nè 👀🌙");
+            return;
+        }
+
+
+        if (accounts[username] !== password) {
+            alert("Nhìn kĩ coi, có cái mật khẩu cũng nhập sai 🔐😭");
+            return;
+        }
+
+
+        hideAll();
+
+
+        document.getElementById("world").style.display = "block";
+
+
+        document.getElementById("welcomeText").innerHTML =
+            "Xin chào <b>" +
+            username +
+            "</b> 🌙<br><br>" +
+            "Đây là thế giới của riêng bạn.<br>" +
+            "Một hành trình mới đang bắt đầu...";
     }
 
 
-    hideAll();
+    /* =========================
+       ĐĂNG XUẤT
+    ========================= */
 
+    function logout() {
+        showHome();
+    }
 
-    document.getElementById("world").style.display = "block";
-
-
-    document.getElementById("welcomeText").innerHTML =
-        "Xin chào <b>" +
-        username +
-        "</b> 🌙<br><br>" +
-        "Đây là thế giới của riêng bạn.<br>" +
-        "Một hành trình mới đang bắt đầu...";
-}
-
-
-/* =========================
-   ĐĂNG XUẤT
-========================= */
-
-function logout() {
-    showHome();
-}
-        
-    </script>
-
+</script>
+    
 </body>
 </html>
