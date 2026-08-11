@@ -1089,8 +1089,9 @@
         return;
     }
 
+
     if (password !== password2) {
-        alert("Hai mật khẩu chưa sinh đôi!");
+        alert("Hai mật khẩu chưa sinh đôi kìa!");
         return;
     }
 
@@ -1100,7 +1101,7 @@
 
 
     if (existingUser) {
-        alert("Tên đăng nhập này có người nhanh tay hơn rồi ahaha!");
+        alert("Tên đăng nhập này có người nhanh tay hơn rồi ahaha 💨🌙");
         return;
     }
 
@@ -1111,7 +1112,7 @@
     );
 
 
-    alert("Dỏi! Vô đăng nhập đi nhìn giề 🌙✨");
+    alert("Dỏi! Tạo xong ròi vô đăng nhập đi nhìn giề ✨🌙");
 
 
     document.getElementById("registerUsername").value = "";
@@ -1122,11 +1123,11 @@
 }
 
 
-        /* =========================
-           ĐĂNG NHẬP
-        ========================= */
+/* =========================
+   ĐĂNG NHẬP
+========================= */
 
-        function login() {
+function login() {
 
     const username =
         document.getElementById("loginUsername").value.trim();
@@ -1146,13 +1147,13 @@
 
 
     if (!savedPassword) {
-        alert("Tài khoản này không tồn tại!");
+        alert("Ụa? Tài khoản này chưa tồn tại nè 👀🌙");
         return;
     }
 
 
     if (savedPassword !== password) {
-        alert("Nhìn kĩ đi sai mật khẩu kìa!");
+        alert("Nhìn kĩ đi có cái mật khẩu cũng nhập saiii 🔐");
         return;
     }
 
@@ -1160,6 +1161,7 @@
     hideAll();
 
     document.getElementById("world").style.display = "block";
+
 
     document.getElementById("welcomeText").innerHTML =
         "Xin chào <b>" +
