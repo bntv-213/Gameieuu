@@ -1550,33 +1550,79 @@ function getPlayerData(username) {
             achievements: 0,
 
             completedQuests: 0,
+            questExplorerClaimed: false,
+
             onlineTime: 0,
+            lastOnlineTime: null,
 
             unlockedTitles: [],
             claimedTitleRewards: []
         };
     }
 
-    /* =========================
-       BỔ SUNG DỮ LIỆU CŨ
-       ========================= */
+    const player = allData[username];
 
-    if (!Array.isArray(allData[username].unlockedTitles)) {
-        allData[username].unlockedTitles = [];
+    if (typeof player.level !== "number") {
+        player.level = 1;
     }
 
-    if (!Array.isArray(allData[username].claimedTitleRewards)) {
-        allData[username].claimedTitleRewards = [];
+    if (typeof player.xp !== "number") {
+        player.xp = 0;
     }
 
-    if (typeof allData[username].completedQuests !== "number") {
-        allData[username].completedQuests = 0;
+    if (typeof player.coins !== "number") {
+        player.coins = 100;
     }
 
-    if (typeof allData[username].onlineTime !== "number") {
-        allData[username].onlineTime = 0;
+    if (typeof player.diamonds !== "number") {
+        player.diamonds = 10;
     }
 
+    if (typeof player.energy !== "number") {
+        player.energy = 100;
+    }
+
+    if (typeof player.areas !== "number") {
+        player.areas = 0;
+    }
+
+    if (typeof player.achievements !== "number") {
+        player.achievements = 0;
+    }
+
+    if (typeof player.completedQuests !== "number") {
+        player.completedQuests = 0;
+    }
+
+    if (typeof player.questExplorerClaimed !== "boolean") {
+        player.questExplorerClaimed = false;
+    }
+
+    if (typeof player.onlineTime !== "number") {
+        player.onlineTime = 0;
+    }
+
+    if (!("lastOnlineTime" in player)) {
+        player.lastOnlineTime = null;
+    }
+
+    if (!Array.isArray(player.unlockedTitles)) {
+        player.unlockedTitles = [];
+    }
+
+    if (!Array.isArray(player.claimedTitleRewards)) {
+        player.claimedTitleRewards = [];
+    }
+
+    allData[username] = player;
+
+    localStorage.setItem(
+        "lunariaPlayerData",
+        JSON.stringify(allData)
+    );
+
+    return player;
+}
     /* =========================
        LƯU LẠI
        ========================= */
@@ -1588,30 +1634,6 @@ function getPlayerData(username) {
 
     return allData[username];
 }
-            /* =====================
-               DỮ LIỆU NHIỆM VỤ
-            ===================== */
-
-            completedQuests: 0,
-
-
-            /* =====================
-               DỮ LIỆU THỜI GIAN
-            ===================== */
-
-            onlineTime: 0,
-            lastOnlineTime: null,
-
-
-            /* =====================
-               DỮ LIỆU DANH HIỆU
-            ===================== */
-
-            unlockedTitles: [],
-            claimedTitleRewards: []
-
-        };
-    }
 
     /*
      * Tài khoản cũ sẽ được bổ sung
@@ -2073,17 +2095,6 @@ function checkTitles(username, playerData) {
             unlockTitle(username, playerData, title);
         }
     });
-}
-    const allData = JSON.parse(
-        localStorage.getItem("lunariaPlayerData") || "{}"
-    );
-
-    allData[username] = data;
-
-    localStorage.setItem(
-        "lunariaPlayerData",
-        JSON.stringify(allData)
-    );
 }
 
 /* =========================
