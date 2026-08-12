@@ -734,49 +734,6 @@
 
         </section>
 
-        /* =========================
-   DỮ LIỆU NGƯỜI CHƠI
-========================= */
-
-function getPlayerData(username) {
-    const allData = JSON.parse(
-        localStorage.getItem("lunariaPlayerData") || "{}"
-    );
-
-    if (!allData[username]) {
-        allData[username] = {
-            level: 1,
-            xp: 0,
-            coins: 100,
-            diamonds: 10,
-            energy: 100,
-            areas: 0,
-            achievements: 0
-        };
-
-        localStorage.setItem(
-            "lunariaPlayerData",
-            JSON.stringify(allData)
-        );
-    }
-
-    return allData[username];
-}
-
-
-function savePlayerData(username, data) {
-    const allData = JSON.parse(
-        localStorage.getItem("lunariaPlayerData") || "{}"
-    );
-
-    allData[username] = data;
-
-    localStorage.setItem(
-        "lunariaPlayerData",
-        JSON.stringify(allData)
-    );
-}
-
         <!-- Đăng ký -->
 
         <section id="register" class="form">
@@ -1075,6 +1032,52 @@ function savePlayerData(username, data) {
     </main>
 
 <script>
+
+    /* =========================
+   DỮ LIỆU NGƯỜI CHƠI
+========================= */
+
+function getPlayerData(username) {
+
+    const allData = JSON.parse(
+        localStorage.getItem("lunariaPlayerData") || "{}"
+    );
+
+    if (!allData[username]) {
+
+        allData[username] = {
+            level: 1,
+            xp: 0,
+            coins: 100,
+            diamonds: 10,
+            energy: 100,
+            areas: 0,
+            achievements: 0
+        };
+
+        localStorage.setItem(
+            "lunariaPlayerData",
+            JSON.stringify(allData)
+        );
+    }
+
+    return allData[username];
+}
+
+
+function savePlayerData(username, data) {
+
+    const allData = JSON.parse(
+        localStorage.getItem("lunariaPlayerData") || "{}"
+    );
+
+    allData[username] = data;
+
+    localStorage.setItem(
+        "lunariaPlayerData",
+        JSON.stringify(allData)
+    );
+}
     
      /* =========================
        CHUYỂN MÀN HÌNH
