@@ -2843,66 +2843,80 @@ function closeInventory() {
     </div>
 
 </div>
-    <!-- =========================
-     POPUP NHIỆM VỤ
+   <!-- =========================
+     POPUP NHIỆM VỤ & DANH HIỆU
 ========================= -->
 
 <div id="questOverlay">
 
     <div class="quest-popup">
 
+        <!-- Nút đóng -->
         <button
             class="quest-close"
             onclick="closeQuests()">
             ×
         </button>
 
-        <h2>📜 Nhiệm vụ</h2>
+        <h2>📜 Nhiệm vụ & Danh hiệu</h2>
 
         <div class="quest-subtitle">
-            Những hành trình đang chờ bạn hoàn thành
+            Hoàn thành hành trình để nhận phần thưởng và danh hiệu.
         </div>
 
-        <div class="quest-card">
 
-            <div class="quest-title">
-                🗺️ Nhà thám hiểm đầu tiên
-            </div>
+        <!-- =========================
+             TAB
+        ========================= -->
 
-            <div class="quest-description">
-                Khám phá 3 khu vực khác nhau trong Lunaria.
-            </div>
-
-            <div class="quest-progress-text">
-                <span>Tiến độ</span>
-
-                <span id="questProgressText">
-                    0 / 3
-                </span>
-            </div>
-
-            <div class="quest-progress">
-
-                <div
-                    class="quest-progress-bar"
-                    id="questProgressBar">
-                </div>
-
-            </div>
-
-            <div class="quest-reward">
-                🎁 Phần thưởng: +100 🪙 &nbsp; +20 ⭐ XP
-            </div>
+        <div class="quest-tabs">
 
             <button
-                class="quest-complete"
-                id="questClaimButton"
-                onclick="claimQuestReward()"
-                disabled>
+                class="quest-tab active"
+                id="questTabButton"
+                onclick="switchQuestTab('quests')">
 
-                🔒 Chưa hoàn thành
+                📜 Nhiệm vụ
 
             </button>
+
+            <button
+                class="quest-tab"
+                id="titleTabButton"
+                onclick="switchQuestTab('titles')">
+
+                🏆 Danh hiệu
+
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             DANH SÁCH NHIỆM VỤ
+        ========================= -->
+
+        <div
+            id="questsPanel"
+            class="quest-panel active">
+
+            <div id="questList"></div>
+
+        </div>
+
+
+        <!-- =========================
+             DANH SÁCH DANH HIỆU
+        ========================= -->
+
+        <div
+            id="titlesPanel"
+            class="quest-panel">
+
+            <div
+                id="titleList"
+                class="title-list">
+            </div>
 
         </div>
 
