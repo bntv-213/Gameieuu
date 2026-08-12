@@ -782,6 +782,53 @@
     }
 
 }
+        /* =========================
+   FIX MENU LUNARIA
+========================= */
+
+.menu-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 15px !important;
+
+    width: 100% !important;
+    margin: 22px 0 0 !important;
+}
+
+.menu-card {
+    width: auto !important;
+    min-height: 150px !important;
+
+    padding: 22px 15px !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    text-align: center !important;
+
+    border-radius: 20px !important;
+
+    cursor: pointer !important;
+}
+
+/* Khi màn hình nhỏ */
+@media (max-width: 800px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 500px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .menu-card {
+        min-height: 130px !important;
+    }
+}
     </style>
 </head>
 
