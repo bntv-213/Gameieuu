@@ -2216,44 +2216,71 @@ function updatePlayerUI(playerData) {
 ========================= */
 
 function hideForms() {
+
     document.getElementById("home").classList.add("hidden");
-    document.getElementById("login").classList.add("hidden");
-    document.getElementById("register").classList.add("hidden");
+
+    document.getElementById("login")
+        .classList.add("hidden");
+
+    document.getElementById("register")
+        .classList.add("hidden");
+
+    document.getElementById("login")
+        .classList.remove("active");
+
+    document.getElementById("register")
+        .classList.remove("active");
 }
 
 
-/* Hiện form đăng nhập / đăng ký */
+/* =========================
+   HIỆN FORM
+========================= */
 
 function showForm(type) {
 
-    // Đảm bảo trang login vẫn đang hiện
-    document
-        .getElementById("loginPage")
-        .classList.remove("hidden");
+    const loginPage =
+        document.getElementById("loginPage");
 
-    // Ẩn tất cả nội dung bên trong
-    hideForms();
+    const home =
+        document.getElementById("home");
 
-    // Hiện form được chọn
+    const loginForm =
+        document.getElementById("login");
+
+    const registerForm =
+        document.getElementById("register");
+
+    loginPage.classList.remove("hidden");
+
+    home.classList.add("hidden");
+
+    loginForm.classList.add("hidden");
+    loginForm.classList.remove("active");
+
+    registerForm.classList.add("hidden");
+    registerForm.classList.remove("active");
+
+
     if (type === "login") {
 
-        document
-            .getElementById("login")
-            .classList.remove("hidden");
+        loginForm.classList.remove("hidden");
+        loginForm.classList.add("active");
 
     }
 
     else if (type === "register") {
 
-        document
-            .getElementById("register")
-            .classList.remove("hidden");
+        registerForm.classList.remove("hidden");
+        registerForm.classList.add("active");
 
     }
 }
 
 
-/* Quay về trang chủ login */
+/* =========================
+   VỀ TRANG CHỦ
+========================= */
 
 function showHome() {
 
@@ -2271,7 +2298,7 @@ function showHome() {
         .getElementById("home")
         .classList.remove("hidden");
 }
-
+    
 /* =========================
    ĐĂNG KÝ
 ========================= */
