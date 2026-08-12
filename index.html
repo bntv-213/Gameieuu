@@ -2414,66 +2414,6 @@ function login() {
     updatePlayerUI(playerData);
 }
 
-    const accounts = JSON.parse(
-        localStorage.getItem("lunariaAccounts") || "{}"
-    );
-
-
-    if (!accounts[username]) {
-        alert("Ụa? Tài khoản này chưa tồn tại nè 👀🌙");
-        return;
-    }
-
-
-    if (accounts[username] !== password) {
-        alert("Nhìn kĩ coi, có cái mật khẩu cũng nhập sai 🔐😭");
-        return;
-    }
-
-
-    const playerData = getPlayerData(username);
-
-
-    document
-        .getElementById("loginPage")
-        .classList.add("hidden");
-
-
-    document
-        .getElementById("game")
-        .style.display = "block";
-
-
-    document
-        .getElementById("playerName")
-        .textContent = username;
-
-    document
-        .getElementById("coins")
-        .textContent = playerData.coins;
-
-    document
-        .getElementById("diamonds")
-        .textContent = playerData.diamonds;
-
-    document
-        .getElementById("energy")
-        .textContent = playerData.energy;
-
-    document
-        .getElementById("areas")
-        .textContent = playerData.areas;
-
-    document
-        .getElementById("xp")
-        .textContent = playerData.xp + " / 100";
-
-    document
-        .getElementById("achievements")
-        .textContent = playerData.achievements;
-}
-
-
 /* =========================
    KHÁM PHÁ
 ========================= */
