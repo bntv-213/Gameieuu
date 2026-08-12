@@ -1255,20 +1255,103 @@ document
 
     function startExplore() {
 
-        document
-            .getElementById("areas")
-            .textContent = "1";
+    const username =
+        document.getElementById("playerName").textContent;
+
+    if (!username) {
+        alert("Ủa? Chưa có người chơi nè 👀🌙");
+        return;
+    }
 
 
-        document
-            .getElementById("xp")
-            .textContent = "25 / 100";
+    const playerData =
+        getPlayerData(username);
 
+
+    /* Kiểm tra năng lượng */
+
+    if (playerData.energy <= 0) {
+        alert(
+            "⚡ Hết năng lượng rồi bé ơi! Nghỉ một chút đã nha 🌙"
+        );
+        return;
+    }
+
+
+    /* =========================
+       THƯỞNG KHÁM PHÁ
+    ========================= */
+
+    playerData.areas += 1;
+
+    playerData.xp += 25;
+
+    playerData.coins += 20;
+
+    playerData.energy -= 10;
+
+
+    /* =========================
+       LÊN CẤP
+    ========================= */
+
+    if (playerData.xp >= 100) {
+
+        playerData.xp -= 100;
+
+        playerData.level += 1;
 
         alert(
-            "✨ Bạn vừa khám phá một vùng đất mới!"
+            "🎉 LÊN CẤP!\n\n" +
+            "✨ Bạn đã đạt cấp " +
+            playerData.level +
+            "!"
         );
     }
+
+
+    /* =========================
+       LƯU DỮ LIỆU
+    ========================= */
+
+    savePlayerData(
+        username,
+        playerData
+    );
+
+
+    /* =========================
+       CẬP NHẬT GIAO DIỆN
+    ========================= */
+
+    document
+        .getElementById("areas")
+        .textContent = playerData.areas;
+
+    document
+        .getElementById("xp")
+        .textContent =
+            playerData.xp + " / 100";
+
+    document
+        .getElementById("coins")
+        .textContent =
+            playerData.coins;
+
+    document
+        .getElementById("energy")
+        .textContent =
+            playerData.energy;
+
+
+    alert(
+        "✨ Bạn vừa khám phá một vùng đất mới!\n\n" +
+        "🗺️ +1 khu vực\n" +
+        "⭐ +25 XP\n" +
+        "🪙 +20 xu\n" +
+        "⚡ -10 năng lượng"
+    );
+}
 
 
     /* =========================
