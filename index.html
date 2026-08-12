@@ -829,6 +829,187 @@
         min-height: 130px !important;
     }
 }
+        /* =========================
+   POPUP TÚI ĐỒ
+========================= */
+
+#inventoryOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    background: rgba(5, 6, 25, 0.65);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+#inventoryOverlay.active {
+    display: flex;
+}
+
+.inventory-popup {
+    width: min(900px, 90vw);
+    max-height: 85vh;
+
+    overflow-y: auto;
+
+    background:
+        linear-gradient(
+            rgba(18, 19, 65, 0.96),
+            rgba(12, 13, 52, 0.96)
+        );
+
+    border: 1px solid rgba(180, 160, 255, 0.35);
+    border-radius: 28px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.55),
+        0 0 40px rgba(130, 100, 255, 0.18);
+
+    position: relative;
+
+    animation: inventoryOpen 0.2s ease-out;
+}
+
+@keyframes inventoryOpen {
+    from {
+        opacity: 0;
+        transform: scale(0.94) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+
+/* Nút đóng */
+
+.inventory-close {
+    position: absolute;
+
+    top: 18px;
+    right: 20px;
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+
+    font-size: 24px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.inventory-close:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: scale(1.05);
+}
+
+
+/* Tiêu đề */
+
+.inventory-popup h2 {
+    margin: 0;
+    text-align: center;
+
+    color: white;
+    font-size: 32px;
+}
+
+.inventory-subtitle {
+    text-align: center;
+
+    color: rgba(220, 220, 255, 0.7);
+
+    margin-top: 8px;
+    margin-bottom: 30px;
+}
+
+
+/* Các ô vật phẩm */
+
+.inventory-items {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.inventory-item {
+    background: rgba(255, 255, 255, 0.07);
+
+    border: 1px solid rgba(190, 175, 255, 0.18);
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    transition: 0.2s;
+}
+
+.inventory-item:hover {
+    transform: translateY(-3px);
+
+    background: rgba(255, 255, 255, 0.10);
+}
+
+.inventory-icon {
+    font-size: 45px;
+    margin-bottom: 12px;
+}
+
+.inventory-item-name {
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.inventory-item-value {
+    margin-top: 8px;
+
+    color: #b9a4ff;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+
+/* Điện thoại */
+
+@media (max-width: 700px) {
+
+    #inventoryOverlay {
+        padding: 15px;
+    }
+
+    .inventory-popup {
+        width: 100%;
+        padding: 25px 18px;
+    }
+
+    .inventory-items {
+        grid-template-columns: 1fr;
+    }
+
+}
     </style>
 </head>
 
@@ -1581,6 +1762,46 @@ function closeInventory() {
         .getElementById("inventoryPanel")
         .classList.add("hidden");
 }
+
+    /* =========================
+   TÚI ĐỒ - POPUP
+========================= */
+
+function openInventory() {
+
+    const username =
+        document.getElementById("playerName").textContent;
+
+    if (!username) {
+        return;
+    }
+
+    const playerData =
+        getPlayerData(username);
+
+
+    document.getElementById("inventoryCoins")
+        .textContent = playerData.coins;
+
+    document.getElementById("inventoryDiamonds")
+        .textContent = playerData.diamonds;
+
+    document.getElementById("inventoryEnergy")
+        .textContent = playerData.energy;
+
+
+    document
+        .getElementById("inventoryOverlay")
+        .classList.add("active");
+}
+
+
+function closeInventory() {
+
+    document
+        .getElementById("inventoryOverlay")
+        .classList.remove("active");
+}
     
 /* =========================
    MENU
@@ -1609,6 +1830,99 @@ function logout() {
 }
 
 </script>
-    
+    <!-- =========================
+     POPUP TÚI ĐỒ
+========================= -->
+
+<div id="inventoryOverlay">
+
+    <div class="inventory-popup">
+
+        <button
+            class="inventory-close"
+            onclick="closeInventory()"
+        >
+            ×
+        </button>
+
+        <h2>🎒 Túi đồ</h2>
+
+        <div class="inventory-subtitle">
+            Những vật phẩm bạn đang sở hữu
+        </div>
+
+
+        <div class="inventory-items">
+
+            <!-- XU -->
+
+            <div class="inventory-item">
+
+                <div class="inventory-icon">
+                    🪙
+                </div>
+
+                <div class="inventory-item-name">
+                    Xu Lunaria
+                </div>
+
+                <div
+                    class="inventory-item-value"
+                    id="inventoryCoins"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <!-- KIM CƯƠNG -->
+
+            <div class="inventory-item">
+
+                <div class="inventory-icon">
+                    💎
+                </div>
+
+                <div class="inventory-item-name">
+                    Kim cương
+                </div>
+
+                <div
+                    class="inventory-item-value"
+                    id="inventoryDiamonds"
+                >
+                    0
+                </div>
+
+            </div>
+
+
+            <!-- NĂNG LƯỢNG -->
+
+            <div class="inventory-item">
+
+                <div class="inventory-icon">
+                    ⚡
+                </div>
+
+                <div class="inventory-item-name">
+                    Năng lượng
+                </div>
+
+                <div
+                    class="inventory-item-value"
+                    id="inventoryEnergy"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 </body>
 </html>
