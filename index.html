@@ -734,6 +734,48 @@
 
         </section>
 
+        /* =========================
+   DỮ LIỆU NGƯỜI CHƠI
+========================= */
+
+function getPlayerData(username) {
+    const allData = JSON.parse(
+        localStorage.getItem("lunariaPlayerData") || "{}"
+    );
+
+    if (!allData[username]) {
+        allData[username] = {
+            level: 1,
+            xp: 0,
+            coins: 100,
+            diamonds: 10,
+            energy: 100,
+            areas: 0,
+            achievements: 0
+        };
+
+        localStorage.setItem(
+            "lunariaPlayerData",
+            JSON.stringify(allData)
+        );
+    }
+
+    return allData[username];
+}
+
+
+function savePlayerData(username, data) {
+    const allData = JSON.parse(
+        localStorage.getItem("lunariaPlayerData") || "{}"
+    );
+
+    allData[username] = data;
+
+    localStorage.setItem(
+        "lunariaPlayerData",
+        JSON.stringify(allData)
+    );
+}
 
         <!-- Đăng ký -->
 
@@ -1104,13 +1146,13 @@
 
         accounts[username] = password;
 
+localStorage.setItem(
+    "lunariaAccounts",
+    JSON.stringify(accounts)
+);
 
-        localStorage.setItem(
-            "lunariaAccounts",
-            JSON.stringify(accounts)
-        );
-
-
+getPlayerData(username);
+        
         alert(
             "DỎI! Tạo xong ròi, vô đăng nhập đi chứ nhìn giề! ✨🌙"
         );
@@ -1157,9 +1199,11 @@
 
 
         if (accounts[username] !== password) {
-            alert("Nhìn kĩ coi, có cái mật khẩu cũng nhập sai 🔐😭");
-            return;
-        }
+    alert("Nhìn kĩ coi, có cái mật khẩu cũng nhập sai 🔐😭");
+    return;
+}
+
+const playerData = getPlayerData(username);
 
 
         /* Ẩn hoàn toàn khung đăng nhập */
@@ -1175,12 +1219,36 @@
 
 
         /* Hiện tên người chơi */
-        document
-            .getElementById("playerName")
-            .textContent = username;
-    }
+       document
+    .getElementById("playerName")
+    .textContent = username;
 
+document
+    .getElementById("coins")
+    .textContent = playerData.coins;
 
+document
+    .getElementById("diamonds")
+    .textContent = playerData.diamonds;
+
+document
+    .getElementById("energy")
+    .textContent = playerData.energy;
+
+document
+    .getElementById("areas")
+    .textContent = playerData.areas;
+
+document
+    .getElementById("xp")
+    .textContent = playerData.xp + " / 100";
+
+document
+    .getElementById("achievements")
+    .textContent = playerData.achievements;
+    
+}
+    
     /* =========================
        KHÁM PHÁ
     ========================= */
