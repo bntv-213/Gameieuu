@@ -680,108 +680,7 @@
                 padding: 22px;
             }
         }
-        /* =========================
-   TÚI ĐỒ
-========================= */
-
-.game-panel {
-    width: min(900px, 92%);
-    margin: 25px auto;
-
-    padding: 30px;
-
-    border-radius: 25px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(15,18,55,0.86),
-            rgba(31,24,69,0.78)
-        );
-
-    border:
-        1px solid rgba(255,255,255,0.18);
-
-    backdrop-filter: blur(14px);
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,0.35);
-
-    text-align: center;
-}
-
-.game-panel h2 {
-    font-size: 30px;
-
-    text-shadow:
-        0 0 15px rgba(160,130,255,0.6);
-}
-
-.panel-note {
-    margin-top: 8px;
-    color: #bfc3e8;
-}
-
-.inventory-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 15px;
-
-    margin-top: 25px;
-}
-
-.item-card {
-    padding: 25px 15px;
-
-    border-radius: 18px;
-
-    background:
-        rgba(255,255,255,0.07);
-
-    border:
-        1px solid rgba(255,255,255,0.12);
-
-    transition: 0.2s;
-}
-
-.item-card:hover {
-    transform: translateY(-4px);
-
-    background:
-        rgba(255,255,255,0.11);
-}
-
-.item-icon {
-    font-size: 42px;
-    margin-bottom: 10px;
-}
-
-.item-card strong {
-    display: block;
-    font-size: 15px;
-}
-
-.item-card span {
-    display: block;
-
-    margin-top: 8px;
-
-    color: #b8a7ff;
-
-    font-size: 20px;
-    font-weight: bold;
-}
-
-@media (max-width: 600px) {
-
-    .inventory-grid {
-        grid-template-columns: 1fr;
-    }
-
-}
+        
         /* =========================
    FIX MENU LUNARIA
 ========================= */
@@ -1346,46 +1245,6 @@
      TÚI ĐỒ
 ========================= -->
 
-<section id="inventoryPanel" class="game-panel hidden">
-
-    <h2>🎒 Túi đồ</h2>
-
-    <p class="panel-note">
-        Những vật phẩm bạn đang sở hữu
-    </p>
-
-    <div class="inventory-grid">
-
-        <div class="item-card">
-            <div class="item-icon">🪙</div>
-            <strong>Xu Lunaria</strong>
-            <span id="inventoryCoins">100</span>
-        </div>
-
-        <div class="item-card">
-            <div class="item-icon">💎</div>
-            <strong>Kim cương</strong>
-            <span id="inventoryDiamonds">10</span>
-        </div>
-
-        <div class="item-card">
-            <div class="item-icon">⚡</div>
-            <strong>Năng lượng</strong>
-            <span id="inventoryEnergy">100</span>
-        </div>
-
-    </div>
-
-    <button
-        class="back-btn"
-        onclick="closeInventory()">
-
-        ← Đóng túi đồ
-
-    </button>
-
-</section>
-
             <!-- Thông tin -->
 
             <section class="bottom-info">
@@ -1724,43 +1583,6 @@ function startExplore() {
         "🪙 +20 xu\n" +
         "⚡ -10 năng lượng"
     );
-}
-
-/* =========================
-   TÚI ĐỒ
-========================= */
-
-function openInventory() {
-
-    const username =
-        document.getElementById("playerName").textContent;
-
-    const playerData =
-        getPlayerData(username);
-
-    document
-        .getElementById("inventoryCoins")
-        .textContent = playerData.coins;
-
-    document
-        .getElementById("inventoryDiamonds")
-        .textContent = playerData.diamonds;
-
-    document
-        .getElementById("inventoryEnergy")
-        .textContent = playerData.energy;
-
-    document
-        .getElementById("inventoryPanel")
-        .classList.remove("hidden");
-}
-
-
-function closeInventory() {
-
-    document
-        .getElementById("inventoryPanel")
-        .classList.add("hidden");
 }
 
     /* =========================
