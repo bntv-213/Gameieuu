@@ -2007,7 +2007,41 @@ const TITLE_DATA = [
 
 ];
 
-function savePlayerData(username, data) {
+function checkTitles(username, playerData) {
+
+    if (!username || !playerData) {
+        return;
+    }
+
+    TITLE_DATA.forEach(function(title) {
+
+        if (title.hidden) {
+            return;
+        }
+
+        if (playerData.unlockedTitles.includes(title.id)) {
+            return;
+        }
+
+        let currentValue = 0;
+
+        if (title.type === "areas") {
+            currentValue = playerData.areas || 0;
+        }
+
+        else if (title.type === "quests") {
+            currentValue = playerData.completedQuests || 0;
+        }
+
+        else if (title.type === "onlineTime") {
+            currentValue = playerData.onlineTime || 0;
+        }
+
+        if (currentValue >= title.requirement) {
+            unlockTitle(username, playerData, title);
+        }
+    });
+}
     const allData = JSON.parse(
         localStorage.getItem("lunariaPlayerData") || "{}"
     );
