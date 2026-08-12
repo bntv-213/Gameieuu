@@ -2989,19 +2989,30 @@ function openInventory() {
 function openQuests() {
 
     const username =
-        document.getElementById("playerName").textContent;
+        document
+            .getElementById("playerName")
+            .textContent
+            .trim();
 
-    if (!username) {
+    if (!username || username === "Người chơi") {
         return;
     }
 
     updateQuestDisplay();
+
+    renderTitles();
+
+    switchQuestTab("quests");
 
     document
         .getElementById("questOverlay")
         .classList.add("active");
 }
 
+
+/* =========================
+   ĐÓNG
+========================= */
 
 function closeQuests() {
 
@@ -3011,168 +3022,244 @@ function closeQuests() {
 }
 
 
+/* =========================
+   CHUYỂN TAB
+========================= */
+
+function switchQuestTab(tab) {
+
+    const questsPanel =
+        document.getElementById("questsPanel");
+
+    const titlesPanel =
+        document.getElementById("titlesPanel");
+
+    const questButton =
+        document.getElementById("questTabButton");
+
+    const titleButton =
+        document.getElementById("titleTabButton");
+
+
+    questsPanel.classList.remove("active");
+
+    titlesPanel.classList.remove("active");
+
+    questButton.classList.remove("active");
+
+    titleButton.classList.remove("active");
+
+
+    if (tab === "quests") {
+
+        questsPanel.classList.add("active");
+
+        questButton.classList.add("active");
+
+    }
+
+    else {
+
+        titlesPanel.classList.add("active");
+
+        titleButton.classList.add("active");
+    }
+}
+
+
+/* =========================
+   LẤY TIẾN ĐỘ
+========================= */
+
+function getQuestValue(playerData, quest) {
+
+    if (quest.type === "areas") {
+
+        return playerData.areas || 0;
+    }
+
+    if (quest.type === "quests") {
+
+        return playerData.completedQuests || 0;
+    }
+
+    if (quest.type === "onlineTime") {
+
+        return playerData.onlineTime || 0;
+    }
+
+    if (quest.type === "coins") {
+
+        return playerData.coins || 0;
+    }
+
+    if (quest.type === "diamonds") {
+
+        return playerData.diamonds || 0;
+    }
+
+    return 0;
+}
+
+
+/* =========================
+   HIỂN THỊ NHIỆM VỤ
+========================= */
+
 function updateQuestDisplay() {
 
     const username =
-        document.getElementById("playerName").textContent;
+        document
+            .getElementById("playerName")
+            .textContent
+            .trim();
 
-    if (!username) {
+    if (!username || username === "Người chơi") {
         return;
     }
 
     const playerData =
         getPlayerData(username);
 
-    const progress =
-        Math.min(playerData.areas, 3);
+    const questList =
+        document.getElementById("questList");
 
-    const percentage =
-        (progress / 3) * 100;
-
-
-    document
-        .getElementById("questProgressText")
-        .textContent =
-            progress + " / 3";
+    questList.innerHTML = "";
 
 
-    document
-        .getElementById("questProgressBar")
-        .style.width =
-            percentage + "%";
+    QUEST_DATA.forEach(function(quest) {
+
+        const current =
+            getQuestValue(
+                playerData,
+                quest
+            );
+
+        const progress =
+            Math.min(
+                current,
+                quest.requirement
+            );
+
+        const percentage =
+            Math.min(
+                (progress / quest.requirement) * 100,
+                100
+            );
 
 
-    const button =
-        document.getElementById("questClaimButton");
+        const claimed =
+            Array.isArray(
+                playerData.completedQuestRewards
+            )
+            &&
+            playerData.completedQuestRewards
+                .includes(quest.id);
 
 
-    const claimed =
-        playerData.questExplorerClaimed === true;
+        const rewardText = [];
 
 
-    if (claimed) {
+        if (quest.reward.coins) {
 
-        button.disabled = true;
-
-        button.textContent =
-            "✅ Đã nhận thưởng";
-
-        return;
-    }
+            rewardText.push(
+                "🪙 +" +
+                quest.reward.coins
+            );
+        }
 
 
-    if (playerData.areas >= 3) {
+        if (quest.reward.xp) {
 
-        button.disabled = false;
+            rewardText.push(
+                "⭐ +" +
+                quest.reward.xp +
+                " XP"
+            );
+        }
 
-        button.textContent =
-            "🎁 Nhận thưởng";
 
-    } else {
-
-        button.disabled = true;
-
-        button.textContent =
+        let buttonText =
             "🔒 Chưa hoàn thành";
-    }
+
+        let disabled = true;
+
+
+        if (claimed) {
+
+            buttonText =
+                "✅ Đã nhận thưởng";
+
+            disabled = true;
+
+        }
+
+        else if (
+            current >= quest.requirement
+        ) {
+
+            buttonText =
+                "🎁 Nhận thưởng";
+
+            disabled = false;
+        }
+
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "quest-card";
+
+
+        card.innerHTML = `
+
+            <div class="quest-title">
+                ${quest.title}
+            </div>
+
+            <div class="quest-description">
+                ${quest.description}
+            </div>
+
+            <div class="quest-progress-text">
+
+                <span>Tiến độ</span>
+
+                <span>
+                    ${progress} / ${quest.requirement}
+                </span>
+
+            </div>
+
+            <div class="quest-progress">
+
+                <div
+                    class="quest-progress-bar"
+                    style="width:${percentage}%">
+                </div>
+
+            </div>
+
+            <div class="quest-reward">
+                🎁 Phần thưởng:
+                ${rewardText.join(" &nbsp; ")}
+            </div>
+
+            <button
+                class="quest-complete"
+                ${disabled ? "disabled" : ""}
+                onclick="claimQuest('${quest.id}')">
+
+                ${buttonText}
+
+            </button>
+        `;
+
+
+        questList.appendChild(card);
+    });
 }
-
-
-function claimQuestReward() {
-
-    const username =
-        document.getElementById("playerName").textContent;
-
-    if (!username) {
-        return;
-    }
-
-
-    const playerData =
-        getPlayerData(username);
-
-
-    if (playerData.areas < 3) {
-        return;
-    }
-
-
-    if (playerData.questExplorerClaimed === true) {
-        return;
-    }
-
-
-    /* Thưởng nhiệm vụ */
-
-    playerData.coins += 100;
-
-playerData.xp += 20;
-
-playerData.completedQuests += 1;
-
-playerData.questExplorerClaimed = true;
-
-
-    /* Kiểm tra lên cấp */
-
-    if (playerData.xp >= 100) {
-
-        playerData.xp -= 100;
-
-        playerData.level += 1;
-
-        alert(
-            "🎉 LÊN CẤP!\n\n" +
-            "✨ Bạn đã đạt cấp " +
-            playerData.level +
-            "!"
-        );
-    }
-
-   checkTitles(
-    username,
-    playerData
-);
-
-savePlayerData(
-    username,
-    playerData
-);
-
-    /* Cập nhật giao diện chính */
-
-    document
-        .getElementById("coins")
-        .textContent =
-            playerData.coins;
-
-    document
-        .getElementById("xp")
-        .textContent =
-            playerData.xp + " / 100";
-
-
-    updateQuestDisplay();
-
-
-    alert(
-        "🎉 Hoàn thành nhiệm vụ!\n\n" +
-        "🪙 +100 xu\n" +
-        "⭐ +20 XP"
-    );
-}
-    
-/* =========================
-   MENU
-========================= */
-
-function showMessage(name) {
-    alert(
-        name +
-        " sẽ được mở khóa trong những bước tiếp theo của Lunaria! 🌙✨"
-    );
-}
-
 
 /* =========================
    ĐĂNG XUẤT
