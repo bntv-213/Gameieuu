@@ -1539,7 +1539,6 @@ function getPlayerData(username) {
     );
 
     if (!allData[username]) {
-
         allData[username] = {
             level: 1,
             xp: 0,
@@ -1561,8 +1560,6 @@ function getPlayerData(username) {
     }
 
     const player = allData[username];
-
-    /* Bổ sung dữ liệu còn thiếu cho tài khoản cũ */
 
     if (typeof player.level !== "number") {
         player.level = 1;
@@ -1644,8 +1641,7 @@ function savePlayerData(username, playerData) {
         JSON.stringify(allData)
     );
 }
-
-
+    
 /* =========================
    DANH SÁCH DANH HIỆU LUNARIA
 ========================= */
@@ -2042,36 +2038,42 @@ function checkTitles(username, playerData) {
 
     TITLE_DATA.forEach(function(title) {
 
+        /* Danh hiệu bí ẩn chưa mở */
         if (title.hidden) {
             return;
         }
 
+        /* Đã nhận rồi thì bỏ qua */
         if (playerData.unlockedTitles.includes(title.id)) {
             return;
         }
 
         let currentValue = 0;
 
+        /* Khám phá */
         if (title.type === "areas") {
             currentValue = playerData.areas || 0;
         }
 
+        /* Nhiệm vụ */
         else if (title.type === "quests") {
             currentValue = playerData.completedQuests || 0;
         }
 
+        /* Thời gian online */
         else if (title.type === "onlineTime") {
             currentValue = playerData.onlineTime || 0;
         }
 
+        /* Đủ điều kiện */
         if (currentValue >= title.requirement) {
+
             unlockTitle(
                 username,
                 playerData,
                 title
             );
         }
-
     });
 }
 
@@ -2082,21 +2084,15 @@ function checkTitles(username, playerData) {
 
 function unlockTitle(username, playerData, title) {
 
-    if (
-        playerData.unlockedTitles.includes(title.id)
-    ) {
+    /* Chống nhận trùng */
+    if (playerData.unlockedTitles.includes(title.id)) {
         return;
     }
 
     /* Thêm danh hiệu */
-
-    playerData.unlockedTitles.push(
-        title.id
-    );
-
+    playerData.unlockedTitles.push(title.id);
 
     /* Trao phần thưởng */
-
     const reward = title.reward;
 
     if (reward.coins) {
@@ -2111,59 +2107,37 @@ function unlockTitle(username, playerData, title) {
         playerData.energy += reward.energy;
     }
 
-
-    /* Đánh dấu đã nhận thưởng */
-
-    if (
-        !playerData.claimedTitleRewards.includes(title.id)
-    ) {
-        playerData.claimedTitleRewards.push(
-            title.id
-        );
+    /* Đánh dấu đã nhận */
+    if (!playerData.claimedTitleRewards.includes(title.id)) {
+        playerData.claimedTitleRewards.push(title.id);
     }
 
-
     /* Cập nhật số danh hiệu */
-
     playerData.achievements =
         playerData.unlockedTitles.length;
 
-
     /* Lưu */
-
     savePlayerData(
         username,
         playerData
     );
 
-
     /* Cập nhật giao diện */
-
-    updatePlayerUI(
-        playerData
-    );
-
+    updatePlayerUI(playerData);
 
     /* Thông báo */
-
     const rewardText = [];
 
     if (reward.coins) {
-        rewardText.push(
-            "🪙 +" + reward.coins
-        );
+        rewardText.push("🪙 +" + reward.coins);
     }
 
     if (reward.diamonds) {
-        rewardText.push(
-            "💎 +" + reward.diamonds
-        );
+        rewardText.push("💎 +" + reward.diamonds);
     }
 
     if (reward.energy) {
-        rewardText.push(
-            "⚡ +" + reward.energy
-        );
+        rewardText.push("⚡ +" + reward.energy);
     }
 
     alert(
@@ -2206,35 +2180,28 @@ function updatePlayerUI(playerData) {
     const achievements =
         document.getElementById("achievements");
 
-
     if (coins) {
-        coins.textContent =
-            playerData.coins;
+        coins.textContent = playerData.coins;
     }
 
     if (diamonds) {
-        diamonds.textContent =
-            playerData.diamonds;
+        diamonds.textContent = playerData.diamonds;
     }
 
     if (energy) {
-        energy.textContent =
-            playerData.energy;
+        energy.textContent = playerData.energy;
     }
 
     if (areas) {
-        areas.textContent =
-            playerData.areas;
+        areas.textContent = playerData.areas;
     }
 
     if (xp) {
-        xp.textContent =
-            playerData.xp + " / 100";
+        xp.textContent = playerData.xp + " / 100";
     }
 
     if (achievements) {
-        achievements.textContent =
-            playerData.achievements;
+        achievements.textContent = playerData.achievements;
     }
 }
     
@@ -2243,26 +2210,42 @@ function updatePlayerUI(playerData) {
 ========================= */
 
 function hideAll() {
-    document.getElementById("home").style.display = "none";
-    document.getElementById("login").style.display = "none";
-    document.getElementById("register").style.display = "none";
-    document.getElementById("game").style.display = "none";
+
+    document.getElementById("home")
+        .classList.add("hidden");
+
+    document.getElementById("login")
+        .classList.add("hidden");
+
+    document.getElementById("register")
+        .classList.add("hidden");
+
+    document.getElementById("game")
+        .classList.add("hidden");
 }
 
 
 function showForm(type) {
+
     hideAll();
 
-    document.getElementById("loginPage").style.display = "block";
-    document.getElementById(type).style.display = "block";
+    document.getElementById("loginPage")
+        .classList.remove("hidden");
+
+    document.getElementById(type)
+        .classList.remove("hidden");
 }
 
 
 function showHome() {
+
     hideAll();
 
-    document.getElementById("loginPage").style.display = "block";
-    document.getElementById("home").style.display = "block";
+    document.getElementById("loginPage")
+        .classList.remove("hidden");
+
+    document.getElementById("home")
+        .classList.remove("hidden");
 }
 
 
