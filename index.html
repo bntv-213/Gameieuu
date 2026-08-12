@@ -2063,7 +2063,10 @@ questExplorerClaimed: false,
     if (!Array.isArray(player.claimedTitleRewards)) {
         player.claimedTitleRewards = [];
     }
-
+if (!Array.isArray(player.completedQuestRewards)) {
+    player.completedQuestRewards = [];
+}
+    
     allData[username] = player;
 
     localStorage.setItem(
@@ -2596,6 +2599,256 @@ const QUEST_DATA = [
 
 ];
 
+/* =========================
+   HIỂN THỊ TẤT CẢ DANH HIỆU
+========================= */
+
+function renderTitles() {
+
+    const username =
+        document
+            .getElementById("playerName")
+            .textContent
+            .trim();
+
+    if (!username || username === "Người chơi") {
+        return;
+    }
+
+
+    const playerData =
+        getPlayerData(username);
+
+
+    const titleList =
+        document.getElementById("titleList");
+
+
+    titleList.innerHTML = "";
+
+
+    TITLE_DATA.forEach(function(title) {
+
+        const unlocked =
+            playerData.unlockedTitles
+                .includes(title.id);
+
+
+        let currentValue = 0;
+
+
+        /* =========================
+           LẤY TIẾN ĐỘ
+        ========================= */
+
+        if (title.type === "areas") {
+
+            currentValue =
+                playerData.areas || 0;
+        }
+
+        else if (title.type === "quests") {
+
+            currentValue =
+                playerData.completedQuests || 0;
+        }
+
+        else if (title.type === "onlineTime") {
+
+            currentValue =
+                playerData.onlineTime || 0;
+        }
+
+
+        /* =========================
+           DANH HIỆU BÍ ẨN
+        ========================= */
+
+        if (title.hidden) {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "title-card mystery";
+
+
+            card.innerHTML = `
+
+                <div class="title-header">
+
+                    <div class="title-icon">
+                        ${title.icon}
+                    </div>
+
+                    <div class="title-info">
+
+                        <div class="title-name">
+                            ???
+                        </div>
+
+                        <div class="title-category">
+                            ${title.category}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="title-description">
+                    ${title.description}
+                </div>
+
+                <div class="title-status">
+                    ❓ Bí ẩn
+                </div>
+
+            `;
+
+
+            titleList.appendChild(card);
+
+            return;
+        }
+
+
+        /* =========================
+           PHẦN THƯỞNG
+        ========================= */
+
+        const rewardText = [];
+
+
+        if (title.reward.coins) {
+
+            rewardText.push(
+                "🪙 +" +
+                title.reward.coins
+            );
+        }
+
+
+        if (title.reward.diamonds) {
+
+            rewardText.push(
+                "💎 +" +
+                title.reward.diamonds
+            );
+        }
+
+
+        if (title.reward.energy) {
+
+            rewardText.push(
+                "⚡ +" +
+                title.reward.energy
+            );
+        }
+
+
+        let statusText =
+            "🔒 " +
+            Math.min(
+                currentValue,
+                title.requirement
+            ) +
+            " / " +
+            title.requirement;
+
+
+        let statusClass = "";
+
+
+        if (unlocked) {
+
+            statusText =
+                "✅ Đã đạt danh hiệu";
+
+            statusClass =
+                "unlocked";
+
+        }
+
+        else if (
+            currentValue >= title.requirement
+        ) {
+
+            statusText =
+                "🎁 Đủ điều kiện";
+
+            statusClass =
+                "ready";
+        }
+
+
+        /* =========================
+           TẠO CARD
+        ========================= */
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "title-card" +
+            (
+                unlocked
+                    ? " unlocked"
+                    : ""
+            );
+
+
+        card.innerHTML = `
+
+            <div class="title-header">
+
+                <div class="title-icon">
+                    ${title.icon}
+                </div>
+
+                <div class="title-info">
+
+                    <div class="title-name">
+                        ${title.name}
+                    </div>
+
+                    <div class="title-category">
+                        ${title.category}
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="title-description">
+                ${title.description}
+            </div>
+
+
+            <div class="title-reward">
+
+                🎁 Phần thưởng:
+                ${rewardText.join(" &nbsp; ")}
+
+            </div>
+
+
+            <div
+                class="title-status ${statusClass}">
+
+                ${statusText}
+
+            </div>
+
+        `;
+
+
+        titleList.appendChild(card);
+
+    });
+}
+    
 /* =========================
    KIỂM TRA DANH HIỆU
 ========================= */
