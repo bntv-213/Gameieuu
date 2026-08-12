@@ -2664,9 +2664,11 @@ function claimQuestReward() {
 
     playerData.coins += 100;
 
-    playerData.xp += 20;
+playerData.xp += 20;
 
-    playerData.questExplorerClaimed = true;
+playerData.completedQuests += 1;
+
+playerData.questExplorerClaimed = true;
 
 
     /* Kiểm tra lên cấp */
@@ -2685,12 +2687,15 @@ function claimQuestReward() {
         );
     }
 
+   checkTitles(
+    username,
+    playerData
+);
 
-    savePlayerData(
-        username,
-        playerData
-    );
-
+savePlayerData(
+    username,
+    playerData
+);
 
     /* Cập nhật giao diện chính */
 
