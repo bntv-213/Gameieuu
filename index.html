@@ -1996,8 +1996,11 @@ function getPlayerData(username) {
             areas: 0,
             achievements: 0,
 
-            completedQuests: 0,
-            questExplorerClaimed: false,
+completedQuests: 0,
+
+completedQuestRewards: [],
+
+questExplorerClaimed: false,
 
             onlineTime: 0,
             lastOnlineTime: null,
@@ -3261,6 +3264,164 @@ function updateQuestDisplay() {
     });
 }
 
+/* =========================
+   NHẬN THƯỞNG NHIỆM VỤ
+========================= */
+
+function claimQuest(questId) {
+
+    const username =
+        document
+            .getElementById("playerName")
+            .textContent
+            .trim();
+
+    if (!username || username === "Người chơi") {
+        return;
+    }
+
+
+    const playerData =
+        getPlayerData(username);
+
+
+    const quest =
+        QUEST_DATA.find(function(item) {
+
+            return item.id === questId;
+
+        });
+
+
+    if (!quest) {
+        return;
+    }
+
+
+    if (!Array.isArray(
+        playerData.completedQuestRewards
+    )) {
+
+        playerData.completedQuestRewards = [];
+    }
+
+
+    if (
+        playerData.completedQuestRewards
+            .includes(quest.id)
+    ) {
+
+        return;
+    }
+
+
+    const current =
+        getQuestValue(
+            playerData,
+            quest
+        );
+
+
+    if (current < quest.requirement) {
+
+        return;
+    }
+
+
+    /* =========================
+       TRAO THƯỞNG
+    ========================= */
+
+    if (quest.reward.coins) {
+
+        playerData.coins +=
+            quest.reward.coins;
+    }
+
+
+    if (quest.reward.xp) {
+
+        playerData.xp +=
+            quest.reward.xp;
+    }
+
+
+    playerData.completedQuests += 1;
+
+
+    playerData.completedQuestRewards
+        .push(quest.id);
+
+
+    /* =========================
+       LÊN CẤP
+    ========================= */
+
+    while (playerData.xp >= 100) {
+
+        playerData.xp -= 100;
+
+        playerData.level += 1;
+
+        alert(
+            "🎉 LÊN CẤP!\n\n" +
+            "✨ Bạn đã đạt cấp " +
+            playerData.level +
+            "!"
+        );
+    }
+
+
+    /* =========================
+       LƯU
+    ========================= */
+
+    savePlayerData(
+        username,
+        playerData
+    );
+
+
+    /* =========================
+       KIỂM TRA DANH HIỆU
+    ========================= */
+
+    checkTitles(
+        username,
+        playerData
+    );
+
+
+    updatePlayerUI(
+        playerData
+    );
+
+
+    updateQuestDisplay();
+
+
+    alert(
+        "🎉 Hoàn thành nhiệm vụ!\n\n" +
+        quest.title +
+        "\n\n" +
+        "🎁 Phần thưởng:\n" +
+        (
+            quest.reward.coins
+                ? "🪙 +" +
+                  quest.reward.coins +
+                  " xu\n"
+                : ""
+        ) +
+        (
+            quest.reward.xp
+                ? "⭐ +" +
+                  quest.reward.xp +
+                  " XP"
+                : ""
+        )
+    );
+}    
+    
 /* =========================
    ĐĂNG XUẤT
 ========================= */
