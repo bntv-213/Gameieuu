@@ -1140,6 +1140,448 @@
         padding: 25px 18px;
     }
 }
+        /* =========================
+   NHIỆM VỤ & DANH HIỆU MỚI
+========================= */
+
+.quest-popup {
+    width: min(850px, 92vw);
+    max-height: 88vh;
+    overflow-y: auto;
+
+    padding: 35px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            rgba(18, 19, 65, 0.97),
+            rgba(12, 13, 52, 0.97)
+        );
+
+    border:
+        1px solid rgba(180, 160, 255, 0.35);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.55),
+        0 0 40px rgba(130, 100, 255, 0.18);
+
+    position: relative;
+
+    animation: questOpen 0.2s ease-out;
+}
+
+
+/* =========================
+   TAB
+========================= */
+
+.quest-tabs {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin: 25px 0;
+}
+
+.quest-tab {
+
+    padding: 13px;
+
+    border-radius: 13px;
+
+    color: #c9c9e5;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.quest-tab:hover {
+
+    background:
+        rgba(255,255,255,0.12);
+}
+
+.quest-tab.active {
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #765fe0,
+            #9b7cff
+        );
+
+    box-shadow:
+        0 8px 25px rgba(126,99,255,0.28);
+}
+
+
+/* =========================
+   PANEL
+========================= */
+
+.quest-panel {
+    display: none;
+}
+
+.quest-panel.active {
+    display: block;
+}
+
+
+/* =========================
+   DANH SÁCH
+========================= */
+
+#questList,
+.title-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+
+/* =========================
+   QUEST CARD
+========================= */
+
+.quest-card {
+
+    padding: 22px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid rgba(190,175,255,0.18);
+
+    transition: 0.2s;
+}
+
+.quest-card:hover {
+
+    background:
+        rgba(255,255,255,0.10);
+
+    transform: translateY(-2px);
+}
+
+.quest-title {
+
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.quest-description {
+
+    margin-top: 7px;
+
+    color: #c5c8e5;
+
+    line-height: 1.5;
+}
+
+.quest-progress-text {
+
+    margin-top: 17px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #d9d9f2;
+
+    font-size: 14px;
+}
+
+.quest-progress {
+
+    width: 100%;
+    height: 12px;
+
+    margin-top: 8px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    overflow: hidden;
+}
+
+.quest-progress-bar {
+
+    height: 100%;
+
+    width: 0%;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #8c75ff,
+            #b69cff
+        );
+
+    transition:
+        width 0.3s ease;
+}
+
+.quest-reward {
+
+    margin-top: 15px;
+
+    color: #c0aaff;
+
+    font-weight: bold;
+}
+
+.quest-complete {
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-top: 15px;
+
+    border-radius: 13px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #8c75ff,
+            #a78cff
+        );
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.quest-complete:hover {
+
+    transform: translateY(-2px);
+
+    filter: brightness(1.1);
+}
+
+.quest-complete:disabled {
+
+    cursor: default;
+
+    opacity: 0.5;
+
+    transform: none;
+}
+
+
+/* =========================
+   DANH HIỆU
+========================= */
+
+.title-card {
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid rgba(190,175,255,0.18);
+
+    transition: 0.2s;
+}
+
+.title-card:hover {
+
+    background:
+        rgba(255,255,255,0.10);
+
+    transform: translateY(-2px);
+}
+
+.title-card.unlocked {
+
+    border-color:
+        rgba(170,140,255,0.45);
+
+    box-shadow:
+        0 0 25px rgba(140,110,255,0.10);
+}
+
+.title-card.mystery {
+
+    opacity: 0.75;
+}
+
+.title-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+.title-icon {
+
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    font-size: 27px;
+}
+
+.title-info {
+
+    flex: 1;
+}
+
+.title-name {
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    color: white;
+}
+
+.title-category {
+
+    margin-top: 4px;
+
+    color: #9296bd;
+
+    font-size: 12px;
+}
+
+.title-description {
+
+    margin-top: 12px;
+
+    color: #c7c9e4;
+
+    line-height: 1.5;
+}
+
+.title-reward {
+
+    margin-top: 10px;
+
+    color: #bba6ff;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+.title-status {
+
+    margin-top: 15px;
+
+    padding: 9px 12px;
+
+    border-radius: 10px;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color: #aaaed0;
+}
+
+.title-status.ready {
+
+    color: #e7dcff;
+
+    background:
+        rgba(140,110,255,0.18);
+}
+
+.title-status.unlocked {
+
+    color: #bfffcf;
+
+    background:
+        rgba(60,190,110,0.14);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .quest-popup {
+
+        width: 100%;
+
+        padding: 25px 18px;
+    }
+
+    .title-header {
+
+        align-items: flex-start;
+    }
+
+    .title-icon {
+
+        width: 43px;
+        height: 43px;
+
+        font-size: 23px;
+    }
+
+    .title-name {
+
+        font-size: 15px;
+    }
+}
     </style>
 </head>
 
