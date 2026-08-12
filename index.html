@@ -1533,30 +1533,479 @@
 ========================= */
 
 function getPlayerData(username) {
+
     const allData = JSON.parse(
         localStorage.getItem("lunariaPlayerData") || "{}"
     );
 
+    /*
+     * Nếu người chơi chưa có dữ liệu
+     * thì tạo dữ liệu mặc định.
+     */
     if (!allData[username]) {
+
         allData[username] = {
+
             level: 1,
             xp: 0,
+
             coins: 100,
             diamonds: 10,
             energy: 100,
-            areas: 0,
-            achievements: 0
-        };
 
-        localStorage.setItem(
-            "lunariaPlayerData",
-            JSON.stringify(allData)
-        );
+            areas: 0,
+            achievements: 0,
+
+            /* =====================
+               DỮ LIỆU NHIỆM VỤ
+            ===================== */
+
+            completedQuests: 0,
+
+
+            /* =====================
+               DỮ LIỆU THỜI GIAN
+            ===================== */
+
+            onlineTime: 0,
+            lastOnlineTime: null,
+
+
+            /* =====================
+               DỮ LIỆU DANH HIỆU
+            ===================== */
+
+            unlockedTitles: [],
+            claimedTitleRewards: []
+
+        };
     }
 
-    return allData[username];
+    /*
+     * Tài khoản cũ sẽ được bổ sung
+     * dữ liệu mới mà KHÔNG reset
+     * coins / diamonds / XP / areas...
+     */
+    const player = allData[username];
+
+    if (typeof player.completedQuests !== "number") {
+        player.completedQuests = 0;
+    }
+
+    if (typeof player.onlineTime !== "number") {
+        player.onlineTime = 0;
+    }
+
+    if (!Array.isArray(player.unlockedTitles)) {
+        player.unlockedTitles = [];
+    }
+
+    if (!Array.isArray(player.claimedTitleRewards)) {
+        player.claimedTitleRewards = [];
+    }
+
+    if (!("lastOnlineTime" in player)) {
+        player.lastOnlineTime = null;
+    }
+
+
+    /*
+     * Lưu lại dữ liệu sau khi bổ sung field.
+     */
+    allData[username] = player;
+
+    localStorage.setItem(
+        "lunariaPlayerData",
+        JSON.stringify(allData)
+    );
+
+    return player;
 }
 
+    /* =========================
+   DANH SÁCH DANH HIỆU LUNARIA
+========================= */
+
+const TITLE_DATA = [
+
+    /* =========================
+       🗺️ KHÁM PHÁ
+    ========================= */
+
+    {
+        id: "explorer_25",
+        category: "Khám phá",
+        icon: "🗺️",
+        name: "Kẻ Đặt Chân Đầu Tiên",
+        description: "Khám phá 25 khu vực.",
+        requirement: 25,
+        type: "areas",
+
+        reward: {
+            coins: 500,
+            diamonds: 5,
+            energy: 20
+        }
+    },
+
+    {
+        id: "explorer_75",
+        category: "Khám phá",
+        icon: "🌲",
+        name: "Lữ Khách Không Mỏi",
+        description: "Khám phá 75 khu vực.",
+        requirement: 75,
+        type: "areas",
+
+        reward: {
+            coins: 1500,
+            diamonds: 10,
+            energy: 30
+        }
+    },
+
+    {
+        id: "explorer_150",
+        category: "Khám phá",
+        icon: "🏔️",
+        name: "Nhà Thám Hiểm Đại Lục",
+        description: "Khám phá 150 khu vực.",
+        requirement: 150,
+        type: "areas",
+
+        reward: {
+            coins: 3500,
+            diamonds: 20,
+            energy: 50
+        }
+    },
+
+    {
+        id: "explorer_300",
+        category: "Khám phá",
+        icon: "🌌",
+        name: "Kẻ Đi Qua Vạn Dặm",
+        description: "Khám phá 300 khu vực.",
+        requirement: 300,
+        type: "areas",
+
+        reward: {
+            coins: 10000,
+            diamonds: 50,
+            energy: 75
+        }
+    },
+
+    {
+        id: "explorer_500",
+        category: "Khám phá",
+        icon: "👑",
+        name: "Chinh Phục Lunaria",
+        description: "Khám phá 500 khu vực.",
+        requirement: 500,
+        type: "areas",
+
+        reward: {
+            coins: 25000,
+            diamonds: 100,
+            energy: 100
+        }
+    },
+
+    {
+        id: "explorer_1000",
+        category: "Khám phá",
+        icon: "🌠",
+        name: "Người Đã Đi Đến Tận Cùng",
+        description: "Khám phá 1.000 khu vực.",
+        requirement: 1000,
+        type: "areas",
+
+        reward: {
+            coins: 75000,
+            diamonds: 250,
+            energy: 150
+        }
+    },
+
+
+    /* =========================
+       📜 NHIỆM VỤ
+    ========================= */
+
+    {
+        id: "quest_10",
+        category: "Nhiệm vụ",
+        icon: "📜",
+        name: "Kẻ Thực Thi",
+        description: "Hoàn thành 10 nhiệm vụ.",
+        requirement: 10,
+        type: "quests",
+
+        reward: {
+            coins: 1000,
+            diamonds: 10,
+            energy: 20
+        }
+    },
+
+    {
+        id: "quest_30",
+        category: "Nhiệm vụ",
+        icon: "⚔️",
+        name: "Thợ Săn Nhiệm Vụ",
+        description: "Hoàn thành 30 nhiệm vụ.",
+        requirement: 30,
+        type: "quests",
+
+        reward: {
+            coins: 3000,
+            diamonds: 20,
+            energy: 30
+        }
+    },
+
+    {
+        id: "quest_75",
+        category: "Nhiệm vụ",
+        icon: "🔥",
+        name: "Người Không Bỏ Cuộc",
+        description: "Hoàn thành 75 nhiệm vụ.",
+        requirement: 75,
+        type: "quests",
+
+        reward: {
+            coins: 8000,
+            diamonds: 40,
+            energy: 50
+        }
+    },
+
+    {
+        id: "quest_150",
+        category: "Nhiệm vụ",
+        icon: "🏆",
+        name: "Bậc Thầy Nhiệm Vụ",
+        description: "Hoàn thành 150 nhiệm vụ.",
+        requirement: 150,
+        type: "quests",
+
+        reward: {
+            coins: 20000,
+            diamonds: 75,
+            energy: 75
+        }
+    },
+
+    {
+        id: "quest_300",
+        category: "Nhiệm vụ",
+        icon: "👑",
+        name: "Kẻ Chinh Phục Vĩ Đại",
+        description: "Hoàn thành 300 nhiệm vụ.",
+        requirement: 300,
+        type: "quests",
+
+        reward: {
+            coins: 50000,
+            diamonds: 150,
+            energy: 100
+        }
+    },
+
+    {
+        id: "quest_500",
+        category: "Nhiệm vụ",
+        icon: "🌟",
+        name: "Huyền Thoại Nhiệm Vụ",
+        description: "Hoàn thành 500 nhiệm vụ.",
+        requirement: 500,
+        type: "quests",
+
+        reward: {
+            coins: 150000,
+            diamonds: 300,
+            energy: 150
+        }
+    },
+
+
+    /* =========================
+       ⏱️ THỜI GIAN ONLINE
+       Đơn vị: giây
+    ========================= */
+
+    {
+        id: "time_2h",
+        category: "Thời gian",
+        icon: "🌙",
+        name: "Kẻ Lưu Luyến",
+        description: "Online tổng cộng 2 giờ.",
+        requirement: 2 * 60 * 60,
+        type: "onlineTime",
+
+        reward: {
+            coins: 1000,
+            diamonds: 10,
+            energy: 20
+        }
+    },
+
+    {
+        id: "time_6h",
+        category: "Thời gian",
+        icon: "🎮",
+        name: "Nghiện Lunaria",
+        description: "Online tổng cộng 6 giờ.",
+        requirement: 6 * 60 * 60,
+        type: "onlineTime",
+
+        reward: {
+            coins: 3000,
+            diamonds: 25,
+            energy: 30
+        }
+    },
+
+    {
+        id: "time_15h",
+        category: "Thời gian",
+        icon: "🏠",
+        name: "Cư Dân Lunaria",
+        description: "Online tổng cộng 15 giờ.",
+        requirement: 15 * 60 * 60,
+        type: "onlineTime",
+
+        reward: {
+            coins: 7500,
+            diamonds: 50,
+            energy: 50
+        }
+    },
+
+    {
+        id: "time_30h",
+        category: "Thời gian",
+        icon: "🕰️",
+        name: "Kẻ Không Muốn Rời Đi",
+        description: "Online tổng cộng 30 giờ.",
+        requirement: 30 * 60 * 60,
+        type: "onlineTime",
+
+        reward: {
+            coins: 15000,
+            diamonds: 75,
+            energy: 75
+        }
+    },
+
+    {
+        id: "time_60h",
+        category: "Thời gian",
+        icon: "🛡️",
+        name: "Người Canh Giữ Lunaria",
+        description: "Online tổng cộng 60 giờ.",
+        requirement: 60 * 60 * 60,
+        type: "onlineTime",
+
+        reward: {
+            coins: 35000,
+            diamonds: 150,
+            energy: 100
+        }
+    },
+
+    {
+        id: "time_100h",
+        category: "Thời gian",
+        icon: "✨",
+        name: "Linh Hồn Lunaria",
+        description: "Online tổng cộng 100 giờ.",
+        requirement: 100 * 60 * 60,
+        type: "onlineTime",
+
+        reward: {
+            coins: 75000,
+            diamonds: 250,
+            energy: 150
+        }
+    },
+
+    {
+        id: "time_250h",
+        category: "Thời gian",
+        icon: "🌌",
+        name: "Huyền Thoại Bất Diệt",
+        description: "Online tổng cộng 250 giờ.",
+        requirement: 250 * 60 * 60,
+        type: "onlineTime",
+
+        reward: {
+            coins: 200000,
+            diamonds: 500,
+            energy: 250
+        }
+    },
+
+    {
+        id: "time_500h",
+        category: "Thời gian",
+        icon: "🔮",
+        name: "Thực Thể Lunaria",
+        description: "Online tổng cộng 500 giờ.",
+        requirement: 500 * 60 * 60,
+        type: "onlineTime",
+
+        reward: {
+            coins: 500000,
+            diamonds: 1000,
+            energy: 500
+        }
+    },
+
+
+    /* =========================
+       🔮 BÍ ẨN
+       Chưa mở điều kiện.
+    ========================= */
+
+    {
+        id: "mystery_1",
+        category: "Bí ẩn",
+        icon: "❓",
+        name: "???",
+        description: "Một bí mật đang chờ được khám phá.",
+        requirement: 1,
+        type: "mystery",
+
+        reward: {
+            coins: 0,
+            diamonds: 0,
+            energy: 0
+        },
+
+        hidden: true
+    },
+
+    {
+        id: "mystery_2",
+        category: "Bí ẩn",
+        icon: "❔",
+        name: "???",
+        description: "Không ai biết điều kiện để đạt được.",
+        requirement: 1,
+        type: "mystery",
+
+        reward: {
+            coins: 0,
+            diamonds: 0,
+            energy: 0
+        },
+
+        hidden: true
+    }
+
+];
 
 function savePlayerData(username, data) {
     const allData = JSON.parse(
