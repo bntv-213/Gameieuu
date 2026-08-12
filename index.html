@@ -275,11 +275,9 @@
            GAME
         ========================= */
 
-        #game {
-    display: none;
+       #game {
     min-height: 100vh;
     padding-bottom: 40px;
-
     background: transparent;
 }
 
@@ -2221,13 +2219,12 @@ function hideAll() {
 function showForm(type) {
     hideAll();
 
-    document.getElementById("loginPage")
-        .classList.remove("hidden");
+   document.getElementById("loginPage")
+    .classList.add("hidden");
 
-    document.getElementById(type)
-        .classList.remove("hidden");
+document.getElementById("game")
+    .classList.remove("hidden");
 }
-
 
 function showHome() {
     hideAll();
