@@ -225,9 +225,13 @@
         ========================= */
 
         .form {
-            display: none;
-            text-align: left;
-        }
+    display: none;
+    text-align: left;
+}
+
+.form.active {
+    display: block;
+}
 
         .form h2 {
             text-align: center;
@@ -279,6 +283,10 @@
     min-height: 100vh;
     padding-bottom: 40px;
     background: transparent;
+}
+
+#game.hidden {
+    display: none;
 }
 
         /* Thanh trên */
@@ -2207,35 +2215,62 @@ function updatePlayerUI(playerData) {
    CHUYỂN MÀN HÌNH
 ========================= */
 
-function hideAll() {
+function hideForms() {
     document.getElementById("home").classList.add("hidden");
     document.getElementById("login").classList.add("hidden");
     document.getElementById("register").classList.add("hidden");
-    document.getElementById("game").classList.add("hidden");
-    document.getElementById("loginPage").classList.add("hidden");
 }
 
+
+/* Hiện form đăng nhập / đăng ký */
 
 function showForm(type) {
-    hideAll();
 
-   document.getElementById("loginPage")
-    .classList.add("hidden");
+    // Đảm bảo trang login vẫn đang hiện
+    document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
 
-document.getElementById("game")
-    .classList.remove("hidden");
+    // Ẩn tất cả nội dung bên trong
+    hideForms();
+
+    // Hiện form được chọn
+    if (type === "login") {
+
+        document
+            .getElementById("login")
+            .classList.remove("hidden");
+
+    }
+
+    else if (type === "register") {
+
+        document
+            .getElementById("register")
+            .classList.remove("hidden");
+
+    }
 }
+
+
+/* Quay về trang chủ login */
 
 function showHome() {
-    hideAll();
 
-    document.getElementById("loginPage")
+    document
+        .getElementById("loginPage")
         .classList.remove("hidden");
 
-    document.getElementById("home")
+    document
+        .getElementById("game")
+        .classList.add("hidden");
+
+    hideForms();
+
+    document
+        .getElementById("home")
         .classList.remove("hidden");
 }
-
 
 /* =========================
    ĐĂNG KÝ
@@ -2305,18 +2340,52 @@ function register() {
 ========================= */
 
 function login() {
+
     const username =
         document.getElementById("loginUsername").value.trim();
 
     const password =
         document.getElementById("loginPassword").value;
 
-
     if (!username || !password) {
         alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
         return;
     }
 
+    const accounts = JSON.parse(
+        localStorage.getItem("lunariaAccounts") || "{}"
+    );
+
+    if (!accounts[username]) {
+        alert("Ụa? Tài khoản này chưa tồn tại nè 👀🌙");
+        return;
+    }
+
+    if (accounts[username] !== password) {
+        alert("Nhìn kĩ coi, có cái mật khẩu cũng nhập sai 🔐😭");
+        return;
+    }
+
+    const playerData = getPlayerData(username);
+
+    // Ẩn trang đăng nhập
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+    // Hiện game
+    document
+        .getElementById("game")
+        .classList.remove("hidden");
+
+    // Tên người chơi
+    document
+        .getElementById("playerName")
+        .textContent = username;
+
+    // Cập nhật toàn bộ chỉ số
+    updatePlayerUI(playerData);
+}
 
     const accounts = JSON.parse(
         localStorage.getItem("lunariaAccounts") || "{}"
