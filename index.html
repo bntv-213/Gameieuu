@@ -1032,19 +1032,16 @@
     </main>
 
 <script>
-
-    /* =========================
+/* =========================
    DỮ LIỆU NGƯỜI CHƠI
 ========================= */
 
 function getPlayerData(username) {
-
     const allData = JSON.parse(
         localStorage.getItem("lunariaPlayerData") || "{}"
     );
 
     if (!allData[username]) {
-
         allData[username] = {
             level: 1,
             xp: 0,
@@ -1066,7 +1063,6 @@ function getPlayerData(username) {
 
 
 function savePlayerData(username, data) {
-
     const allData = JSON.parse(
         localStorage.getItem("lunariaPlayerData") || "{}"
     );
@@ -1078,186 +1074,182 @@ function savePlayerData(username, data) {
         JSON.stringify(allData)
     );
 }
-    
-     /* =========================
-       CHUYỂN MÀN HÌNH
-    ========================= */
-
-    function hideAll() {
-        document.getElementById("home").style.display = "none";
-        document.getElementById("login").style.display = "none";
-        document.getElementById("register").style.display = "none";
-        document.getElementById("game").style.display = "none";
-    }
 
 
-    function showForm(type) {
-        hideAll();
+/* =========================
+   CHUYỂN MÀN HÌNH
+========================= */
 
-        document.getElementById("loginPage").style.display = "block";
-        document.getElementById(type).style.display = "block";
-    }
-
-
-    function showHome() {
-        hideAll();
-
-        document.getElementById("loginPage").style.display = "block";
-        document.getElementById("home").style.display = "block";
-    }
-
-
-    /* =========================
-       ĐĂNG KÝ
-    ========================= */
-
-    function register() {
-
-        const username =
-            document.getElementById("registerUsername").value.trim();
-
-        const password =
-            document.getElementById("registerPassword").value;
-
-        const password2 =
-            document.getElementById("registerPassword2").value;
-
-
-        if (!username || !password) {
-            alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
-            return;
-        }
-
-
-        if (password !== password2) {
-            alert("Hai mật khẩu chưa sinh đôi kìa 😭");
-            return;
-        }
-
-
-        const accounts =
-            JSON.parse(
-                localStorage.getItem("lunariaAccounts") || "{}"
-            );
-
-
-        if (accounts[username]) {
-            alert("Tên này có người nhanh tay hơn rồi ahaha! 💨🌙");
-            return;
-        }
-
-
-        accounts[username] = password;
-
-localStorage.setItem(
-    "lunariaAccounts",
-    JSON.stringify(accounts)
-);
-
-getPlayerData(username);
-        
-        alert(
-            "DỎI! Tạo xong ròi, vô đăng nhập đi chứ nhìn giề! ✨🌙"
-        );
-
-
-        document.getElementById("registerUsername").value = "";
-        document.getElementById("registerPassword").value = "";
-        document.getElementById("registerPassword2").value = "";
-
-
-        showForm("login");
-    }
-
-
-    /* =========================
-       ĐĂNG NHẬP
-    ========================= */
-
-    function login() {
-
-        const username =
-            document.getElementById("loginUsername").value.trim();
-
-        const password =
-            document.getElementById("loginPassword").value;
-
-
-        if (!username || !password) {
-            alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
-            return;
-        }
-
-
-        const accounts =
-            JSON.parse(
-                localStorage.getItem("lunariaAccounts") || "{}"
-            );
-
-
-        if (!accounts[username]) {
-            alert("Ụa? Tài khoản này chưa tồn tại nè 👀🌙");
-            return;
-        }
-
-
-        if (accounts[username] !== password) {
-    alert("Nhìn kĩ coi, có cái mật khẩu cũng nhập sai 🔐😭");
-    return;
+function hideAll() {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("login").style.display = "none";
+    document.getElementById("register").style.display = "none";
+    document.getElementById("game").style.display = "none";
 }
 
-const playerData = getPlayerData(username);
 
+function showForm(type) {
+    hideAll();
 
-        /* Ẩn hoàn toàn khung đăng nhập */
-        document
-            .getElementById("loginPage")
-            .classList.add("hidden");
-
-
-        /* Hiện thế giới Lunaria */
-        document
-            .getElementById("game")
-            .style.display = "block";
-
-
-        /* Hiện tên người chơi */
-       document
-    .getElementById("playerName")
-    .textContent = username;
-
-document
-    .getElementById("coins")
-    .textContent = playerData.coins;
-
-document
-    .getElementById("diamonds")
-    .textContent = playerData.diamonds;
-
-document
-    .getElementById("energy")
-    .textContent = playerData.energy;
-
-document
-    .getElementById("areas")
-    .textContent = playerData.areas;
-
-document
-    .getElementById("xp")
-    .textContent = playerData.xp + " / 100";
-
-document
-    .getElementById("achievements")
-    .textContent = playerData.achievements;
-    
+    document.getElementById("loginPage").style.display = "block";
+    document.getElementById(type).style.display = "block";
 }
-    
-    /* =========================
-       KHÁM PHÁ
-    ========================= */
 
-    function startExplore() {
 
+function showHome() {
+    hideAll();
+
+    document.getElementById("loginPage").style.display = "block";
+    document.getElementById("home").style.display = "block";
+}
+
+
+/* =========================
+   ĐĂNG KÝ
+========================= */
+
+function register() {
+    const username =
+        document.getElementById("registerUsername").value.trim();
+
+    const password =
+        document.getElementById("registerPassword").value;
+
+    const password2 =
+        document.getElementById("registerPassword2").value;
+
+
+    if (!username || !password) {
+        alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
+        return;
+    }
+
+
+    if (password !== password2) {
+        alert("Hai mật khẩu chưa sinh đôi kìa 😭");
+        return;
+    }
+
+
+    const accounts = JSON.parse(
+        localStorage.getItem("lunariaAccounts") || "{}"
+    );
+
+
+    if (accounts[username]) {
+        alert("Tên này có người nhanh tay hơn rồi ahaha! 💨🌙");
+        return;
+    }
+
+
+    accounts[username] = password;
+
+    localStorage.setItem(
+        "lunariaAccounts",
+        JSON.stringify(accounts)
+    );
+
+
+    getPlayerData(username);
+
+
+    alert(
+        "DỎI! Tạo xong ròi, vô đăng nhập đi chứ nhìn giề! ✨🌙"
+    );
+
+
+    document.getElementById("registerUsername").value = "";
+    document.getElementById("registerPassword").value = "";
+    document.getElementById("registerPassword2").value = "";
+
+
+    showForm("login");
+}
+
+
+/* =========================
+   ĐĂNG NHẬP
+========================= */
+
+function login() {
+    const username =
+        document.getElementById("loginUsername").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value;
+
+
+    if (!username || !password) {
+        alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
+        return;
+    }
+
+
+    const accounts = JSON.parse(
+        localStorage.getItem("lunariaAccounts") || "{}"
+    );
+
+
+    if (!accounts[username]) {
+        alert("Ụa? Tài khoản này chưa tồn tại nè 👀🌙");
+        return;
+    }
+
+
+    if (accounts[username] !== password) {
+        alert("Nhìn kĩ coi, có cái mật khẩu cũng nhập sai 🔐😭");
+        return;
+    }
+
+
+    const playerData = getPlayerData(username);
+
+
+    document
+        .getElementById("loginPage")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("game")
+        .style.display = "block";
+
+
+    document
+        .getElementById("playerName")
+        .textContent = username;
+
+    document
+        .getElementById("coins")
+        .textContent = playerData.coins;
+
+    document
+        .getElementById("diamonds")
+        .textContent = playerData.diamonds;
+
+    document
+        .getElementById("energy")
+        .textContent = playerData.energy;
+
+    document
+        .getElementById("areas")
+        .textContent = playerData.areas;
+
+    document
+        .getElementById("xp")
+        .textContent = playerData.xp + " / 100";
+
+    document
+        .getElementById("achievements")
+        .textContent = playerData.achievements;
+}
+
+
+/* =========================
+   KHÁM PHÁ
+========================= */
+
+function startExplore() {
     const username =
         document.getElementById("playerName").textContent;
 
@@ -1267,11 +1259,8 @@ document
     }
 
 
-    const playerData =
-        getPlayerData(username);
+    const playerData = getPlayerData(username);
 
-
-    /* Kiểm tra năng lượng */
 
     if (playerData.energy <= 0) {
         alert(
@@ -1281,27 +1270,14 @@ document
     }
 
 
-    /* =========================
-       THƯỞNG KHÁM PHÁ
-    ========================= */
-
     playerData.areas += 1;
-
     playerData.xp += 25;
-
     playerData.coins += 20;
-
     playerData.energy -= 10;
 
 
-    /* =========================
-       LÊN CẤP
-    ========================= */
-
     if (playerData.xp >= 100) {
-
         playerData.xp -= 100;
-
         playerData.level += 1;
 
         alert(
@@ -1313,38 +1289,20 @@ document
     }
 
 
-    /* =========================
-       LƯU DỮ LIỆU
-    ========================= */
-
-    savePlayerData(
-        username,
-        playerData
-    );
+    savePlayerData(username, playerData);
 
 
-    /* =========================
-       CẬP NHẬT GIAO DIỆN
-    ========================= */
+    document.getElementById("areas").textContent =
+        playerData.areas;
 
-    document
-        .getElementById("areas")
-        .textContent = playerData.areas;
+    document.getElementById("xp").textContent =
+        playerData.xp + " / 100";
 
-    document
-        .getElementById("xp")
-        .textContent =
-            playerData.xp + " / 100";
+    document.getElementById("coins").textContent =
+        playerData.coins;
 
-    document
-        .getElementById("coins")
-        .textContent =
-            playerData.coins;
-
-    document
-        .getElementById("energy")
-        .textContent =
-            playerData.energy;
+    document.getElementById("energy").textContent =
+        playerData.energy;
 
 
     alert(
@@ -1357,37 +1315,31 @@ document
 }
 
 
-    /* =========================
-       MENU
-    ========================= */
+/* =========================
+   MENU
+========================= */
 
-    function showMessage(name) {
-
-        alert(
-            name +
-            " sẽ được mở khóa trong những bước tiếp theo của Lunaria! 🌙✨"
-        );
-    }
-
-
-    /* =========================
-       ĐĂNG XUẤT
-    ========================= */
-
-    function logout() {
-
-        document
-            .getElementById("game")
-            .style.display = "none";
+function showMessage(name) {
+    alert(
+        name +
+        " sẽ được mở khóa trong những bước tiếp theo của Lunaria! 🌙✨"
+    );
+}
 
 
-        document
-            .getElementById("loginPage")
-            .classList.remove("hidden");
+/* =========================
+   ĐĂNG XUẤT
+========================= */
 
+function logout() {
+    document.getElementById("game").style.display = "none";
 
-        showHome();
-    }
+    document
+        .getElementById("loginPage")
+        .classList.remove("hidden");
+
+    showHome();
+}
 
 </script>
     
