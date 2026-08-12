@@ -1562,6 +1562,8 @@ function getPlayerData(username) {
 
     const player = allData[username];
 
+    /* Bổ sung dữ liệu còn thiếu cho tài khoản cũ */
+
     if (typeof player.level !== "number") {
         player.level = 1;
     }
@@ -1623,60 +1625,28 @@ function getPlayerData(username) {
 
     return player;
 }
-    /* =========================
-       LƯU LẠI
-       ========================= */
+
+
+/* =========================
+   LƯU DỮ LIỆU NGƯỜI CHƠI
+========================= */
+
+function savePlayerData(username, playerData) {
+
+    const allData = JSON.parse(
+        localStorage.getItem("lunariaPlayerData") || "{}"
+    );
+
+    allData[username] = playerData;
 
     localStorage.setItem(
         "lunariaPlayerData",
         JSON.stringify(allData)
     );
-
-    return allData[username];
 }
 
-    /*
-     * Tài khoản cũ sẽ được bổ sung
-     * dữ liệu mới mà KHÔNG reset
-     * coins / diamonds / XP / areas...
-     */
-    const player = allData[username];
 
-    if (typeof player.completedQuests !== "number") {
-        player.completedQuests = 0;
-    }
-
-    if (typeof player.onlineTime !== "number") {
-        player.onlineTime = 0;
-    }
-
-    if (!Array.isArray(player.unlockedTitles)) {
-        player.unlockedTitles = [];
-    }
-
-    if (!Array.isArray(player.claimedTitleRewards)) {
-        player.claimedTitleRewards = [];
-    }
-
-    if (!("lastOnlineTime" in player)) {
-        player.lastOnlineTime = null;
-    }
-
-
-    /*
-     * Lưu lại dữ liệu sau khi bổ sung field.
-     */
-    allData[username] = player;
-
-    localStorage.setItem(
-        "lunariaPlayerData",
-        JSON.stringify(allData)
-    );
-
-    return player;
-}
-
-    /* =========================
+/* =========================
    DANH SÁCH DANH HIỆU LUNARIA
 ========================= */
 
@@ -1886,7 +1856,6 @@ const TITLE_DATA = [
 
     /* =========================
        ⏱️ THỜI GIAN ONLINE
-       Đơn vị: giây
     ========================= */
 
     {
@@ -2020,7 +1989,6 @@ const TITLE_DATA = [
 
     /* =========================
        🔮 BÍ ẨN
-       Chưa mở điều kiện.
     ========================= */
 
     {
@@ -2061,6 +2029,11 @@ const TITLE_DATA = [
 
 ];
 
+
+/* =========================
+   KIỂM TRA DANH HIỆU
+========================= */
+
 function checkTitles(username, playerData) {
 
     if (!username || !playerData) {
@@ -2092,22 +2065,118 @@ function checkTitles(username, playerData) {
         }
 
         if (currentValue >= title.requirement) {
-            unlockTitle(username, playerData, title);
+            unlockTitle(
+                username,
+                playerData,
+                title
+            );
         }
+
     });
 }
 
-/* =========================
-   KIỂM TRA DANH HIỆU
-========================= */
-
-function checkTitles(username, playerData) {
 
 /* =========================
    MỞ KHÓA DANH HIỆU
 ========================= */
 
 function unlockTitle(username, playerData, title) {
+
+    if (
+        playerData.unlockedTitles.includes(title.id)
+    ) {
+        return;
+    }
+
+    /* Thêm danh hiệu */
+
+    playerData.unlockedTitles.push(
+        title.id
+    );
+
+
+    /* Trao phần thưởng */
+
+    const reward = title.reward;
+
+    if (reward.coins) {
+        playerData.coins += reward.coins;
+    }
+
+    if (reward.diamonds) {
+        playerData.diamonds += reward.diamonds;
+    }
+
+    if (reward.energy) {
+        playerData.energy += reward.energy;
+    }
+
+
+    /* Đánh dấu đã nhận thưởng */
+
+    if (
+        !playerData.claimedTitleRewards.includes(title.id)
+    ) {
+        playerData.claimedTitleRewards.push(
+            title.id
+        );
+    }
+
+
+    /* Cập nhật số danh hiệu */
+
+    playerData.achievements =
+        playerData.unlockedTitles.length;
+
+
+    /* Lưu */
+
+    savePlayerData(
+        username,
+        playerData
+    );
+
+
+    /* Cập nhật giao diện */
+
+    updatePlayerUI(
+        playerData
+    );
+
+
+    /* Thông báo */
+
+    const rewardText = [];
+
+    if (reward.coins) {
+        rewardText.push(
+            "🪙 +" + reward.coins
+        );
+    }
+
+    if (reward.diamonds) {
+        rewardText.push(
+            "💎 +" + reward.diamonds
+        );
+    }
+
+    if (reward.energy) {
+        rewardText.push(
+            "⚡ +" + reward.energy
+        );
+    }
+
+    alert(
+        "🏆 DANH HIỆU MỚI!\n\n" +
+        title.icon + " " +
+        title.name +
+        "\n\n" +
+        title.description +
+        "\n\n🎁 PHẦN THƯỞNG\n" +
+        rewardText.join("\n")
+    );
+}
+
 
 /* =========================
    CẬP NHẬT GIAO DIỆN
@@ -2118,7 +2187,6 @@ function updatePlayerUI(playerData) {
     if (!playerData) {
         return;
     }
-
 
     const coins =
         document.getElementById("coins");
@@ -2140,247 +2208,34 @@ function updatePlayerUI(playerData) {
 
 
     if (coins) {
-
         coins.textContent =
             playerData.coins;
     }
 
-
     if (diamonds) {
-
         diamonds.textContent =
             playerData.diamonds;
     }
 
-
     if (energy) {
-
         energy.textContent =
             playerData.energy;
     }
 
-
     if (areas) {
-
         areas.textContent =
             playerData.areas;
     }
 
-
     if (xp) {
-
         xp.textContent =
             playerData.xp + " / 100";
     }
 
-
     if (achievements) {
-
         achievements.textContent =
             playerData.achievements;
     }
-}
-    
-    /* Chống nhận trùng */
-    if (
-        playerData.unlockedTitles.includes(title.id)
-    ) {
-        return;
-    }
-
-
-    /* =========================
-       THÊM DANH HIỆU
-    ========================= */
-
-    playerData.unlockedTitles.push(
-        title.id
-    );
-
-
-    /* =========================
-       TRAO PHẦN THƯỞNG
-    ========================= */
-
-    const reward = title.reward;
-
-
-    if (reward.coins) {
-
-        playerData.coins +=
-            reward.coins;
-    }
-
-
-    if (reward.diamonds) {
-
-        playerData.diamonds +=
-            reward.diamonds;
-    }
-
-
-    if (reward.energy) {
-
-        playerData.energy +=
-            reward.energy;
-    }
-
-
-    /* =========================
-       ĐÁNH DẤU ĐÃ NHẬN THƯỞNG
-    ========================= */
-
-    if (
-        !playerData.claimedTitleRewards.includes(
-            title.id
-        )
-    ) {
-
-        playerData.claimedTitleRewards.push(
-            title.id
-        );
-    }
-
-
-    /* =========================
-       CẬP NHẬT SỐ DANH HIỆU
-    ========================= */
-
-    playerData.achievements =
-        playerData.unlockedTitles.length;
-
-
-    /* =========================
-       LƯU
-    ========================= */
-
-    savePlayerData(
-        username,
-        playerData
-    );
-
-
-    /* =========================
-       CẬP NHẬT GIAO DIỆN
-    ========================= */
-
-    updatePlayerUI(
-        playerData
-    );
-
-
-    /* =========================
-       THÔNG BÁO
-    ========================= */
-
-    const rewardText = [];
-
-
-    if (reward.coins) {
-
-        rewardText.push(
-            "🪙 +" + reward.coins
-        );
-    }
-
-
-    if (reward.diamonds) {
-
-        rewardText.push(
-            "💎 +" + reward.diamonds
-        );
-    }
-
-
-    if (reward.energy) {
-
-        rewardText.push(
-            "⚡ +" + reward.energy
-        );
-    }
-
-
-    alert(
-        "🏆 DANH HIỆU MỚI!\n\n" +
-
-        title.icon + " " +
-        title.name +
-
-        "\n\n" +
-
-        title.description +
-
-        "\n\n🎁 PHẦN THƯỞNG\n" +
-
-        rewardText.join("\n")
-    );
-}
-
-        /* Danh hiệu bí ẩn chưa mở điều kiện */
-        if (title.hidden) {
-            return;
-        }
-
-
-        /* Đã nhận danh hiệu rồi thì bỏ qua */
-        if (
-            playerData.unlockedTitles.includes(title.id)
-        ) {
-            return;
-        }
-
-
-        let currentValue = 0;
-
-
-        /* =========================
-           KHÁM PHÁ
-        ========================= */
-
-        if (title.type === "areas") {
-
-            currentValue =
-                playerData.areas || 0;
-        }
-
-
-        /* =========================
-           NHIỆM VỤ
-        ========================= */
-
-        else if (title.type === "quests") {
-
-            currentValue =
-                playerData.completedQuests || 0;
-        }
-
-
-        /* =========================
-           THỜI GIAN ONLINE
-        ========================= */
-
-        else if (title.type === "onlineTime") {
-
-            currentValue =
-                playerData.onlineTime || 0;
-        }
-
-
-        /* =========================
-           KIỂM TRA ĐỦ ĐIỀU KIỆN
-        ========================= */
-
-        if (currentValue >= title.requirement) {
-
-            unlockTitle(
-                username,
-                playerData,
-                title
-            );
-        }
-
-    });
-
 }
     
 /* =========================
