@@ -2020,7 +2020,299 @@ function savePlayerData(username, data) {
     );
 }
 
+/* =========================
+   KIỂM TRA DANH HIỆU
+========================= */
 
+function checkTitles(username, playerData) {
+
+/* =========================
+   MỞ KHÓA DANH HIỆU
+========================= */
+
+function unlockTitle(username, playerData, title) {
+
+/* =========================
+   CẬP NHẬT GIAO DIỆN
+========================= */
+
+function updatePlayerUI(playerData) {
+
+    if (!playerData) {
+        return;
+    }
+
+
+    const coins =
+        document.getElementById("coins");
+
+    const diamonds =
+        document.getElementById("diamonds");
+
+    const energy =
+        document.getElementById("energy");
+
+    const areas =
+        document.getElementById("areas");
+
+    const xp =
+        document.getElementById("xp");
+
+    const achievements =
+        document.getElementById("achievements");
+
+
+    if (coins) {
+
+        coins.textContent =
+            playerData.coins;
+    }
+
+
+    if (diamonds) {
+
+        diamonds.textContent =
+            playerData.diamonds;
+    }
+
+
+    if (energy) {
+
+        energy.textContent =
+            playerData.energy;
+    }
+
+
+    if (areas) {
+
+        areas.textContent =
+            playerData.areas;
+    }
+
+
+    if (xp) {
+
+        xp.textContent =
+            playerData.xp + " / 100";
+    }
+
+
+    if (achievements) {
+
+        achievements.textContent =
+            playerData.achievements;
+    }
+}
+    
+    /* Chống nhận trùng */
+    if (
+        playerData.unlockedTitles.includes(title.id)
+    ) {
+        return;
+    }
+
+
+    /* =========================
+       THÊM DANH HIỆU
+    ========================= */
+
+    playerData.unlockedTitles.push(
+        title.id
+    );
+
+
+    /* =========================
+       TRAO PHẦN THƯỞNG
+    ========================= */
+
+    const reward = title.reward;
+
+
+    if (reward.coins) {
+
+        playerData.coins +=
+            reward.coins;
+    }
+
+
+    if (reward.diamonds) {
+
+        playerData.diamonds +=
+            reward.diamonds;
+    }
+
+
+    if (reward.energy) {
+
+        playerData.energy +=
+            reward.energy;
+    }
+
+
+    /* =========================
+       ĐÁNH DẤU ĐÃ NHẬN THƯỞNG
+    ========================= */
+
+    if (
+        !playerData.claimedTitleRewards.includes(
+            title.id
+        )
+    ) {
+
+        playerData.claimedTitleRewards.push(
+            title.id
+        );
+    }
+
+
+    /* =========================
+       CẬP NHẬT SỐ DANH HIỆU
+    ========================= */
+
+    playerData.achievements =
+        playerData.unlockedTitles.length;
+
+
+    /* =========================
+       LƯU
+    ========================= */
+
+    savePlayerData(
+        username,
+        playerData
+    );
+
+
+    /* =========================
+       CẬP NHẬT GIAO DIỆN
+    ========================= */
+
+    updatePlayerUI(
+        playerData
+    );
+
+
+    /* =========================
+       THÔNG BÁO
+    ========================= */
+
+    const rewardText = [];
+
+
+    if (reward.coins) {
+
+        rewardText.push(
+            "🪙 +" + reward.coins
+        );
+    }
+
+
+    if (reward.diamonds) {
+
+        rewardText.push(
+            "💎 +" + reward.diamonds
+        );
+    }
+
+
+    if (reward.energy) {
+
+        rewardText.push(
+            "⚡ +" + reward.energy
+        );
+    }
+
+
+    alert(
+        "🏆 DANH HIỆU MỚI!\n\n" +
+
+        title.icon + " " +
+        title.name +
+
+        "\n\n" +
+
+        title.description +
+
+        "\n\n🎁 PHẦN THƯỞNG\n" +
+
+        rewardText.join("\n")
+    );
+}
+    
+    if (!username || !playerData) {
+        return;
+    }
+
+
+    TITLE_DATA.forEach(function(title) {
+
+        /* Danh hiệu bí ẩn chưa mở điều kiện */
+        if (title.hidden) {
+            return;
+        }
+
+
+        /* Đã nhận danh hiệu rồi thì bỏ qua */
+        if (
+            playerData.unlockedTitles.includes(title.id)
+        ) {
+            return;
+        }
+
+
+        let currentValue = 0;
+
+
+        /* =========================
+           KHÁM PHÁ
+        ========================= */
+
+        if (title.type === "areas") {
+
+            currentValue =
+                playerData.areas || 0;
+        }
+
+
+        /* =========================
+           NHIỆM VỤ
+        ========================= */
+
+        else if (title.type === "quests") {
+
+            currentValue =
+                playerData.completedQuests || 0;
+        }
+
+
+        /* =========================
+           THỜI GIAN ONLINE
+        ========================= */
+
+        else if (title.type === "onlineTime") {
+
+            currentValue =
+                playerData.onlineTime || 0;
+        }
+
+
+        /* =========================
+           KIỂM TRA ĐỦ ĐIỀU KIỆN
+        ========================= */
+
+        if (currentValue >= title.requirement) {
+
+            unlockTitle(
+                username,
+                playerData,
+                title
+            );
+        }
+
+    });
+
+}
+    
 /* =========================
    CHUYỂN MÀN HÌNH
 ========================= */
@@ -2235,7 +2527,10 @@ function startExplore() {
 
 
     savePlayerData(username, playerData);
-
+checkTitles(
+    username,
+    playerData
+);
 
     document.getElementById("areas").textContent =
         playerData.areas;
