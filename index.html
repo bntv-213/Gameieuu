@@ -2210,23 +2210,15 @@ function updatePlayerUI(playerData) {
 ========================= */
 
 function hideAll() {
-
-    document.getElementById("home")
-        .classList.add("hidden");
-
-    document.getElementById("login")
-        .classList.add("hidden");
-
-    document.getElementById("register")
-        .classList.add("hidden");
-
-    document.getElementById("game")
-        .classList.add("hidden");
+    document.getElementById("home").classList.add("hidden");
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("register").classList.add("hidden");
+    document.getElementById("game").classList.add("hidden");
+    document.getElementById("loginPage").classList.add("hidden");
 }
 
 
 function showForm(type) {
-
     hideAll();
 
     document.getElementById("loginPage")
@@ -2238,7 +2230,6 @@ function showForm(type) {
 
 
 function showHome() {
-
     hideAll();
 
     document.getElementById("loginPage")
@@ -2708,11 +2699,9 @@ function showMessage(name) {
 ========================= */
 
 function logout() {
-    document.getElementById("game").style.display = "none";
 
-    document
-        .getElementById("loginPage")
-        .classList.remove("hidden");
+    document.getElementById("game")
+        .classList.add("hidden");
 
     showHome();
 }
