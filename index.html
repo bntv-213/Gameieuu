@@ -1592,15 +1592,19 @@ function startExplore() {
 function openInventory() {
 
     const username =
-        document.getElementById("playerName").textContent;
+        document.getElementById("playerName").textContent.trim();
 
-    if (!username) {
+    if (!username || username === "Người chơi") {
         return;
     }
 
     const playerData =
         getPlayerData(username);
 
+
+    /* =========================
+       CẬP NHẬT TÚI ĐỒ
+    ========================= */
 
     document.getElementById("inventoryCoins")
         .textContent = playerData.coins;
@@ -1612,17 +1616,27 @@ function openInventory() {
         .textContent = playerData.energy;
 
 
+    /* =========================
+       CẬP NHẬT THANH TRÊN
+    ========================= */
+
+    document.getElementById("coins")
+        .textContent = playerData.coins;
+
+    document.getElementById("diamonds")
+        .textContent = playerData.diamonds;
+
+    document.getElementById("energy")
+        .textContent = playerData.energy;
+
+
+    /* =========================
+       MỞ POPUP
+    ========================= */
+
     document
         .getElementById("inventoryOverlay")
         .classList.add("active");
-}
-
-
-function closeInventory() {
-
-    document
-        .getElementById("inventoryOverlay")
-        .classList.remove("active");
 }
     
 /* =========================
