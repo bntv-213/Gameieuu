@@ -1538,27 +1538,56 @@ function getPlayerData(username) {
         localStorage.getItem("lunariaPlayerData") || "{}"
     );
 
-    /*
-     * Nếu người chơi chưa có dữ liệu
-     * thì tạo dữ liệu mặc định.
-     */
     if (!allData[username]) {
 
         allData[username] = {
-    level: 1,
-    xp: 0,
-    coins: 100,
-    diamonds: 10,
-    energy: 100,
-    areas: 0,
-    achievements: 0,
+            level: 1,
+            xp: 0,
+            coins: 100,
+            diamonds: 10,
+            energy: 100,
+            areas: 0,
+            achievements: 0,
 
-    completedQuests: 0,
-    onlineTime: 0,
+            completedQuests: 0,
+            onlineTime: 0,
 
-    unlockedTitles: [],
-    claimedTitleRewards: []
-};
+            unlockedTitles: [],
+            claimedTitleRewards: []
+        };
+    }
+
+    /* =========================
+       BỔ SUNG DỮ LIỆU CŨ
+       ========================= */
+
+    if (!Array.isArray(allData[username].unlockedTitles)) {
+        allData[username].unlockedTitles = [];
+    }
+
+    if (!Array.isArray(allData[username].claimedTitleRewards)) {
+        allData[username].claimedTitleRewards = [];
+    }
+
+    if (typeof allData[username].completedQuests !== "number") {
+        allData[username].completedQuests = 0;
+    }
+
+    if (typeof allData[username].onlineTime !== "number") {
+        allData[username].onlineTime = 0;
+    }
+
+    /* =========================
+       LƯU LẠI
+       ========================= */
+
+    localStorage.setItem(
+        "lunariaPlayerData",
+        JSON.stringify(allData)
+    );
+
+    return allData[username];
+}
             /* =====================
                DỮ LIỆU NHIỆM VỤ
             ===================== */
