@@ -1582,6 +1582,54 @@
         font-size: 15px;
     }
 }
+        /* =========================
+   NÚT ĐEO DANH HIỆU
+========================= */
+
+.title-equip-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 11px 15px;
+
+    border: 1px solid rgba(180, 160, 255, 0.30);
+    border-radius: 12px;
+
+    background: rgba(140, 117, 255, 0.18);
+    color: white;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.title-equip-btn:hover {
+    transform: translateY(-2px);
+
+    background: rgba(140, 117, 255, 0.30);
+
+    box-shadow:
+        0 8px 20px rgba(126, 99, 255, 0.25);
+}
+
+.title-equip-btn.equipped {
+    background: linear-gradient(
+        135deg,
+        #8c75ff,
+        #a78cff
+    );
+
+    border-color: rgba(255,255,255,0.25);
+
+    box-shadow:
+        0 5px 20px rgba(140,117,255,0.35);
+}
+
+.title-equip-btn.equipped:hover {
+    filter: brightness(1.08);
+}
     </style>
 </head>
 
@@ -1755,13 +1803,21 @@
                 <div>
 
                     <div
-                        class="player-name"
-                        id="playerName">
+    class="player-name"
+    id="playerName">
 
-                        Người chơi
+    Người chơi
 
-                    </div>
+</div>
 
+<div
+    class="equipped-title"
+    id="equippedTitle">
+
+    Chưa đeo danh hiệu
+
+</div>    
+                    
                     <div class="level">
                         ✨ Cấp độ 1
                     </div>
@@ -2006,7 +2062,8 @@ questExplorerClaimed: false,
             lastOnlineTime: null,
 
             unlockedTitles: [],
-            claimedTitleRewards: []
+            claimedTitleRewards: [],
+            equippedTitle: null
         };
     }
 
@@ -2063,6 +2120,9 @@ questExplorerClaimed: false,
     if (!Array.isArray(player.claimedTitleRewards)) {
         player.claimedTitleRewards = [];
     }
+    if (typeof player.equippedTitle !== "string") {
+    player.equippedTitle = null;
+}
 if (!Array.isArray(player.completedQuestRewards)) {
     player.completedQuestRewards = [];
 }
@@ -2761,24 +2821,30 @@ function renderTitles() {
 
         if (unlocked) {
 
-            statusText =
-                "✅ Đã đạt danh hiệu";
+    statusClass = "unlocked";
 
-            statusClass =
-                "unlocked";
+    if (playerData.equippedTitle === title.id) {
 
-        }
+        statusText =
+            "✨ Đang đeo";
 
-        else if (
-            currentValue >= title.requirement
-        ) {
+    } else {
 
-            statusText =
-                "🎁 Đủ điều kiện";
+        statusText =
+            "✅ Đã đạt danh hiệu";
+    }
 
-            statusClass =
-                "ready";
-        }
+}
+else if (
+    currentValue >= title.requirement
+) {
+
+    statusText =
+        "🎁 Đủ điều kiện";
+
+    statusClass =
+        "ready";
+}
 
 
         /* =========================
@@ -2835,13 +2901,31 @@ function renderTitles() {
 
 
             <div
-                class="title-status ${statusClass}">
+    class="title-status ${statusClass}">
 
-                ${statusText}
+    ${statusText}
 
-            </div>
+</div>
 
-        `;
+${
+    unlocked
+        ? `
+            <button
+                class="equip-title-btn"
+                onclick="equipTitle('${title.id}')">
+
+                ${
+                    playerData.equippedTitle === title.id
+                        ? "❌ Tháo danh hiệu"
+                        : "🏆 Đeo danh hiệu"
+                }
+
+            </button>
+        `
+        : ""
+}
+
+         `;
 
 
         titleList.appendChild(card);
@@ -2974,7 +3058,127 @@ function unlockTitle(username, playerData, title) {
     );
 }
 
+ /* =========================
+   ĐEO DANH HIỆU
+========================= */
 
+function equipTitle(titleId) {
+
+    const username =
+        document
+            .getElementById("playerName")
+            .textContent
+            .trim();
+
+    if (!username || username === "Người chơi") {
+        return;
+    }
+
+    const playerData =
+        getPlayerData(username);
+
+    /* Kiểm tra danh hiệu có tồn tại */
+    const title =
+        TITLE_DATA.find(function(title) {
+            return title.id === titleId;
+        });
+
+    if (!title) {
+        return;
+    }
+
+    /* Chưa đạt thì không được đeo */
+    if (!playerData.unlockedTitles.includes(titleId)) {
+        alert("🔒 Bé chưa đạt danh hiệu này đâu nha! 🌙");
+        return;
+    }
+
+    /* Nếu đang đeo danh hiệu này → tháo */
+    if (playerData.equippedTitle === titleId) {
+
+        playerData.equippedTitle = null;
+
+        savePlayerData(
+            username,
+            playerData
+        );
+
+        renderTitles();
+        updateEquippedTitle();
+
+        return;
+    }
+
+    /* Đeo danh hiệu mới */
+    playerData.equippedTitle = titleId;
+
+    savePlayerData(
+        username,
+        playerData
+    );
+
+    renderTitles();
+    updateEquippedTitle();
+
+    alert(
+        "✨ Đã đeo danh hiệu!\n\n" +
+        title.icon + " " +
+        title.name
+    );
+}   
+
+/* =========================
+   HIỂN THỊ DANH HIỆU ĐANG ĐEO
+========================= */
+
+function updateEquippedTitle() {
+
+    const username =
+        document
+            .getElementById("playerName")
+            .textContent
+            .trim();
+
+    if (!username || username === "Người chơi") {
+        return;
+    }
+
+    const playerData =
+        getPlayerData(username);
+
+    const titleElement =
+        document.getElementById("equippedTitle");
+
+    if (!titleElement) {
+        return;
+    }
+
+    /* Chưa đeo */
+    if (!playerData.equippedTitle) {
+
+        titleElement.textContent =
+            "Chưa đeo danh hiệu";
+
+        return;
+    }
+
+    const title =
+        TITLE_DATA.find(function(title) {
+            return title.id === playerData.equippedTitle;
+        });
+
+    if (!title) {
+
+        titleElement.textContent =
+            "Chưa đeo danh hiệu";
+
+        return;
+    }
+
+    titleElement.textContent =
+        title.icon + " " + title.name;
+}
+    
 /* =========================
    CẬP NHẬT GIAO DIỆN
 ========================= */
@@ -3228,7 +3432,9 @@ function login() {
         .textContent = username;
 
     // Cập nhật toàn bộ chỉ số
-    updatePlayerUI(playerData);
+updatePlayerUI(playerData);
+
+updateEquippedTitle();
 }
 
 /* =========================
