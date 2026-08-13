@@ -1817,7 +1817,7 @@
     Chưa đeo danh hiệu
 
 <div class="level">
-    ✨ Cấp độ <span id="level">1</span>
+    ✨ Cấp độ <span id="playerLevel">1</span>
 </div>
 
                 </div>
@@ -1995,9 +1995,9 @@
                         ⭐ Kinh nghiệm
                     </span>
 
-                    <strong id="xp">
-                        0 / 100
-                    </strong>
+<strong id="xp">
+    0 / 100
+</strong>
 
                 </div>
 
@@ -3230,10 +3230,89 @@ function addXP(username, playerData, amount) {
 
 
     /* =========================
-       CẬP NHẬT GIAO DIỆN
-    ========================= */
+   CẬP NHẬT GIAO DIỆN
+========================= */
 
-    updatePlayerUI(playerData);
+function updatePlayerUI(playerData) {
+
+    if (!playerData) {
+        return;
+    }
+
+    // ...
+}
+
+    const coins =
+        document.getElementById("coins");
+
+    const diamonds =
+        document.getElementById("diamonds");
+
+    const energy =
+        document.getElementById("energy");
+
+    const areas =
+        document.getElementById("areas");
+
+    const xp =
+        document.getElementById("xp");
+
+    const achievements =
+        document.getElementById("achievements");
+
+    const level =
+        document.getElementById("playerLevel");
+
+
+    if (coins) {
+        coins.textContent =
+            playerData.coins;
+    }
+
+
+    if (diamonds) {
+        diamonds.textContent =
+            playerData.diamonds;
+    }
+
+
+    if (energy) {
+        energy.textContent =
+            playerData.energy;
+    }
+
+
+    if (areas) {
+        areas.textContent =
+            playerData.areas;
+    }
+
+
+    if (xp) {
+
+        const xpRequired =
+            getXPRequired(playerData.level);
+
+        xp.textContent =
+            playerData.xp +
+            " / " +
+            xpRequired;
+    }
+
+
+    if (level) {
+
+        level.textContent =
+            playerData.level;
+    }
+
+
+    if (achievements) {
+        achievements.textContent =
+            playerData.achievements;
+    }
+
+}
 
 
     /* =========================
@@ -3250,6 +3329,16 @@ function addXP(username, playerData, amount) {
         );
     }
 }
+
+ /* =========================
+   XP CẦN ĐỂ LÊN CẤP
+========================= */
+
+function getXPRequired(level) {
+
+    return 100 + ((level - 1) * 200);
+
+}   
     
 function updatePlayerUI(playerData) {
 
@@ -3568,8 +3657,14 @@ checkTitles(
     document.getElementById("areas").textContent =
         playerData.areas;
 
-    document.getElementById("xp").textContent =
-        playerData.xp + " / 100";
+    savePlayerData(username, playerData);
+
+checkTitles(
+    username,
+    playerData
+);
+
+updatePlayerUI(playerData);
 
     document.getElementById("coins").textContent =
         playerData.coins;
