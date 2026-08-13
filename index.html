@@ -3183,6 +3183,76 @@ function updateEquippedTitle() {
    CẬP NHẬT GIAO DIỆN
 ========================= */
 
+function getXPRequired(level) {
+    return 100 + (level - 1) * 200;
+}
+
+
+/* =========================
+   CỘNG KINH NGHIỆM
+========================= */
+
+function addXP(username, playerData, amount) {
+
+    if (!playerData || !amount || amount <= 0) {
+        return;
+    }
+
+    playerData.xp += amount;
+
+
+    /* =========================
+       KIỂM TRA LÊN CẤP
+    ========================= */
+
+    let leveledUp = false;
+
+    while (
+        playerData.xp >=
+        getXPRequired(playerData.level)
+    ) {
+
+        playerData.xp -=
+            getXPRequired(playerData.level);
+
+        playerData.level += 1;
+
+        leveledUp = true;
+    }
+
+
+    /* =========================
+       LƯU DỮ LIỆU
+    ========================= */
+
+    savePlayerData(
+        username,
+        playerData
+    );
+
+
+    /* =========================
+       CẬP NHẬT GIAO DIỆN
+    ========================= */
+
+    updatePlayerUI(playerData);
+
+
+    /* =========================
+       THÔNG BÁO LÊN CẤP
+    ========================= */
+
+    if (leveledUp) {
+
+        alert(
+            "🎉 LÊN CẤP!\n\n" +
+            "✨ Bạn đã đạt cấp " +
+            playerData.level +
+            "!"
+        );
+    }
+}
+    
 function updatePlayerUI(playerData) {
 
     if (!playerData) {
@@ -3468,17 +3538,16 @@ function startExplore() {
     playerData.energy -= 10;
 
 
-    if (playerData.xp >= 100) {
-        playerData.xp -= 100;
-        playerData.level += 1;
+    playerData.areas += 1;
 
-        alert(
-            "🎉 LÊN CẤP!\n\n" +
-            "✨ Bạn đã đạt cấp " +
-            playerData.level +
-            "!"
-        );
-    }
+addXP(
+    username,
+    playerData,
+    25
+);
+
+playerData.coins += 20;
+playerData.energy -= 10;
 
 
     savePlayerData(username, playerData);
