@@ -4000,24 +4000,29 @@ function claimQuest(questId) {
         .push(quest.id);
 
 
-    /* =========================
-       LÊN CẤP
-    ========================= */
+   /* =========================
+   LÊN CẤP
+========================= */
 
-    while (playerData.xp >= 100) {
+let xpNeeded =
+    100 + (playerData.level - 1) * 200;
 
-        playerData.xp -= 100;
+while (playerData.xp >= xpNeeded) {
 
-        playerData.level += 1;
+    playerData.xp -= xpNeeded;
 
-        alert(
-            "🎉 LÊN CẤP!\n\n" +
-            "✨ Bạn đã đạt cấp " +
-            playerData.level +
-            "!"
-        );
-    }
+    playerData.level += 1;
 
+    alert(
+        "🎉 LÊN CẤP!\n\n" +
+        "✨ Bạn đã đạt cấp " +
+        playerData.level +
+        "!"
+    );
+
+    xpNeeded =
+        100 + (playerData.level - 1) * 200;
+}
 
     /* =========================
        LƯU
