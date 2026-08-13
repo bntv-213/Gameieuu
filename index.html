@@ -3294,8 +3294,13 @@ function updatePlayerUI(playerData) {
     }
 
     if (xp) {
-        xp.textContent = playerData.xp + " / 100";
-    }
+
+    const xpNeeded =
+        100 + (playerData.level - 1) * 200;
+
+    xp.textContent =
+        playerData.xp + " / " + xpNeeded;
+}
 
     if (achievements) {
         achievements.textContent = playerData.achievements;
