@@ -1816,11 +1816,9 @@
 
     Chưa đeo danh hiệu
 
-</div>    
-                    
-                    <div class="level">
-                        ✨ Cấp độ 1
-                    </div>
+<div class="level">
+    ✨ Cấp độ <span id="level">1</span>
+</div>
 
                 </div>
 
@@ -3274,6 +3272,9 @@ function updatePlayerUI(playerData) {
     const xp =
         document.getElementById("xp");
 
+    const level =
+    document.getElementById("level");
+
     const achievements =
         document.getElementById("achievements");
 
@@ -3300,6 +3301,9 @@ function updatePlayerUI(playerData) {
 
     xp.textContent =
         playerData.xp + " / " + xpNeeded;
+}
+    if (level) {
+    level.textContent = playerData.level;
 }
 
     if (achievements) {
