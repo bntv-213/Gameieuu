@@ -1605,7 +1605,7 @@
     transition: 0.2s;
 }
 
-.title-equip-btn:hover {
+.equip-title-btn:hover {
     transform: translateY(-2px);
 
     background: rgba(140, 117, 255, 0.30);
@@ -1614,7 +1614,7 @@
         0 8px 20px rgba(126, 99, 255, 0.25);
 }
 
-.title-equip-btn.equipped {
+.equip-title-btn.equipped {
     background: linear-gradient(
         135deg,
         #8c75ff,
@@ -1627,7 +1627,7 @@
         0 5px 20px rgba(140,117,255,0.35);
 }
 
-.title-equip-btn.equipped:hover {
+.equip-title-btn.equipped:hover {
     filter: brightness(1.08);
 }
     </style>
@@ -3335,11 +3335,61 @@ function updatePlayerUI(playerData) {
 ========================= */
 
 function getXPRequired(level) {
+    return 100 + (level - 1) * 200;
+}
 
-    return 100 + ((level - 1) * 200);
 
-}   
-    
+/* =========================
+   CỘNG KINH NGHIỆM
+========================= */
+
+function addXP(username, playerData, amount) {
+
+    if (!playerData || !amount || amount <= 0) {
+        return false;
+    }
+
+    playerData.xp += amount;
+
+    let leveledUp = false;
+
+    while (
+        playerData.xp >=
+        getXPRequired(playerData.level)
+    ) {
+
+        playerData.xp -=
+            getXPRequired(playerData.level);
+
+        playerData.level += 1;
+
+        leveledUp = true;
+    }
+
+    savePlayerData(
+        username,
+        playerData
+    );
+
+    updatePlayerUI(playerData);
+
+    if (leveledUp) {
+        alert(
+            "🎉 LÊN CẤP!\n\n" +
+            "✨ Bạn đã đạt cấp " +
+            playerData.level +
+            "!"
+        );
+    }
+
+    return leveledUp;
+}
+
+
+/* =========================
+   CẬP NHẬT GIAO DIỆN
+========================= */
+
 function updatePlayerUI(playerData) {
 
     if (!playerData) {
@@ -3362,42 +3412,60 @@ function updatePlayerUI(playerData) {
         document.getElementById("xp");
 
     const level =
-    document.getElementById("level");
+        document.getElementById("playerLevel");
 
     const achievements =
         document.getElementById("achievements");
 
+
     if (coins) {
-        coins.textContent = playerData.coins;
+        coins.textContent =
+            playerData.coins;
     }
+
 
     if (diamonds) {
-        diamonds.textContent = playerData.diamonds;
+        diamonds.textContent =
+            playerData.diamonds;
     }
+
 
     if (energy) {
-        energy.textContent = playerData.energy;
+        energy.textContent =
+            playerData.energy;
     }
 
+
     if (areas) {
-        areas.textContent = playerData.areas;
+        areas.textContent =
+            playerData.areas;
     }
+
 
     if (xp) {
 
-    const xpNeeded =
-        100 + (playerData.level - 1) * 200;
+        const xpRequired =
+            getXPRequired(playerData.level);
 
-    xp.textContent =
-        playerData.xp + " / " + xpNeeded;
-}
+        xp.textContent =
+            playerData.xp +
+            " / " +
+            xpRequired;
+    }
+
+
     if (level) {
-    level.textContent = playerData.level;
-}
+        level.textContent =
+            playerData.level;
+    }
+
 
     if (achievements) {
-        achievements.textContent = playerData.achievements;
+        achievements.textContent =
+            playerData.achievements;
     }
+
+    updateEquippedTitle();
 }
     
 /* =========================
@@ -3610,68 +3678,86 @@ updateEquippedTitle();
 ========================= */
 
 function startExplore() {
-    const username =
-        document.getElementById("playerName").textContent;
 
-    if (!username) {
+    const username =
+        document
+            .getElementById("playerName")
+            .textContent
+            .trim();
+
+    if (!username || username === "Người chơi") {
         alert("Ủa? Chưa có người chơi nè 👀🌙");
         return;
     }
 
 
-    const playerData = getPlayerData(username);
+    const playerData =
+        getPlayerData(username);
 
 
-    if (playerData.energy <= 0) {
+    if (playerData.energy < 10) {
         alert(
-            "⚡ Hết năng lượng rồi bé ơi! Nghỉ một chút đã nha 🌙"
+            "⚡ Không đủ năng lượng để khám phá!\n\n" +
+            "Bé cần ít nhất 10 năng lượng nha 🌙"
         );
         return;
     }
 
 
+    /* =========================
+       PHẦN THƯỞNG KHÁM PHÁ
+    ========================= */
+
     playerData.areas += 1;
-    playerData.xp += 25;
+
     playerData.coins += 20;
+
     playerData.energy -= 10;
 
 
-    playerData.areas += 1;
+    /* =========================
+       CỘNG XP
+    ========================= */
 
-addXP(
-    username,
-    playerData,
-    25
-);
-
-playerData.coins += 20;
-playerData.energy -= 10;
+    addXP(
+        username,
+        playerData,
+        25
+    );
 
 
-    savePlayerData(username, playerData);
-checkTitles(
-    username,
-    playerData
-);
+    /* =========================
+       LƯU
+    ========================= */
 
-    document.getElementById("areas").textContent =
-        playerData.areas;
+    savePlayerData(
+        username,
+        playerData
+    );
 
-    savePlayerData(username, playerData);
 
-checkTitles(
-    username,
-    playerData
-);
+    /* =========================
+       KIỂM TRA DANH HIỆU
+    ========================= */
 
-updatePlayerUI(playerData);
+    checkTitles(
+        username,
+        playerData
+    );
 
-    document.getElementById("coins").textContent =
-        playerData.coins;
 
-    document.getElementById("energy").textContent =
-        playerData.energy;
+    /* =========================
+       CẬP NHẬT GIAO DIỆN
+    ========================= */
 
+    updatePlayerUI(
+        playerData
+    );
+
+
+    /* =========================
+       THÔNG BÁO
+    ========================= */
 
     alert(
         "✨ Bạn vừa khám phá một vùng đất mới!\n\n" +
