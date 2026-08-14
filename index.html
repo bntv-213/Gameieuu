@@ -3612,52 +3612,164 @@ function register() {
 
 function login() {
 
-    const username =
-        document.getElementById("loginUsername").value.trim();
+    try {
 
-    const password =
-        document.getElementById("loginPassword").value;
+        const username =
+            document
+                .getElementById("loginUsername")
+                .value
+                .trim();
 
-    if (!username || !password) {
-        alert("Bé ơi bé à, nhập đầy đủ đi nò! 🌙");
-        return;
+        const password =
+            document
+                .getElementById("loginPassword")
+                .value;
+
+
+        if (!username || !password) {
+
+            alert(
+                "Bé ơi bé à, nhập đầy đủ đi nò! 🌙"
+            );
+
+            return;
+        }
+
+
+        /* =========================
+           ĐỌC TÀI KHOẢN
+        ========================= */
+
+        let accounts = {};
+
+        try {
+
+            accounts = JSON.parse(
+                localStorage.getItem(
+                    "lunariaAccounts"
+                ) || "{}"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Lỗi dữ liệu lunariaAccounts:",
+                error
+            );
+
+            alert(
+                "⚠️ Dữ liệu tài khoản đang bị lỗi.\n\n" +
+                "Bé mở F12 → Console rồi gửi anh dòng lỗi màu đỏ nha."
+            );
+
+            return;
+        }
+
+
+        /* =========================
+           KIỂM TRA TÀI KHOẢN
+        ========================= */
+
+        if (!accounts[username]) {
+
+            alert(
+                "Ụa? Tài khoản này chưa tồn tại nè 👀🌙"
+            );
+
+            return;
+        }
+
+
+        if (accounts[username] !== password) {
+
+            alert(
+                "Nhìn kĩ coi, có cái mật khẩu cũng nhập sai 🔐😭"
+            );
+
+            return;
+        }
+
+
+        /* =========================
+           LẤY DỮ LIỆU NHÂN VẬT
+        ========================= */
+
+        let playerData;
+
+        try {
+
+            playerData =
+                getPlayerData(username);
+
+        } catch (error) {
+
+            console.error(
+                "Lỗi dữ liệu người chơi:",
+                error
+            );
+
+            alert(
+                "⚠️ Tài khoản đúng rồi nhưng dữ liệu nhân vật đang bị lỗi.\n\n" +
+                "Bé mở F12 → Console rồi gửi anh dòng lỗi màu đỏ nha."
+            );
+
+            return;
+        }
+
+
+        /* =========================
+           ẨN TRANG ĐĂNG NHẬP
+        ========================= */
+
+        document
+            .getElementById("loginPage")
+            .classList.add("hidden");
+
+
+        /* =========================
+           HIỆN GAME
+        ========================= */
+
+        document
+            .getElementById("game")
+            .classList.remove("hidden");
+
+
+        /* =========================
+           HIỆN TÊN
+        ========================= */
+
+        document
+            .getElementById("playerName")
+            .textContent = username;
+
+
+        /* =========================
+           CẬP NHẬT GIAO DIỆN
+        ========================= */
+
+        updatePlayerUI(playerData);
+
+        updateEquippedTitle();
+
+
+        console.log(
+            "🌙 Đăng nhập thành công:",
+            username
+        );
+
+    } catch (error) {
+
+        console.error(
+            "❌ LỖI LOGIN:",
+            error
+        );
+
+        alert(
+            "❌ Lunaria gặp lỗi khi đăng nhập.\n\n" +
+            "Bé mở F12 → Console rồi chụp dòng đỏ gửi anh."
+        );
     }
-
-    const accounts = JSON.parse(
-        localStorage.getItem("lunariaAccounts") || "{}"
-    );
-
-    if (!accounts[username]) {
-        alert("Ụa? Tài khoản này chưa tồn tại nè 👀🌙");
-        return;
-    }
-
-    if (accounts[username] !== password) {
-        alert("Nhìn kĩ coi, có cái mật khẩu cũng nhập sai 🔐😭");
-        return;
-    }
-
-    const playerData = getPlayerData(username);
-
-    // Ẩn trang đăng nhập
-    document
-        .getElementById("loginPage")
-        .classList.add("hidden");
-
-    // Hiện game
-    document
-        .getElementById("game")
-        .classList.remove("hidden");
-
-    // Tên người chơi
-    document
-        .getElementById("playerName")
-        .textContent = username;
-
-    // Cập nhật toàn bộ chỉ số
-updatePlayerUI(playerData);
-
-updateEquippedTitle();
 }
 
 /* =========================
