@@ -1630,6 +1630,158 @@
 .equip-title-btn.equipped:hover {
     filter: brightness(1.08);
 }
+        /* =========================
+   🛍️ POPUP SHOP
+========================= */
+
+.shop-overlay {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 9999;
+
+    background:
+        rgba(5, 6, 25, 0.68);
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+}
+
+.shop-overlay.active {
+    display: flex;
+}
+
+.shop-popup {
+    position: relative;
+
+    width: min(850px, 92vw);
+    max-height: 88vh;
+
+    overflow-y: auto;
+
+    padding: 35px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            rgba(18, 19, 65, 0.97),
+            rgba(12, 13, 52, 0.97)
+        );
+
+    border:
+        1px solid rgba(180, 160, 255, 0.35);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.55),
+        0 0 40px rgba(130, 100, 255, 0.18);
+
+    animation:
+        shopOpen 0.2s ease-out;
+}
+
+@keyframes shopOpen {
+
+    from {
+        opacity: 0;
+        transform: scale(0.94) translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+
+/* =========================
+   NÚT ĐÓNG SHOP
+========================= */
+
+.shop-close {
+
+    position: absolute;
+
+    top: 18px;
+    right: 20px;
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color: white;
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.shop-close:hover {
+
+    background:
+        rgba(255,255,255,0.18);
+
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   TIÊU ĐỀ SHOP
+========================= */
+
+.shop-popup h2 {
+
+    margin: 0;
+
+    text-align: center;
+
+    color: white;
+
+    font-size: 32px;
+
+    text-shadow:
+        0 0 15px rgba(160,130,255,0.6);
+}
+
+.shop-popup p {
+
+    margin-top: 8px;
+
+    text-align: center;
+
+    color:
+        rgba(220,220,255,0.7);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .shop-overlay {
+        padding: 15px;
+    }
+
+    .shop-popup {
+
+        width: 100%;
+
+        padding: 25px 18px;
+    }
+}
     </style>
 </head>
 
