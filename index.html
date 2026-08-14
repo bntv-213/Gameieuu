@@ -3178,159 +3178,6 @@ function updateEquippedTitle() {
 }
     
 /* =========================
-   CẬP NHẬT GIAO DIỆN
-========================= */
-
-function getXPRequired(level) {
-    return 100 + (level - 1) * 200;
-}
-
-
-/* =========================
-   CỘNG KINH NGHIỆM
-========================= */
-
-function addXP(username, playerData, amount) {
-
-    if (!playerData || !amount || amount <= 0) {
-        return;
-    }
-
-    playerData.xp += amount;
-
-
-    /* =========================
-       KIỂM TRA LÊN CẤP
-    ========================= */
-
-    let leveledUp = false;
-
-    while (
-        playerData.xp >=
-        getXPRequired(playerData.level)
-    ) {
-
-        playerData.xp -=
-            getXPRequired(playerData.level);
-
-        playerData.level += 1;
-
-        leveledUp = true;
-    }
-
-
-    /* =========================
-       LƯU DỮ LIỆU
-    ========================= */
-
-    savePlayerData(
-        username,
-        playerData
-    );
-
-
-    /* =========================
-   CẬP NHẬT GIAO DIỆN
-========================= */
-
-function updatePlayerUI(playerData) {
-
-    if (!playerData) {
-        return;
-    }
-
-    // ...
-}
-
-    const coins =
-        document.getElementById("coins");
-
-    const diamonds =
-        document.getElementById("diamonds");
-
-    const energy =
-        document.getElementById("energy");
-
-    const areas =
-        document.getElementById("areas");
-
-    const xp =
-        document.getElementById("xp");
-
-    const achievements =
-        document.getElementById("achievements");
-
-    const level =
-        document.getElementById("playerLevel");
-
-
-    if (coins) {
-        coins.textContent =
-            playerData.coins;
-    }
-
-
-    if (diamonds) {
-        diamonds.textContent =
-            playerData.diamonds;
-    }
-
-
-    if (energy) {
-        energy.textContent =
-            playerData.energy;
-    }
-
-
-    if (areas) {
-        areas.textContent =
-            playerData.areas;
-    }
-
-
-    if (xp) {
-
-        const xpRequired =
-            getXPRequired(playerData.level);
-
-        xp.textContent =
-            playerData.xp +
-            " / " +
-            xpRequired;
-    }
-
-
-    if (level) {
-
-        level.textContent =
-            playerData.level;
-    }
-
-
-    if (achievements) {
-        achievements.textContent =
-            playerData.achievements;
-    }
-
-}
-
-
-    /* =========================
-       THÔNG BÁO LÊN CẤP
-    ========================= */
-
-    if (leveledUp) {
-
-        alert(
-            "🎉 LÊN CẤP!\n\n" +
-            "✨ Bạn đã đạt cấp " +
-            playerData.level +
-            "!"
-        );
-    }
-}
-
- /* =========================
    XP CẦN ĐỂ LÊN CẤP
 ========================= */
 
@@ -3353,10 +3200,6 @@ function addXP(username, playerData, amount) {
 
     let leveledUp = false;
 
-    /* =========================
-       KIỂM TRA LÊN CẤP
-    ========================= */
-
     while (
         playerData.xp >=
         getXPRequired(playerData.level)
@@ -3370,27 +3213,12 @@ function addXP(username, playerData, amount) {
         leveledUp = true;
     }
 
-
-    /* =========================
-       LƯU DỮ LIỆU
-    ========================= */
-
     savePlayerData(
         username,
         playerData
     );
 
-
-    /* =========================
-       CẬP NHẬT GIAO DIỆN
-    ========================= */
-
     updatePlayerUI(playerData);
-
-
-    /* =========================
-       THÔNG BÁO LÊN CẤP
-    ========================= */
 
     if (leveledUp) {
 
@@ -3413,7 +3241,6 @@ function updatePlayerUI(playerData) {
     if (!playerData) {
         return;
     }
-
 
     const coins =
         document.getElementById("coins");
@@ -3442,28 +3269,24 @@ function updatePlayerUI(playerData) {
             playerData.coins;
     }
 
-
     if (diamonds) {
         diamonds.textContent =
             playerData.diamonds;
     }
-
 
     if (energy) {
         energy.textContent =
             playerData.energy;
     }
 
-
     if (areas) {
         areas.textContent =
             playerData.areas;
     }
 
-
     if (xp) {
 
-        const xpRequired =
+        const xpNeeded =
             getXPRequired(
                 playerData.level
             );
@@ -3471,15 +3294,13 @@ function updatePlayerUI(playerData) {
         xp.textContent =
             playerData.xp +
             " / " +
-            xpRequired;
+            xpNeeded;
     }
-
 
     if (level) {
         level.textContent =
             playerData.level;
     }
-
 
     if (achievements) {
         achievements.textContent =
