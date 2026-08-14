@@ -1953,15 +1953,15 @@
 
                 <div
                     class="menu-card"
-                    onclick="showMessage('Thành tựu')">
+                    onclick="openShop()">
 
                     <div class="menu-icon">
-                        🏆
+                        🛍️
                     </div>
 
-                    <h3>
-                        Thành tựu
-                    </h3>
+<h3>
+    Shop
+</h3>
 
                     <p>
                         Những điều bạn đã đạt được
@@ -3863,6 +3863,19 @@ function openQuests() {
         .classList.add("active");
 }
 
+ function openShop() {
+
+    document
+        .getElementById("shopOverlay")
+        .classList.add("active");
+}
+
+ function closeShop() {
+
+    document
+        .getElementById("shopOverlay")
+        .classList.remove("active");
+}   
 
 /* =========================
    ĐÓNG
@@ -4465,6 +4478,35 @@ function closeInventory() {
             </div>
 
         </div>
+
+    </div>
+
+</div>
+    <!-- =========================
+     🛍️ SHOP
+========================= -->
+
+<div
+    id="shopOverlay"
+    class="shop-overlay">
+
+    <div class="shop-popup">
+
+        <button
+            class="shop-close"
+            onclick="closeShop()">
+
+            ×
+
+        </button>
+
+        <h2>
+            🛍️ Shop Lunaria
+        </h2>
+
+        <p>
+            Mua những vật phẩm đặc biệt ✨
+        </p>
 
     </div>
 
