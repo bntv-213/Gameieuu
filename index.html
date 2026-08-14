@@ -3189,7 +3189,7 @@ function getXPRequired(level) {
 
 
 /* =========================
-   CỘNG KINH NGHIỆM
+   CỘNG KINH NGHIỆM + THƯỞNG LÊN CẤP
 ========================= */
 
 function addXP(username, playerData, amount) {
@@ -3201,6 +3201,7 @@ function addXP(username, playerData, amount) {
     playerData.xp += amount;
 
     let leveledUp = false;
+    let rewards = [];
 
     while (
         playerData.xp >=
@@ -3210,29 +3211,88 @@ function addXP(username, playerData, amount) {
         playerData.xp -=
             getXPRequired(playerData.level);
 
+        /* TĂNG CẤP */
         playerData.level += 1;
 
         leveledUp = true;
+
+        /* =========================
+           🎁 PHẦN THƯỞNG LÊN CẤP
+        ========================= */
+
+        const level = playerData.level;
+
+        /* Cấp càng cao → thưởng càng nhiều */
+
+        const coinReward =
+            level * 100;
+
+        const diamondReward =
+            level * 2;
+
+        const energyReward =
+            level * 5;
+
+
+        /* CỘNG THƯỞNG */
+
+        playerData.coins +=
+            coinReward;
+
+        playerData.diamonds +=
+            diamondReward;
+
+        playerData.energy +=
+            energyReward;
+
+
+        /* LƯU THÔNG TIN THƯỞNG */
+
+        rewards.push(
+            "✨ Cấp " + level +
+            ": +" + coinReward + " 🪙" +
+            ", +" + diamondReward + " 💎" +
+            ", +" + energyReward + " ⚡"
+        );
     }
+
+
+    /* =========================
+       💾 LƯU DỮ LIỆU
+    ========================= */
 
     savePlayerData(
         username,
         playerData
     );
 
+
+    /* =========================
+       🔄 CẬP NHẬT GIAO DIỆN
+    ========================= */
+
     updatePlayerUI(playerData);
+
+
+    /* =========================
+       🎉 THÔNG BÁO LÊN CẤP
+    ========================= */
 
     if (leveledUp) {
 
         alert(
             "🎉 LÊN CẤP!\n\n" +
+
             "✨ Bạn đã đạt cấp " +
             playerData.level +
-            "!"
+            "!\n\n" +
+
+            "🎁 PHẦN THƯỞNG\n" +
+
+            rewards.join("\n")
         );
     }
 }
-
 
 /* =========================
    CẬP NHẬT GIAO DIỆN
