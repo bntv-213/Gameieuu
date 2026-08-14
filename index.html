@@ -3346,7 +3346,7 @@ function getXPRequired(level) {
 function addXP(username, playerData, amount) {
 
     if (!playerData || !amount || amount <= 0) {
-        return false;
+        return;
     }
 
     playerData.xp += amount;
@@ -3371,9 +3371,12 @@ function addXP(username, playerData, amount) {
         playerData
     );
 
-    updatePlayerUI(playerData);
+    updatePlayerUI(
+        playerData
+    );
 
     if (leveledUp) {
+
         alert(
             "🎉 LÊN CẤP!\n\n" +
             "✨ Bạn đã đạt cấp " +
@@ -3381,8 +3384,6 @@ function addXP(username, playerData, amount) {
             "!"
         );
     }
-
-    return leveledUp;
 }
 
 
@@ -3411,9 +3412,6 @@ function updatePlayerUI(playerData) {
     const xp =
         document.getElementById("xp");
 
-    const level =
-        document.getElementById("playerLevel");
-
     const achievements =
         document.getElementById("achievements");
 
@@ -3423,29 +3421,27 @@ function updatePlayerUI(playerData) {
             playerData.coins;
     }
 
-
     if (diamonds) {
         diamonds.textContent =
             playerData.diamonds;
     }
-
 
     if (energy) {
         energy.textContent =
             playerData.energy;
     }
 
-
     if (areas) {
         areas.textContent =
             playerData.areas;
     }
 
-
     if (xp) {
 
         const xpRequired =
-            getXPRequired(playerData.level);
+            getXPRequired(
+                playerData.level
+            );
 
         xp.textContent =
             playerData.xp +
@@ -3453,19 +3449,10 @@ function updatePlayerUI(playerData) {
             xpRequired;
     }
 
-
-    if (level) {
-        level.textContent =
-            playerData.level;
-    }
-
-
     if (achievements) {
         achievements.textContent =
             playerData.achievements;
     }
-
-    updateEquippedTitle();
 }
     
 /* =========================
