@@ -1782,6 +1782,78 @@
         padding: 25px 18px;
     }
 }
+        /* ===== SHOP ===== */
+
+.shop-popup{
+    width:min(850px,92vw);
+    max-height:88vh;
+    overflow-y:auto;
+    padding:35px;
+    border-radius:28px;
+    background:linear-gradient(rgba(18,19,65,.97),rgba(12,13,52,.97));
+    border:1px solid rgba(180,160,255,.35);
+}
+
+.shop-subtitle{
+    text-align:center;
+    color:#c8c8e8;
+    margin:10px 0 25px;
+}
+
+.shop-tabs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-bottom:25px;
+}
+
+.shop-tab{
+    padding:12px;
+    border-radius:12px;
+    background:rgba(255,255,255,.07);
+    color:#d7d7f3;
+    font-weight:bold;
+}
+
+.shop-tab.active{
+    background:linear-gradient(135deg,#7d67eb,#a78cff);
+    color:white;
+}
+
+.shop-panel{display:none;}
+.shop-panel.active{display:block;}
+
+.shop-item{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:18px;
+    margin-bottom:15px;
+    border-radius:18px;
+    background:rgba(255,255,255,.06);
+}
+
+.shop-icon{
+    font-size:38px;
+}
+
+.shop-info{
+    flex:1;
+}
+
+.shop-info h3{
+    margin-bottom:4px;
+}
+
+.shop-info p{
+    color:#bfc2e7;
+    font-size:13px;
+}
+
+.shop-price{
+    font-weight:bold;
+    color:#ffe89b;
+}
     </style>
 </head>
 
@@ -4459,6 +4531,20 @@ function closeInventory() {
         .getElementById("inventoryOverlay")
         .classList.remove("active");
 }
+    function switchShopTab(tab){
+
+    document.querySelectorAll(".shop-panel").forEach(panel=>{
+        panel.classList.remove("active");
+    });
+
+    document.querySelectorAll(".shop-tab").forEach(button=>{
+        button.classList.remove("active");
+    });
+
+    document.getElementById(tab+"Shop").classList.add("active");
+
+    event.target.classList.add("active");
+}
 </script>
     <!-- =========================
      POPUP TÚI ĐỒ
@@ -4642,26 +4728,135 @@ function closeInventory() {
     id="shopOverlay"
     class="shop-overlay">
 
-    <div class="shop-popup">
+    <button class="shop-close" onclick="closeShop()">×</button>
 
-        <button
-            class="shop-close"
-            onclick="closeShop()">
+<h2>🛍️ Shop Lunaria</h2>
+<p class="shop-subtitle">Mua vật phẩm để đồng hành cùng hành trình của bạn ✨</p>
 
-            ×
+<!-- TAB -->
+<div class="shop-tabs">
 
-        </button>
+    <button class="shop-tab active" onclick="switchShopTab('decorate')">
+        🎀 Trang trí
+    </button>
 
-        <h2>
-            🛍️ Shop Lunaria
-        </h2>
+    <button class="shop-tab" onclick="switchShopTab('resource')">
+        ⚡ Tài nguyên
+    </button>
 
-        <p>
-            Mua những vật phẩm đặc biệt ✨
-        </p>
+    <button class="shop-tab" onclick="switchShopTab('chest')">
+        📦 Rương
+    </button>
 
+</div>
+
+<!-- =================== TRANG TRÍ =================== -->
+
+<div id="decorateShop" class="shop-panel active">
+
+    <div class="shop-item">
+        <div class="shop-icon">💬</div>
+        <div class="shop-info">
+            <h3>Khung chat</h3>
+            <p>Trang trí khung hội thoại của bạn.</p>
+        </div>
+        <div class="shop-price">500 💎</div>
     </div>
 
+    <div class="shop-item">
+        <div class="shop-icon">🖼️</div>
+        <div class="shop-info">
+            <h3>Khung avatar</h3>
+            <p>Làm nổi bật hồ sơ người chơi.</p>
+        </div>
+        <div class="shop-price">350 💎</div>
+    </div>
+
+    <div class="shop-item">
+        <div class="shop-icon">🌈</div>
+        <div class="shop-info">
+            <h3>Màu tên</h3>
+            <p>Đổi màu tên nhân vật trong Lunaria.</p>
+        </div>
+        <div class="shop-price">250 💎</div>
+    </div>
+
+</div>
+
+<!-- =================== TÀI NGUYÊN =================== -->
+
+<div id="resourceShop" class="shop-panel">
+
+    <div class="shop-item">
+        <div class="shop-icon">⚡</div>
+        <div class="shop-info">
+            <h3>100 Xu → 5 NL</h3>
+            <p>Gói nhỏ</p>
+        </div>
+        <div class="shop-price">100 🪙</div>
+    </div>
+
+    <div class="shop-item">
+        <div class="shop-icon">⚡</div>
+        <div class="shop-info">
+            <h3>500 Xu → 30 NL</h3>
+            <p>Gói vừa</p>
+        </div>
+        <div class="shop-price">500 🪙</div>
+    </div>
+
+    <div class="shop-item">
+        <div class="shop-icon">⚡</div>
+        <div class="shop-info">
+            <h3>1 Kim cương → 30 NL</h3>
+            <p>Đổi nhanh</p>
+        </div>
+        <div class="shop-price">1 💎</div>
+    </div>
+
+    <div class="shop-item">
+        <div class="shop-icon">💰</div>
+        <div class="shop-info">
+            <h3>Đổi xu</h3>
+            <p>1 Kim cương = 500 Xu</p>
+        </div>
+        <div class="shop-price">1 💎</div>
+    </div>
+
+</div>
+
+<!-- =================== RƯƠNG =================== -->
+
+<div id="chestShop" class="shop-panel">
+
+    <div class="shop-item">
+        <div class="shop-icon">📦</div>
+        <div class="shop-info">
+            <h3>Rương Thường</h3>
+            <p>Cấp độ Thường • Hiếm • Quý</p>
+        </div>
+        <div class="shop-price">1000 🪙</div>
+    </div>
+
+    <div class="shop-item">
+        <div class="shop-icon">🌙</div>
+        <div class="shop-info">
+            <h3>Rương Nguyệt Quang</h3>
+            <p>Cấp độ Hiếm • Quý • Huyền thoại</p>
+        </div>
+        <div class="shop-price">2000 🪙</div>
+    </div>
+
+    <div class="shop-item">
+        <div class="shop-icon">👑</div>
+        <div class="shop-info">
+            <h3>Rương Hoàng Gia</h3>
+            <p>Cấp độ Huyền thoại • Thần thoại</p>
+        </div>
+        <div class="shop-price">5000 🪙</div>
+    </div>
+
+</div>
 </div>
 </body>
 </html>
