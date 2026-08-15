@@ -5105,142 +5105,234 @@ function closeInventory() {
 
     </div>
 
-</div>
-    <!-- =========================
-     🛍️ SHOP
+</div><!-- =========================
+     🛍️ SHOP LUNARIA
 ========================= -->
 
 <div
     id="shopOverlay"
     class="shop-overlay">
 
-    <button class="shop-close" onclick="closeShop()">×</button>
+    <div class="shop-popup">
 
-<h2>🛍️ Shop Lunaria</h2>
-<p class="shop-subtitle">Mua vật phẩm để đồng hành cùng hành trình của bạn ✨</p>
+        <!-- Nút đóng -->
+        <button
+            class="shop-close"
+            onclick="closeShop()">
+            ×
+        </button>
 
-<!-- TAB -->
-<div class="shop-tabs">
 
-    <button class="shop-tab active" onclick="switchShopTab('decorate')">
-        🎀 Trang trí
-    </button>
+        <!-- Tiêu đề -->
+        <div class="shop-header">
 
-    <button class="shop-tab" onclick="switchShopTab('resource')">
-        ⚡ Tài nguyên
-    </button>
+            <h2>
+                Mua vật phẩm để đồng hành cùng hành trình của bạn ✨
+            </h2>
 
-    <button class="shop-tab" onclick="switchShopTab('chest')">
-        📦 Rương
-    </button>
+        </div>
+
+
+        <!-- =========================
+             TAB SHOP
+        ========================= -->
+
+        <div class="shop-tabs">
+
+            <button
+                class="shop-tab active"
+                onclick="switchShopTab('decor')">
+
+                🎀 Trang trí
+
+            </button>
+
+
+            <button
+                class="shop-tab"
+                onclick="switchShopTab('resource')">
+
+                ⚡ Tài nguyên
+
+            </button>
+
+
+            <button
+                class="shop-tab"
+                onclick="switchShopTab('chest')">
+
+                📦 Rương
+
+            </button>
+
+        </div>
+
+
+        <!-- =========================
+             NỘI DUNG SHOP
+        ========================= -->
+
+        <div class="shop-content">
+
+
+            <!-- =========================
+                 TRANG TRÍ
+            ========================= -->
+
+            <div
+                id="shopDecor"
+                class="shop-panel active">
+
+                <div class="shop-item-list">
+
+
+                    <div class="shop-item">
+
+                        <div class="shop-item-icon">
+                            💬
+                        </div>
+
+                        <div class="shop-item-info">
+
+                            <div class="shop-item-name">
+                                Khung chat
+                            </div>
+
+                            <div class="shop-item-description">
+                                Trang trí khung hội thoại của bạn.
+                            </div>
+
+                        </div>
+
+                        <div class="shop-item-price">
+                            500 💎
+                        </div>
+
+                    </div>
+
+
+                    <div class="shop-item">
+
+                        <div class="shop-item-icon">
+                            🖼️
+                        </div>
+
+                        <div class="shop-item-info">
+
+                            <div class="shop-item-name">
+                                Khung avatar
+                            </div>
+
+                            <div class="shop-item-description">
+                                Làm nổi bật hồ sơ người chơi.
+                            </div>
+
+                        </div>
+
+                        <div class="shop-item-price">
+                            350 💎
+                        </div>
+
+                    </div>
+
+
+                    <div class="shop-item">
+
+                        <div class="shop-item-icon">
+                            🌈
+                        </div>
+
+                        <div class="shop-item-info">
+
+                            <div class="shop-item-name">
+                                Màu tên
+                            </div>
+
+                            <div class="shop-item-description">
+                                Đổi màu tên nhân vật trong Lunaria.
+                            </div>
+
+                        </div>
+
+                        <div class="shop-item-price">
+                            250 💎
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 TÀI NGUYÊN
+            ========================= -->
+
+            <div
+                id="shopResource"
+                class="shop-panel">
+
+                <div class="shop-item-list">
+
+                    <!-- Sau này thêm các gói năng lượng ở đây -->
+
+                    <div class="shop-empty">
+
+                        ⚡
+
+                        <strong>
+                            Tài nguyên
+                        </strong>
+
+                        <p>
+                            Các gói năng lượng sẽ xuất hiện tại đây.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 RƯƠNG
+            ========================= -->
+
+            <div
+                id="shopChest"
+                class="shop-panel">
+
+                <div class="shop-item-list">
+
+                    <!-- Sau này thêm 3 rương ở đây -->
+
+                    <div class="shop-empty">
+
+                        📦
+
+                        <strong>
+                            Rương Lunaria
+                        </strong>
+
+                        <p>
+                            Những chiếc rương bí ẩn đang chờ bạn.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
 
 </div>
-
-<!-- =================== TRANG TRÍ =================== -->
-
-<div id="decorateShop" class="shop-panel active">
-
-    <div class="shop-item">
-        <div class="shop-icon">💬</div>
-        <div class="shop-info">
-            <h3>Khung chat</h3>
-            <p>Trang trí khung hội thoại của bạn.</p>
-        </div>
-        <div class="shop-price">500 💎</div>
-    </div>
-
-    <div class="shop-item">
-        <div class="shop-icon">🖼️</div>
-        <div class="shop-info">
-            <h3>Khung avatar</h3>
-            <p>Làm nổi bật hồ sơ người chơi.</p>
-        </div>
-        <div class="shop-price">350 💎</div>
-    </div>
-
-    <div class="shop-item">
-        <div class="shop-icon">🌈</div>
-        <div class="shop-info">
-            <h3>Màu tên</h3>
-            <p>Đổi màu tên nhân vật trong Lunaria.</p>
-        </div>
-        <div class="shop-price">250 💎</div>
-    </div>
-
-</div>
-
-<!-- =================== TÀI NGUYÊN =================== -->
-
-<div id="resourceShop" class="shop-panel">
-
-    <div class="shop-item">
-        <div class="shop-icon">⚡</div>
-        <div class="shop-info">
-            <h3>100 Xu → 5 NL</h3>
-            <p>Gói nhỏ</p>
-        </div>
-        <div class="shop-price">100 🪙</div>
-    </div>
-
-    <div class="shop-item">
-        <div class="shop-icon">⚡</div>
-        <div class="shop-info">
-            <h3>500 Xu → 30 NL</h3>
-            <p>Gói vừa</p>
-        </div>
-        <div class="shop-price">500 🪙</div>
-    </div>
-
-    <div class="shop-item">
-        <div class="shop-icon">⚡</div>
-        <div class="shop-info">
-            <h3>1 Kim cương → 30 NL</h3>
-            <p>Đổi nhanh</p>
-        </div>
-        <div class="shop-price">1 💎</div>
-    </div>
-
-    <div class="shop-item">
-        <div class="shop-icon">💰</div>
-        <div class="shop-info">
-            <h3>Đổi xu</h3>
-            <p>1 Kim cương = 500 Xu</p>
-        </div>
-        <div class="shop-price">1 💎</div>
-    </div>
-
-</div>
-
-<!-- =================== RƯƠNG =================== -->
-
-<div id="chestShop" class="shop-panel">
-
-    <div class="shop-item">
-        <div class="shop-icon">📦</div>
-        <div class="shop-info">
-            <h3>Rương Thường</h3>
-            <p>Cấp độ Thường • Hiếm • Quý</p>
-        </div>
-        <div class="shop-price">1000 🪙</div>
-    </div>
-
-    <div class="shop-item">
-        <div class="shop-icon">🌙</div>
-        <div class="shop-info">
-            <h3>Rương Nguyệt Quang</h3>
-            <p>Cấp độ Hiếm • Quý • Huyền thoại</p>
-        </div>
-        <div class="shop-price">2000 🪙</div>
-    </div>
-
-    <div class="shop-item">
-        <div class="shop-icon">👑</div>
-        <div class="shop-info">
-            <h3>Rương Hoàng Gia</h3>
-            <p>Cấp độ Huyền thoại • Thần thoại</p>
-        </div>
-        <div class="shop-price">5000 🪙</div>
-    </div>
 
 </div>
 </div>
