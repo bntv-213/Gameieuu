@@ -2240,6 +2240,512 @@
         font-size: 12px;
     }
 }
+        /* =========================
+   🛍️ SHOP LUNARIA
+========================= */
+
+.shop-overlay {
+    display: none;
+
+    position: fixed;
+    inset: 0;
+
+    z-index: 9999;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 25px;
+
+    /*
+       Làm tối nền nhưng KHÔNG làm shop bị chìm
+    */
+    background:
+        rgba(5, 6, 25, 0.78);
+
+    backdrop-filter: blur(5px);
+}
+
+.shop-overlay.active {
+    display: flex;
+}
+
+
+/* =========================
+   KHUNG SHOP
+========================= */
+
+.shop-popup {
+
+    width: min(850px, 94vw);
+    max-height: 88vh;
+
+    overflow-y: auto;
+
+    padding: 32px;
+
+    position: relative;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(19, 20, 67, 0.99),
+            rgba(11, 12, 48, 0.99)
+        );
+
+    border:
+        1px solid rgba(180, 160, 255, 0.38);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,0.65),
+        0 0 45px rgba(130,100,255,0.18);
+
+    animation:
+        shopOpen 0.22s ease-out;
+}
+
+
+@keyframes shopOpen {
+
+    from {
+        opacity: 0;
+        transform:
+            scale(0.95)
+            translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            scale(1)
+            translateY(0);
+    }
+}
+
+
+/* =========================
+   NÚT ĐÓNG
+========================= */
+
+.shop-close {
+
+    position: absolute;
+
+    top: 18px;
+    right: 20px;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.shop-close:hover {
+
+    background:
+        rgba(255,255,255,0.16);
+
+    transform:
+        scale(1.06);
+}
+
+
+/* =========================
+   TIÊU ĐỀ
+========================= */
+
+.shop-header {
+
+    padding-right: 45px;
+
+    text-align: center;
+
+    margin-bottom: 25px;
+}
+
+.shop-header h2 {
+
+    color: white;
+
+    font-size: clamp(20px, 3vw, 28px);
+
+    line-height: 1.4;
+
+    text-shadow:
+        0 0 15px rgba(160,130,255,0.55);
+}
+
+
+/* =========================
+   TAB
+========================= */
+
+.shop-tabs {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 22px;
+}
+
+.shop-tab {
+
+    padding: 14px 10px;
+
+    border-radius: 14px;
+
+    color: #c9c9e5;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.shop-tab:hover {
+
+    background:
+        rgba(255,255,255,0.12);
+
+    transform:
+        translateY(-2px);
+}
+
+.shop-tab.active {
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #765fe0,
+            #9b7cff
+        );
+
+    border-color:
+        rgba(255,255,255,0.18);
+
+    box-shadow:
+        0 8px 25px
+        rgba(126,99,255,0.30);
+}
+
+
+/* =========================
+   PANEL
+========================= */
+
+.shop-panel {
+    display: none;
+}
+
+.shop-panel.active {
+    display: block;
+}
+
+
+/* =========================
+   DANH SÁCH VẬT PHẨM
+========================= */
+
+.shop-item-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+
+/* =========================
+   CARD VẬT PHẨM
+========================= */
+
+.shop-item {
+
+    min-height: 105px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 18px 20px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid
+        rgba(190,175,255,0.18);
+
+    box-shadow:
+        inset 0 0 25px
+        rgba(150,120,255,0.025);
+
+    transition: 0.2s;
+}
+
+.shop-item:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+        rgba(255,255,255,0.10);
+
+    border-color:
+        rgba(190,175,255,0.30);
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,0.22);
+}
+
+
+/* =========================
+   ICON
+========================= */
+
+.shop-item-icon {
+
+    width: 65px;
+    height: 65px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 17px;
+
+    background:
+        rgba(140,117,255,0.12);
+
+    border:
+        1px solid
+        rgba(180,160,255,0.25);
+
+    font-size: 34px;
+
+    box-shadow:
+        0 0 18px
+        rgba(130,100,255,0.10);
+}
+
+
+/* =========================
+   THÔNG TIN
+========================= */
+
+.shop-item-info {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+.shop-item-name {
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+.shop-item-description {
+
+    margin-top: 6px;
+
+    color: #c5c8e5;
+
+    font-size: 13px;
+
+    line-height: 1.45;
+}
+
+
+/* =========================
+   GIÁ
+========================= */
+
+.shop-item-price {
+
+    flex-shrink: 0;
+
+    padding: 11px 16px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    border:
+        1px solid
+        rgba(190,175,255,0.20);
+
+    color: #ffe58a;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   PANEL TRỐNG
+========================= */
+
+.shop-empty {
+
+    min-height: 220px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.05);
+
+    border:
+        1px solid
+        rgba(190,175,255,0.14);
+
+    color: #c5c8e5;
+
+    font-size: 45px;
+}
+
+.shop-empty strong {
+
+    margin-top: 12px;
+
+    color: white;
+
+    font-size: 19px;
+}
+
+.shop-empty p {
+
+    margin-top: 7px;
+
+    color: #9296bd;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .shop-overlay {
+        padding: 15px;
+    }
+
+    .shop-popup {
+
+        width: 100%;
+
+        padding: 25px 18px;
+
+        border-radius: 23px;
+    }
+
+    .shop-tabs {
+
+        gap: 7px;
+    }
+
+    .shop-tab {
+
+        padding: 12px 6px;
+
+        font-size: 13px;
+    }
+
+    .shop-item {
+
+        gap: 12px;
+
+        padding: 15px;
+    }
+
+    .shop-item-icon {
+
+        width: 53px;
+        height: 53px;
+
+        font-size: 28px;
+    }
+
+    .shop-item-name {
+
+        font-size: 16px;
+    }
+
+    .shop-item-description {
+
+        font-size: 11px;
+    }
+
+    .shop-item-price {
+
+        padding: 9px 10px;
+
+        font-size: 13px;
+    }
+}
     </style>
 </head>
 
@@ -4930,6 +5436,62 @@ function closeInventory() {
     document.getElementById(tab+"Shop").classList.add("active");
 
     event.target.classList.add("active");
+}
+    function switchShopTab(tab) {
+
+    const tabs =
+        document.querySelectorAll(".shop-tab");
+
+    const panels =
+        document.querySelectorAll(".shop-panel");
+
+
+    tabs.forEach(button => {
+
+        button.classList.remove("active");
+
+    });
+
+
+    panels.forEach(panel => {
+
+        panel.classList.remove("active");
+
+    });
+
+
+    if (tab === "decor") {
+
+        tabs[0].classList.add("active");
+
+        document
+            .getElementById("shopDecor")
+            .classList.add("active");
+
+    }
+
+
+    if (tab === "resource") {
+
+        tabs[1].classList.add("active");
+
+        document
+            .getElementById("shopResource")
+            .classList.add("active");
+
+    }
+
+
+    if (tab === "chest") {
+
+        tabs[2].classList.add("active");
+
+        document
+            .getElementById("shopChest")
+            .classList.add("active");
+
+    }
+
 }
 </script>
     <!-- =========================
