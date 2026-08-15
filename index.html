@@ -2746,6 +2746,320 @@
         font-size: 13px;
     }
 }
+        /* =========================
+   🛍️ NỘI DUNG SHOP
+========================= */
+
+.shop-content {
+    width: 100%;
+    margin-top: 24px;
+}
+
+.shop-panel {
+    display: none;
+}
+
+.shop-panel.active {
+    display: block;
+}
+
+
+/* =========================
+   TIÊU ĐỀ PHẦN SHOP
+========================= */
+
+.shop-section-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 18px 20px;
+    margin-bottom: 18px;
+
+    border-radius: 18px;
+
+    background: rgba(255,255,255,0.055);
+
+    border: 1px solid rgba(190,175,255,0.16);
+}
+
+.shop-section-icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 15px;
+
+    background: rgba(140,117,255,0.13);
+
+    font-size: 29px;
+}
+
+.shop-section-title h3 {
+    font-size: 19px;
+    color: white;
+}
+
+.shop-section-title p {
+    margin-top: 4px;
+
+    color: #999dc5;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   CÁC Ô SHOP
+========================= */
+
+.shop-item-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 15px;
+}
+
+.shop-item {
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.055);
+
+    border:
+        1px solid rgba(190,175,255,0.17);
+
+    transition: 0.2s;
+}
+
+.shop-item:hover {
+    transform: translateY(-3px);
+
+    background:
+        rgba(255,255,255,0.085);
+
+    border-color:
+        rgba(190,175,255,0.28);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.22);
+}
+
+.shop-item-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+.shop-item-icon {
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 16px;
+
+    background:
+        rgba(140,117,255,0.12);
+
+    font-size: 31px;
+}
+
+.shop-item-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.shop-item-name {
+    color: white;
+
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.shop-item-description {
+    margin-top: 5px;
+
+    color: #999dc5;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+}
+
+
+/* =========================
+   SỐ LƯỢNG NĂNG LƯỢNG
+========================= */
+
+.shop-energy {
+    margin-top: 17px;
+
+    padding: 12px;
+
+    text-align: center;
+
+    border-radius: 13px;
+
+    background:
+        rgba(140,117,255,0.09);
+
+    color: #d7cbff;
+
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   GIÁ MUA
+========================= */
+
+.shop-buy-row {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 9px;
+
+    margin-top: 14px;
+}
+
+.shop-buy-btn {
+    padding: 11px 9px;
+
+    border-radius: 12px;
+
+    color: white;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid rgba(255,255,255,0.13);
+
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.shop-buy-btn:hover {
+    transform: translateY(-2px);
+
+    background:
+        rgba(140,117,255,0.22);
+
+    border-color:
+        rgba(180,160,255,0.35);
+}
+
+.shop-buy-btn.diamond {
+    background:
+        rgba(90,190,255,0.08);
+
+    border-color:
+        rgba(90,190,255,0.18);
+}
+
+.shop-buy-btn.diamond:hover {
+    background:
+        rgba(90,190,255,0.18);
+}
+
+
+/* =========================
+   RƯƠNG
+========================= */
+
+.chest-item {
+    text-align: center;
+}
+
+.chest-icon {
+    font-size: 65px;
+
+    margin-bottom: 12px;
+
+    filter:
+        drop-shadow(
+            0 0 14px
+            rgba(170,140,255,0.35)
+        );
+}
+
+.chest-rarity {
+    display: inline-block;
+
+    margin-top: 8px;
+
+    padding: 5px 10px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color: #c9c3e8;
+
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.chest-description {
+    margin-top: 10px;
+
+    min-height: 34px;
+
+    color: #999dc5;
+
+    font-size: 12px;
+
+    line-height: 1.45;
+}
+
+.chest-price {
+    margin-top: 15px;
+
+    color: #e5dcff;
+
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+    .shop-item-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .shop-buy-row {
+        grid-template-columns: 1fr 1fr;
+    }
+}
     </style>
 </head>
 
@@ -4981,6 +5295,9 @@ function openQuests() {
 
  function openShop() {
 
+    renderShopResources();
+    renderShopChests();
+
     document
         .getElementById("shopOverlay")
         .classList.add("active");
@@ -4992,6 +5309,50 @@ function openQuests() {
         .getElementById("shopOverlay")
         .classList.remove("active");
 }   
+
+    function buyEnergy(id) {
+
+    const item =
+        shopResources.find(
+            resource => resource.id === id
+        );
+
+    if (!item) return;
+
+    const currencyName =
+        item.currency === "diamond"
+            ? "kim cương"
+            : "xu";
+
+    showMessage(
+        `Mua ${item.name}: +${item.energy} năng lượng bằng ${item.price} ${currencyName}`
+    );
+}
+
+
+function buyChest(id, currency) {
+
+    const chest =
+        shopChests.find(
+            item => item.id === id
+        );
+
+    if (!chest) return;
+
+    const price =
+        currency === "diamond"
+            ? chest.diamondPrice
+            : chest.xuPrice;
+
+    const currencyName =
+        currency === "diamond"
+            ? "kim cương"
+            : "xu";
+
+    showMessage(
+        `Mua ${chest.name}: ${price} ${currencyName}`
+    );
+}
 
 /* =========================
    ĐÓNG
@@ -5667,7 +6028,8 @@ function closeInventory() {
 
     </div>
 
-</div><!-- =========================
+</div>
+    <!-- =========================
      🛍️ SHOP LUNARIA
 ========================= -->
 
@@ -5731,11 +6093,51 @@ function closeInventory() {
 
 
         <!-- =========================
-             NỘI DUNG SHOP
-        ========================= -->
+     NỘI DUNG SHOP
+========================= -->
 
-        <div class="shop-content">
+<div id="shopContent" class="shop-content">
 
+    <!-- =========================
+         ⚡ TÀI NGUYÊN
+    ========================= -->
+
+    <div id="shopResources" class="shop-panel">
+
+        <div class="shop-section-title">
+            <div class="shop-section-icon">⚡</div>
+
+            <div>
+                <h3>Tài nguyên</h3>
+                <p>Mua năng lượng để tiếp tục khám phá Lunaria.</p>
+            </div>
+        </div>
+
+        <div id="resourceList" class="shop-item-grid"></div>
+
+    </div>
+
+
+    <!-- =========================
+         📦 RƯƠNG
+    ========================= -->
+
+    <div id="shopChests" class="shop-panel">
+
+        <div class="shop-section-title">
+            <div class="shop-section-icon">📦</div>
+
+            <div>
+                <h3>Rương Lunaria</h3>
+                <p>Mở rương để nhận những vật phẩm đặc biệt.</p>
+            </div>
+        </div>
+
+        <div id="chestList" class="shop-item-grid"></div>
+
+    </div>
+
+</div>
 
             <!-- =========================
                  TRANG TRÍ
@@ -5848,40 +6250,270 @@ function closeInventory() {
                             Tài nguyên
                         </strong>
 
-                        <p>
-                            Các gói năng lượng sẽ xuất hiện tại đây.
-                        </p>
+                        /* =========================
+   ⚡ GÓI NĂNG LƯỢNG
+========================= */
 
+const shopResources = [
+
+    {
+        id: "energy_100",
+        icon: "⚡",
+        name: "Gói Nhỏ",
+        description: "Một chút năng lượng cho hành trình.",
+        energy: 5,
+        currency: "xu",
+        price: 100
+    },
+
+    {
+        id: "energy_500",
+        icon: "⚡",
+        name: "Gói Vừa",
+        description: "Bổ sung thêm năng lượng.",
+        energy: 25,
+        currency: "xu",
+        price: 500
+    },
+
+    {
+        id: "energy_1000",
+        icon: "⚡",
+        name: "Gói Lớn",
+        description: "Một lượng năng lượng đáng kể.",
+        energy: 50,
+        currency: "xu",
+        price: 1000
+    },
+
+    {
+        id: "energy_5000",
+        icon: "⚡",
+        name: "Gói Đại",
+        description: "Gói năng lượng dành cho những chuyến đi dài.",
+        energy: 250,
+        currency: "xu",
+        price: 5000
+    },
+
+    {
+        id: "diamond_energy_1",
+        icon: "💎",
+        name: "Gói Ngọc Nhỏ",
+        description: "Đổi kim cương lấy năng lượng.",
+        energy: 30,
+        currency: "diamond",
+        price: 1
+    },
+
+    {
+        id: "diamond_energy_5",
+        icon: "💎",
+        name: "Gói Ngọc Vừa",
+        description: "Nhiều năng lượng hơn với kim cương.",
+        energy: 150,
+        currency: "diamond",
+        price: 5
+    },
+
+    {
+        id: "diamond_energy_10",
+        icon: "💎",
+        name: "Gói Ngọc Lớn",
+        description: "Một gói năng lượng lớn.",
+        energy: 300,
+        currency: "diamond",
+        price: 10
+    },
+
+    {
+        id: "diamond_energy_25",
+        icon: "💎",
+        name: "Gói Ngọc Đại",
+        description: "Gói năng lượng cực lớn dành cho hành trình dài.",
+        energy: 750,
+        currency: "diamond",
+        price: 25
+    }
+
+];
+
+
+/* =========================
+   📦 RƯƠNG
+========================= */
+
+const shopChests = [
+
+    {
+        id: "chest_normal",
+        icon: "📦",
+        name: "Rương Thường",
+        rarity: "Cấp độ: Thường",
+        description: "Một chiếc rương cơ bản chứa những vật phẩm sưu tầm quen thuộc.",
+        xuPrice: 1000,
+        diamondPrice: 2
+    },
+
+    {
+        id: "chest_moonlight",
+        icon: "🌙",
+        name: "Rương Nguyệt Quang",
+        rarity: "Cấp độ: Hiếm",
+        description: "Chiếc rương được ánh trăng Lunaria ban phước.",
+        xuPrice: 2000,
+        diamondPrice: 4
+    },
+
+    {
+        id: "chest_royal",
+        icon: "👑",
+        name: "Rương Hoàng Gia",
+        rarity: "Cấp độ: Huyền thoại",
+        description: "Chiếc rương quý giá dành cho những nhà thám hiểm may mắn.",
+        xuPrice: 5000,
+        diamondPrice: 10
+    }
+
+];
+
+
+/* =========================
+   HIỂN THỊ TÀI NGUYÊN
+========================= */
+
+function renderShopResources() {
+
+    const container =
+        document.getElementById("resourceList");
+
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    shopResources.forEach(item => {
+
+        const currencyIcon =
+            item.currency === "diamond"
+                ? "💎"
+                : "🪙";
+
+        const itemElement =
+            document.createElement("div");
+
+        itemElement.className =
+            "shop-item";
+
+        itemElement.innerHTML = `
+
+            <div class="shop-item-header">
+
+                <div class="shop-item-icon">
+                    ${item.icon}
+                </div>
+
+                <div class="shop-item-info">
+
+                    <div class="shop-item-name">
+                        ${item.name}
+                    </div>
+
+                    <div class="shop-item-description">
+                        ${item.description}
                     </div>
 
                 </div>
 
             </div>
 
+            <div class="shop-energy">
+                +${item.energy} ⚡ năng lượng
+            </div>
 
-            <!-- =========================
-                 RƯƠNG
-            ========================= -->
+            <div class="shop-buy-row">
 
-            <div
-                id="shopChest"
-                class="shop-panel">
+                <button
+                    class="shop-buy-btn ${item.currency === "diamond" ? "diamond" : ""}"
+                    onclick="buyEnergy('${item.id}')">
 
-                <div class="shop-item-list">
+                    ${item.price.toLocaleString()}
+                    ${currencyIcon}
 
-                    <!-- Sau này thêm 3 rương ở đây -->
+                </button>
 
-                    <div class="shop-empty">
+            </div>
+        `;
 
-                        📦
+        container.appendChild(itemElement);
 
-                        <strong>
-                            Rương Lunaria
-                        </strong>
+    });
+}
 
-                        <p>
-                            Những chiếc rương bí ẩn đang chờ bạn.
-                        </p>
+
+/* =========================
+   HIỂN THỊ RƯƠNG
+========================= */
+
+function renderShopChests() {
+
+    const container =
+        document.getElementById("chestList");
+
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    shopChests.forEach(chest => {
+
+        const itemElement =
+            document.createElement("div");
+
+        itemElement.className =
+            "shop-item chest-item";
+
+        itemElement.innerHTML = `
+
+            <div class="chest-icon">
+                ${chest.icon}
+            </div>
+
+            <div class="shop-item-name">
+                ${chest.name}
+            </div>
+
+            <div class="chest-rarity">
+                ${chest.rarity}
+            </div>
+
+            <div class="chest-description">
+                ${chest.description}
+            </div>
+
+            <div class="shop-buy-row">
+
+                <button
+                    class="shop-buy-btn"
+                    onclick="buyChest('${chest.id}', 'xu')">
+
+                    ${chest.xuPrice.toLocaleString()} 🪙
+
+                </button>
+
+                <button
+                    class="shop-buy-btn diamond"
+                    onclick="buyChest('${chest.id}', 'diamond')">
+
+                    ${chest.diamondPrice} 💎
+
+                </button>
+
+            </div>
+        `;
+
+        container.appendChild(itemElement);
+
+    });
+}
 
                     </div>
 
