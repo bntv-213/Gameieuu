@@ -5781,20 +5781,6 @@ function closeInventory() {
         .getElementById("inventoryOverlay")
         .classList.remove("active");
 }
-    function switchShopTab(tab){
-
-    document.querySelectorAll(".shop-panel").forEach(panel=>{
-        panel.classList.remove("active");
-    });
-
-    document.querySelectorAll(".shop-tab").forEach(button=>{
-        button.classList.remove("active");
-    });
-
-    document.getElementById(tab+"Shop").classList.add("active");
-
-    event.target.classList.add("active");
-}
     function switchShopTab(tab) {
 
     const tabs =
@@ -5803,20 +5789,13 @@ function closeInventory() {
     const panels =
         document.querySelectorAll(".shop-panel");
 
-
     tabs.forEach(button => {
-
         button.classList.remove("active");
-
     });
-
 
     panels.forEach(panel => {
-
         panel.classList.remove("active");
-
     });
-
 
     if (tab === "decor") {
 
@@ -5825,30 +5804,26 @@ function closeInventory() {
         document
             .getElementById("shopDecor")
             .classList.add("active");
-
     }
-
 
     if (tab === "resource") {
 
         tabs[1].classList.add("active");
 
         document
-            .getElementById("shopResource")
+            .getElementById("shopResources")
             .classList.add("active");
-
     }
-
 
     if (tab === "chest") {
 
         tabs[2].classList.add("active");
 
         document
-            .getElementById("shopChest")
+            .getElementById("shopChests")
             .classList.add("active");
-
     }
+}
 
 }
 </script>
@@ -6247,6 +6222,7 @@ function closeInventory() {
                             Tài nguyên
                         </strong>
 
+<script>                        
 
 /* =========================
    HIỂN THỊ TÀI NGUYÊN
@@ -6397,7 +6373,8 @@ function renderShopChests() {
     </div>
 
 </div>
-
+</script>
+                        
 </div>
 </div>
 </body>
