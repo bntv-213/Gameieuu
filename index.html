@@ -6073,22 +6073,293 @@ function closeInventory() {
          ⚡ TÀI NGUYÊN
     ========================= -->
 
-    <div id="shopResources" class="shop-panel">
+    <div
+    id="shopResources"
+    class="shop-panel">
 
-        <div class="shop-section-title">
-            <div class="shop-section-icon">⚡</div>
+    <div class="resource-header">
 
-            <div>
-                <h3>Tài nguyên</h3>
-                <p>Mua năng lượng để tiếp tục khám phá Lunaria.</p>
-            </div>
+        <div class="resource-icon">
+            ⚡
         </div>
 
-        <div id="resourceList" class="shop-item-grid"></div>
+        <div>
+            <h3>
+                Tài nguyên
+            </h3>
+
+            <p>
+                Mua năng lượng để tiếp tục khám phá Lunaria.
+            </p>
+        </div>
 
     </div>
 
 
+    <!-- =========================
+         MUA BẰNG XU
+    ========================= -->
+
+    <div class="resource-section">
+
+        <div class="resource-section-title">
+            💰 Mua bằng xu
+        </div>
+
+        <div class="resource-grid">
+
+            <div class="resource-card">
+
+                <div class="resource-card-icon">
+                    ⚡
+                </div>
+
+                <div class="resource-card-info">
+
+                    <h4>
+                        Gói nhỏ
+                    </h4>
+
+                    <p>
+                        +5 năng lượng
+                    </p>
+
+                </div>
+
+                <button
+                    class="resource-buy-btn"
+                    onclick="buyResource('xu_100')">
+
+                    100 💰
+
+                </button>
+
+            </div>
+
+
+            <div class="resource-card">
+
+                <div class="resource-card-icon">
+                    ⚡
+                </div>
+
+                <div class="resource-card-info">
+
+                    <h4>
+                        Gói vừa
+                    </h4>
+
+                    <p>
+                        +27 năng lượng
+                    </p>
+
+                </div>
+
+                <button
+                    class="resource-buy-btn"
+                    onclick="buyResource('xu_500')">
+
+                    500 💰
+
+                </button>
+
+            </div>
+
+
+            <div class="resource-card">
+
+                <div class="resource-card-icon">
+                    ⚡
+                </div>
+
+                <div class="resource-card-info">
+
+                    <h4>
+                        Gói lớn
+                    </h4>
+
+                    <p>
+                        +60 năng lượng
+                    </p>
+
+                </div>
+
+                <button
+                    class="resource-buy-btn"
+                    onclick="buyResource('xu_1000')">
+
+                    1.000 💰
+
+                </button>
+
+            </div>
+
+
+            <div class="resource-card">
+
+                <div class="resource-card-icon">
+                    ⚡
+                </div>
+
+                <div class="resource-card-info">
+
+                    <h4>
+                        Gói khổng lồ
+                    </h4>
+
+                    <p>
+                        +325 năng lượng
+                    </p>
+
+                </div>
+
+                <button
+                    class="resource-buy-btn"
+                    onclick="buyResource('xu_5000')">
+
+                    5.000 💰
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         MUA BẰNG KIM CƯƠNG
+    ========================= -->
+
+    <div class="resource-section">
+
+        <div class="resource-section-title">
+            💎 Mua bằng kim cương
+        </div>
+
+        <div class="resource-grid">
+
+            <div class="resource-card diamond-card">
+
+                <div class="resource-card-icon">
+                    ⚡
+                </div>
+
+                <div class="resource-card-info">
+
+                    <h4>
+                        Gói ánh sáng
+                    </h4>
+
+                    <p>
+                        +30 năng lượng
+                    </p>
+
+                </div>
+
+                <button
+                    class="resource-buy-btn diamond-btn"
+                    onclick="buyResource('diamond_1')">
+
+                    1 💎
+
+                </button>
+
+            </div>
+
+
+            <div class="resource-card diamond-card">
+
+                <div class="resource-card-icon">
+                    ⚡
+                </div>
+
+                <div class="resource-card-info">
+
+                    <h4>
+                        Gói nguyệt quang
+                    </h4>
+
+                    <p>
+                        +160 năng lượng
+                    </p>
+
+                </div>
+
+                <button
+                    class="resource-buy-btn diamond-btn"
+                    onclick="buyResource('diamond_5')">
+
+                    5 💎
+
+                </button>
+
+            </div>
+
+
+            <div class="resource-card diamond-card">
+
+                <div class="resource-card-icon">
+                    ⚡
+                </div>
+
+                <div class="resource-card-info">
+
+                    <h4>
+                        Gói tinh tú
+                    </h4>
+
+                    <p>
+                        +350 năng lượng
+                    </p>
+
+                </div>
+
+                <button
+                    class="resource-buy-btn diamond-btn"
+                    onclick="buyResource('diamond_10')">
+
+                    10 💎
+
+                </button>
+
+            </div>
+
+
+            <div class="resource-card diamond-card">
+
+                <div class="resource-card-icon">
+                    ⚡
+                </div>
+
+                <div class="resource-card-info">
+
+                    <h4>
+                        Gói thiên hà
+                    </h4>
+
+                    <p>
+                        +950 năng lượng
+                    </p>
+
+                </div>
+
+                <button
+                    class="resource-buy-btn diamond-btn"
+                    onclick="buyResource('diamond_25')">
+
+                    25 💎
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
     <!-- =========================
          📦 RƯƠNG
     ========================= -->
