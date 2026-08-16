@@ -3060,6 +3060,258 @@
         grid-template-columns: 1fr 1fr;
     }
 }
+        /* =========================
+   SHOP - TÀI NGUYÊN
+========================= */
+
+.resource-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    padding: 22px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    border:
+        1px solid rgba(190,175,255,0.18);
+
+    margin-bottom: 22px;
+}
+
+.resource-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 17px;
+
+    background:
+        rgba(140,117,255,0.16);
+
+    font-size: 32px;
+}
+
+.resource-header h3 {
+    font-size: 22px;
+    color: white;
+}
+
+.resource-header p {
+    margin-top: 5px;
+
+    color: #aeb1d1;
+    font-size: 13px;
+}
+
+
+/* =========================
+   NHÓM TÀI NGUYÊN
+========================= */
+
+.resource-section {
+    margin-top: 25px;
+}
+
+.resource-section-title {
+    margin-bottom: 12px;
+
+    color: #dddafa;
+
+    font-size: 15px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.resource-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 13px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.resource-card {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 16px;
+
+    border-radius: 17px;
+
+    background:
+        rgba(255,255,255,0.055);
+
+    border:
+        1px solid rgba(190,175,255,0.16);
+
+    transition: 0.2s;
+}
+
+.resource-card:hover {
+    transform: translateY(-2px);
+
+    background:
+        rgba(255,255,255,0.085);
+
+    border-color:
+        rgba(180,160,255,0.30);
+}
+
+
+/* =========================
+   ICON
+========================= */
+
+.resource-card-icon {
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
+    background:
+        rgba(140,117,255,0.13);
+
+    font-size: 26px;
+}
+
+
+/* =========================
+   THÔNG TIN
+========================= */
+
+.resource-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.resource-card-info h4 {
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+.resource-card-info p {
+    margin-top: 5px;
+
+    color: #aeb1d1;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   NÚT MUA
+========================= */
+
+.resource-buy-btn {
+    padding: 10px 13px;
+
+    min-width: 82px;
+
+    border-radius: 11px;
+
+    color: #fff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #715ce0,
+            #9b7cff
+        );
+
+    font-size: 13px;
+    font-weight: bold;
+
+    white-space: nowrap;
+
+    transition: 0.2s;
+}
+
+.resource-buy-btn:hover {
+    transform: translateY(-2px);
+
+    filter: brightness(1.1);
+
+    box-shadow:
+        0 7px 18px
+        rgba(126,99,255,0.28);
+}
+
+
+/* =========================
+   KIM CƯƠNG
+========================= */
+
+.diamond-card {
+    border-color:
+        rgba(90,190,255,0.13);
+}
+
+.diamond-card:hover {
+    border-color:
+        rgba(90,190,255,0.30);
+}
+
+.diamond-card
+.resource-card-icon {
+    background:
+        rgba(60,180,255,0.10);
+}
+
+.diamond-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #477fca,
+            #6fc8ff
+        );
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+    .resource-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .resource-card {
+        padding: 14px;
+    }
+
+}
     </style>
 </head>
 
